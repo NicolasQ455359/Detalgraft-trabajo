@@ -1,0 +1,184 @@
+{%- if content_for_header contains 'debutify' and settings.dbtfy_faq_page and section.blocks.size > 0 -%}
+  {%- render "dbtfy-faq-section", section: section -%}
+{%- endif  -%}
+
+{% schema %}
+  {
+    "name": "⚡ FAQ",
+    "class": "faq-section dbtfy dbtfy-faq_page",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Help Center"
+      },
+      {
+        "type": "paragraph",
+        "content": "[Follow our step-by-step tutorial](https:\/\/help.debutify.com\/en\/articles\/5054110-how-to-display-a-new-f-a-q-page-in-3-0)"
+      },
+      {
+        "type": "paragraph",
+        "content": "To enable/disable this add-on, go to Theme settings > Debutify Add-ons."
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Heading",
+        "default": "FAQ"
+      },
+	    {
+        "type": "text",
+        "id": "subtitle",
+        "label": "Subheading"
+      },
+      {
+        "type": "select",
+        "id": "section_style",
+        "label": "Section style",
+        "default": "section-border",
+        "options": [
+          {
+            "value": "section-blank",
+            "label": "Blank background"
+          },
+          {
+            "value": "section-default",
+            "label": "Accent background"
+          },
+          {
+            "value": "section-border",
+            "label": "Border top"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Search"
+	    },
+	    {
+        "type": "checkbox",
+        "id": "dbtfy_faq_searchbox",
+        "label": "Show search",
+        "default": true
+      },
+	    {
+        "type": "text",
+        "id": "dbtfy_faq_search_placeholder",
+        "label": "Placeholder",
+		    "default": "Search questions..."
+      },
+	    {
+        "type": "header",
+        "content":"Banner"
+	    },
+      {
+        "type": "checkbox",
+        "id": "dbtfy_faq_bannerbox",
+        "label": "Show banner",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "dbtfy_faq_banner_icon",
+        "label": "Banner icon",
+        "default": "live_help",
+        "info": "[View all available icons](https:\/\/material.io\/resources\/icons)"
+      },
+	    {
+        "type": "text",
+        "id": "dbtfy_faq_banner_text",
+        "label": "Banner text",
+		    "default": "Didn't find your answer?"
+      },
+      {
+        "type": "text",
+        "id": "dbtfy_faq_banner_subtitle",
+        "label": "Banner text",
+		    "default": "Our customer service will be happy to help you."
+      },
+      {
+        "type": "text",
+        "id": "dbtfy_faq_btn",
+        "label": "Button label",
+		    "default": "Get in Touch"
+      },
+      {
+        "type": "url",
+        "id": "dbtfy_faq_link",
+        "label": "Button link"
+      }
+    ],
+    "blocks" : [
+      {
+        "type": "category_block",
+        "name": "Category",
+        "settings": [
+		      {
+            "type": "header",
+            "content": "Category"
+     	    },
+          {
+            "type": "text",
+            "id": "dbtfy_faq_category",
+            "label": "Heading",
+			      "default": "Category"
+		      },
+          {
+            "type": "text",
+            "id": "dbtfy_faq_icons",
+            "label": "Icon",
+			      "default": "support",
+            "info": "[View all available icons](https:\/\/material.io\/resources\/icons)"
+		      }
+        ]
+      },
+	    {
+        "type": "text_block",
+        "name": "Question",
+        "settings": [
+		      {
+            "type": "header",
+            "content": "Question / Answer"
+          },
+          {
+            "type": "checkbox",
+            "id": "dbtfy_faq_page_open",
+            "label": "Open by default",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "dbtfy_faq_page_icon",
+            "label": "Icon",
+            "info": "[View all available icons](https:\/\/material.io\/resources\/icons)"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "Question",
+            "default": "Question"
+          },
+          {
+            "type": "richtext",
+            "id": "text",
+            "label": "Answer",
+            "default": "<p>This is your answer.</p>"
+          }
+        ]
+      }
+    ],
+    "presets":[
+       {
+          "name": "⚡ FAQ",
+          "category": "Add-ons",
+          "blocks": [
+            {
+              "type": "category_block"
+            },
+            {
+              "type": "text_block"
+            }
+          ]
+       }
+    ]
+  }
+{% endschema %}

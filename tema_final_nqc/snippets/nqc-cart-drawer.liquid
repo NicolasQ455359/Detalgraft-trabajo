@@ -1,0 +1,61 @@
+<div class="cart-drawer-overlay" id="cartDrawerOverlay" onclick="closeCartDrawer(event)">
+    <div class="cart-drawer-panel" onclick="event.stopPropagation()">
+      <div class="drawer-header">
+        <div class="drawer-header-title" id="drawerHeaderTitle">Tu Carrito (0 productos)</div>
+        <button class="drawer-close-btn" onclick="closeCartDrawer()">✕</button>
+      </div>
+
+      <div class="drawer-body">
+        <!-- BARRA DE PEDIDO MÍNIMO BOGOTÁ / NACIONAL -->
+        <div class="min-order-card">
+          <div class="min-toggle-row">
+            <button class="min-toggle-btn active" id="btnZoneBog" onclick="setCartZone(100000)">
+              📍 Bogotá ($100k Mínimo)
+            </button>
+            <button class="min-toggle-btn" id="btnZoneNac" onclick="setCartZone(200000)">
+              🇨🇴 Nacional ($200k Mínimo)
+            </button>
+          </div>
+
+          <div class="min-progress-track">
+            <div class="min-progress-bar" id="drawerProgressBar"></div>
+          </div>
+          <div class="min-alert-text" id="drawerAlertText"></div>
+        </div>
+
+        <!-- LISTA DINÁMICA DE ITEMS EN CARRITO -->
+        <div id="drawerItemsList"></div>
+
+        <!-- CROSS-SELL / SUGERENCIAS DINÁMICAS PARA COMPLETAR EL PEDIDO MÍNIMO -->
+        <div id="drawerCrossSell"></div>
+      </div>
+
+      <!-- FOOTER DEL CARRITO DRAWER -->
+      <div class="drawer-footer">
+        <div class="drawer-total-row">
+          <span style="font-size: 13px; font-weight: 700; color: var(--slate-600);">Total Pedido:</span>
+          <span class="drawer-total-val" id="drawerTotalText">$0 COP</span>
+        </div>
+        <div style="font-size: 11px; color: #16a34a; font-weight: 700; margin-bottom: 12px;">
+          ✓ IVA incluido · Despacho con flota propia Detalgraf
+        </div>
+
+        <!-- CAMPO OBLIGATORIO CÉDULA / NIT DIAN -->
+        <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 10px; margin-bottom: 10px;">
+          <label style="font-size: 11.5px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">
+            🏢 Cédula / NIT para Facturación Electrónica DIAN:
+          </label>
+          <input type="text" id="cedulaNitDrawer" placeholder="Ej: 900.123.456-7 o 80.123.456" style="width: 100%; border: 1px solid #cbd5e1; padding: 7px 10px; border-radius: 5px; font-size: 12px; font-weight: 700;">
+        </div>
+
+        <button class="btn-drawer-checkout" id="btnCheckoutFigma" onclick="proceedCheckoutFigma()">
+          [ Proceder al Pago Seguro 🔒 ]
+        </button>
+
+        <div style="text-align: center; margin-top: 10px;">
+          <a href="#tracking" onclick="closeCartDrawer(); if(window.switchView){window.switchView('track');} return false;" style="font-size: 11.5px; font-weight: 700; color: #005091; text-decoration: none;">
+            📦 ¿Ya tienes una guía de despacho? <u>Rastrear Envío Aquí</u>
+          </a>
+        </div>
+      </div>
+    </div>

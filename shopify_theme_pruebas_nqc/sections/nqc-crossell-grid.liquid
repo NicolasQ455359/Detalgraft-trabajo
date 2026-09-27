@@ -1,0 +1,79 @@
+<!-- Section: nqc-crossell-grid.liquid — Insumos Recomendados / Completa tu Pedido Mínimo DetalShop (Mes 2) -->
+<section class="nqc-crossell-section wrapper">
+  <div class="nqc-crossell-header">
+    <div>
+      <h2 class="nqc-section-headline" style="text-align: left; margin-bottom: 4px;">Completa tu pedido mínimo con estos insumos:</h2>
+      <p class="nqc-section-subheadline" style="text-align: left; margin-bottom: 0;">Agrega productos complementarios para alcanzar el monto mínimo de despacho sin costo adicional</p>
+    </div>
+    <button type="button" class="btn btn--primary js-drawer-open-button-right" onclick="if(window.nqcOpenCart) window.nqcOpenCart();">
+      Ver Carrito
+    </button>
+  </div>
+
+  <div class="nqc-crossell-grid">
+    <!-- Item 1 -->
+    <div class="nqc-crossell-card">
+      <span class="nqc-crossell-badge">Desengrasante</span>
+      <div class="nqc-crossell-title">Desengrasante Industrial 5L Concentrado</div>
+      <div class="nqc-crossell-price">$29.500 COP</div>
+      <button type="button" class="nqc-btn-quick-add" onclick="nqcAddQuickCrossell('Desengrasante Industrial 5L Concentrado', 29500)">
+        + Agregar al Carrito
+      </button>
+    </div>
+
+    <!-- Item 2 -->
+    <div class="nqc-crossell-card">
+      <span class="nqc-crossell-badge">Papel Institucional</span>
+      <div class="nqc-crossell-title">Bobina Papel Secante 300m Doble Hoja</div>
+      <div class="nqc-crossell-price">$25.000 COP</div>
+      <button type="button" class="nqc-btn-quick-add" onclick="nqcAddQuickCrossell('Bobina Papel Secante 300m Doble Hoja', 25000)">
+        + Agregar al Carrito
+      </button>
+    </div>
+
+    <!-- Item 3 -->
+    <div class="nqc-crossell-card">
+      <span class="nqc-crossell-badge">Bioseguridad</span>
+      <div class="nqc-crossell-title">Alcohol Antiséptico 70% Galón x 3.8L</div>
+      <div class="nqc-crossell-price">$34.000 COP</div>
+      <button type="button" class="nqc-btn-quick-add" onclick="nqcAddQuickCrossell('Alcohol Antiséptico 70% Galón x 3.8L', 34000)">
+        + Agregar al Carrito
+      </button>
+    </div>
+
+    <!-- Item 4 -->
+    <div class="nqc-crossell-card">
+      <span class="nqc-crossell-badge">Higiene de Manos</span>
+      <div class="nqc-crossell-title">Jabón Líquido Antibacterial 5L Suave</div>
+      <div class="nqc-crossell-price">$22.000 COP</div>
+      <button type="button" class="nqc-btn-quick-add" onclick="nqcAddQuickCrossell('Jabón Líquido Antibacterial 5L Suave', 22000)">
+        + Agregar al Carrito
+      </button>
+    </div>
+  </div>
+</section>
+
+<script>
+  function nqcAddQuickCrossell(title, price) {
+    if (typeof nqcAddUpsellItemDirect === 'function') {
+      nqcAddUpsellItemDirect(title, price * 100);
+    } else {
+      // Trigger cart drawer open
+      var cartBtn = document.querySelector('.js-drawer-open-button-right');
+      if (cartBtn) cartBtn.click();
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "B2B Crossell Grid",
+  "settings": [],
+  "presets": [
+    {
+      "name": "B2B Crossell Grid",
+      "category": "Products"
+    }
+  ]
+}
+{% endschema %}

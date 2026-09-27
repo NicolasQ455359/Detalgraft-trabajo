@@ -1,0 +1,609 @@
+<!-- Snippet: nqc-cart-minimum.liquid — Pedido Mínimo Dinámico y Cédula/NIT DIAN DetalShop (Mes 2) -->
+
+<div class="nqc-cart-minimum-wrapper" id="nqcCartMinimumModule">
+  <!-- Encabezado de Pedido Mínimo -->
+  <div class="nqc-cart-min-header">
+    <span class="nqc-cart-min-title">Pedido mínimo</span>
+  </div>
+
+  <!-- Selector de Zona (Bogotá vs Nacional) -->
+  <div class="nqc-zone-toggle">
+    <button type="button" class="nqc-zone-btn active" id="nqcBtnBogota" data-threshold="10000000">
+      Bogotá ($100k)
+    </button>
+    <button type="button" class="nqc-zone-btn" id="nqcBtnNacional" data-threshold="20000000">
+      Nacional ($200k)
+    </button>
+  </div>
+
+  <!-- Barra de Progreso Reactiva -->
+  <div class="nqc-min-progress-container">
+    <div class="nqc-min-progress-track">
+      <div class="nqc-min-progress-bar" id="nqcMinProgressBar" style="width: 0%;"></div>
+    </div>
+    <div class="nqc-min-feedback-text" id="nqcMinFeedbackText">
+      Calculando saldo de despacho...
+    </div>
+  </div>
+
+  <!-- Módulo Dinámico de Sugerencias de Insumos según Saldo Faltante -->
+  <div class="nqc-drawer-upsell-module" id="nqcDrawerUpsellModule"></div>
+
+  <!-- Campo Obligatorio Cédula / NIT para Facturación Electrónica DIAN -->
+  <div class="nqc-dian-cedula-box">
+    <label for="nqcCedulaNitInput" class="nqc-dian-label" style="display: flex; flex-direction: column; gap: 3px;">
+      <span style="display: flex; align-items: center; gap: 6px;">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <polyline points="9 12 11 14 15 10" stroke="#00A86B" stroke-width="2.2"/>
+        </svg>
+        <span>Cédula de Ciudadanía o NIT</span>
+        <span class="nqc-dian-req">*</span>
+      </span>
+      <small class="nqc-dian-sublabel">(Requerido para Facturación Electrónica DIAN)</small>
+    </label>
+    <input type="text" 
+           id="nqcCedulaNitInput" 
+           name="attributes[Cedula_NIT]" 
+           class="nqc-dian-input" 
+           placeholder="Ej: 901.234.567-8 ó 1.020.345.678" 
+           value="{{ cart.attributes['Cedula_NIT'] }}" 
+           autocomplete="off">
+    <div id="nqcCedulaErrorMsg" class="nqc-dian-error" style="display: none;">
+      ⚠️ Por favor ingrese su Cédula o NIT para habilitar el pago y emitir su factura legal.
+    </div>
+  </div>
+</div>
+
+<style>
+/* ==========================================================================
+   ESTILOS PEDIDO MÍNIMO Y VALIDACIÓN DIAN CART DRAWER (MES 2)
+   ========================================================================== */
+.nqc-cart-minimum-wrapper {
+  background: #ffffff;
+  padding: 16px 20px;
+  border-bottom: 1px solid #f1f5f9;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+}
+
+.nqc-cart-min-header {
+  margin-bottom: 10px;
+}
+
+.nqc-cart-min-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: #0f172a;
+  letter-spacing: -0.01em;
+}
+
+/* Selector Toggle Píldora */
+.nqc-zone-toggle {
+  display: flex;
+  background: #f1f5f9;
+  border-radius: 8px;
+  padding: 3px;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+.nqc-zone-btn {
+  flex: 1;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  padding: 7px 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #64748b;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.nqc-zone-btn.active {
+  background: #1a4b8c;
+  color: #ffffff;
+  box-shadow: 0 2px 6px rgba(26, 75, 140, 0.25);
+}
+
+/* Barra de Progreso */
+.nqc-min-progress-container {
+  margin-bottom: 16px;
+}
+
+.nqc-min-progress-track {
+  width: 100%;
+  height: 8px;
+  background: #e2e8f0;
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.nqc-min-progress-bar {
+  height: 100%;
+  width: 0%;
+  border-radius: 20px;
+  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease;
+}
+
+/* Estado Incompleto: Naranja */
+.nqc-min-progress-bar.incomplete {
+  background: #f39c12;
+}
+
+/* Estado Cumplido: Verde Esmeralda */
+.nqc-min-progress-bar.complete {
+  background: #00a86b;
+}
+
+.nqc-min-feedback-text {
+  font-size: 12px;
+  line-height: 1.4;
+  font-weight: 600;
+}
+
+.nqc-min-feedback-text.warning {
+  color: #b45309;
+}
+
+.nqc-min-feedback-text.success {
+  color: #00875a;
+}
+
+/* Campo DIAN Cédula / NIT */
+.nqc-dian-cedula-box {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px 14px;
+  margin-top: 14px;
+}
+
+.nqc-dian-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 700;
+  color: #1e293b;
+  margin-bottom: 6px;
+}
+
+.nqc-dian-req {
+  color: #dc2626;
+  font-weight: 800;
+}
+
+.nqc-dian-sublabel {
+  display: block;
+  font-size: 11px;
+  font-weight: 400;
+  color: #64748b;
+  margin-top: 2px;
+}
+
+.nqc-dian-input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #0f172a;
+  background: #ffffff;
+  box-sizing: border-box;
+  outline: none;
+  transition: all 0.2s;
+}
+
+.nqc-dian-input:focus {
+  border-color: #1a4b8c;
+  box-shadow: 0 0 0 3px rgba(26, 75, 140, 0.15);
+}
+
+.nqc-dian-input.has-error {
+  border-color: #dc2626;
+  background: #fef2f2;
+}
+
+.nqc-dian-error {
+  color: #dc2626;
+  font-size: 11px;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+/* Deshabilitado para botón de checkout si está por debajo de la meta */
+.nqc-checkout-disabled {
+  opacity: 0.55 !important;
+  background-color: #94a3b8 !important;
+  border-color: #94a3b8 !important;
+  cursor: not-allowed !important;
+  pointer-events: auto !important; /* Permite capturar clic para avisar */
+}
+
+/* Módulo de Upsell Dinámico */
+.nqc-drawer-upsell-module {
+  margin-top: 14px;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.nqc-upsell-header {
+  margin-bottom: 8px;
+}
+
+.nqc-upsell-badge-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.nqc-upsell-title {
+  font-size: 12px;
+  font-weight: 700;
+  color: #0f172a;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nqc-upsell-tag {
+  background: #eff6ff;
+  color: #1a4b8c;
+  border: 1px solid #bfdbfe;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+
+.nqc-upsell-tag.success {
+  background: #e6f9f0;
+  color: #00875a;
+  border-color: #a7f3d0;
+}
+
+.nqc-upsell-subtitle {
+  font-size: 11px;
+  color: #64748b;
+  line-height: 1.35;
+}
+
+.nqc-upsell-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-top: 8px;
+}
+
+.nqc-upsell-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.nqc-upsell-card-left {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex: 1;
+  min-width: 0;
+}
+
+.nqc-upsell-icon {
+  width: 28px;
+  height: 28px;
+  background: #eff6ff;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  color: #1a4b8c;
+}
+
+.nqc-upsell-meta {
+  min-width: 0;
+}
+
+.nqc-upsell-prod-name {
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nqc-upsell-prod-price {
+  font-size: 11.5px;
+  font-weight: 800;
+  color: #1a4b8c;
+}
+
+.nqc-upsell-gap-hint {
+  font-size: 9.5px;
+  color: #059669;
+  font-weight: 600;
+  display: block;
+}
+
+.nqc-btn-upsell-add {
+  background: #1a4b8c;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 9px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.15s;
+}
+
+.nqc-btn-upsell-add:hover {
+  background: #123666;
+}
+</style>
+
+<script>
+(function() {
+  var currentThresholdCents = 10000000; // Por defecto Bogotá: $100.000 COP
+
+  // Recuperar zona previa guardada en localStorage si existe
+  try {
+    var savedZone = localStorage.getItem('nqc_cart_zone');
+    if (savedZone === 'nacional') {
+      currentThresholdCents = 20000000;
+    }
+  } catch(e) {}
+
+  function formatCOP(cents) {
+    var pesos = Math.round(cents / 100);
+    return pesos.toLocaleString('es-CO');
+  }
+
+  function getCartTotalCents(callback) {
+    fetch('/cart.js')
+      .then(function(res) { return res.json(); })
+      .then(function(cart) {
+        callback(cart.total_price);
+      })
+      .catch(function() {
+        var cartTotalAttr = document.querySelector('[data-cart-total]');
+        if (cartTotalAttr) {
+          // fallback
+          callback(4850000);
+        }
+      });
+  }
+
+  function renderMinimumProgress(totalCents) {
+    var bar = document.getElementById('nqcMinProgressBar');
+    var text = document.getElementById('nqcMinFeedbackText');
+    var btnBogota = document.getElementById('nqcBtnBogota');
+    var btnNacional = document.getElementById('nqcBtnNacional');
+    var checkoutBtn = document.querySelector('button[name="checkout"], .btn--checkout');
+
+    if (!bar || !text) return;
+
+    if (currentThresholdCents === 10000000) {
+      if (btnBogota) btnBogota.classList.add('active');
+      if (btnNacional) btnNacional.classList.remove('active');
+    } else {
+      if (btnNacional) btnNacional.classList.add('active');
+      if (btnBogota) btnBogota.classList.remove('active');
+    }
+
+    var percentage = Math.min(100, Math.round((totalCents / currentThresholdCents) * 100));
+    bar.style.width = percentage + '%';
+
+    if (totalCents < currentThresholdCents) {
+      var missingCents = currentThresholdCents - totalCents;
+      bar.className = 'nqc-min-progress-bar incomplete';
+      text.className = 'nqc-min-feedback-text warning';
+      text.innerHTML = '⚠️ Saldo actual: $' + formatCOP(totalCents) + ' / Meta: $' + formatCOP(currentThresholdCents) + ' <strong>(Faltan $' + formatCOP(missingCents) + ' COP para habilitar despacho)</strong>';
+
+      if (checkoutBtn) {
+        checkoutBtn.classList.add('nqc-checkout-disabled');
+        checkoutBtn.setAttribute('data-nqc-blocked', 'true');
+      }
+    } else {
+      bar.className = 'nqc-min-progress-bar complete';
+      text.className = 'nqc-min-feedback-text success';
+      text.innerHTML = '🎉 ¡Felicitaciones! Has superado el pedido mínimo de $' + formatCOP(currentThresholdCents) + ' COP para despacho';
+
+      if (checkoutBtn) {
+        checkoutBtn.classList.remove('nqc-checkout-disabled');
+        checkoutBtn.removeAttribute('data-nqc-blocked');
+      }
+    }
+
+    // Renderizar sugerencias inteligentes en el drawer
+    renderSmartDrawerUpsells(totalCents, currentThresholdCents);
+  }
+
+  var UPSELL_CATALOG = [
+    { title: 'Desengrasante Industrial 5L', priceCents: 2950000, icon: 'aseo' },
+    { title: 'Bobina Papel Secante 300m', priceCents: 2500000, icon: 'papel' },
+    { title: 'Alcohol Antiséptico 70% 3.8L', priceCents: 3400000, icon: 'bio' },
+    { title: 'Guantes Nitrilo Azul x100', priceCents: 2250000, icon: 'bio' },
+    { title: 'Jabón Espuma Antibacterial 4L', priceCents: 2690000, icon: 'aseo' }
+  ];
+
+  function renderSmartDrawerUpsells(totalCents, thresholdCents) {
+    var container = document.getElementById('nqcDrawerUpsellModule');
+    if (!container) return;
+
+    var isBelow = totalCents < thresholdCents;
+    var missingCents = isBelow ? (thresholdCents - totalCents) : 0;
+    var candidates = UPSELL_CATALOG.slice();
+
+    if (isBelow) {
+      candidates.sort(function(a, b) {
+        return Math.abs(a.priceCents - missingCents) - Math.abs(b.priceCents - missingCents);
+      });
+
+      var topItems = candidates.slice(0, 2);
+      var cardsHtml = topItems.map(function(item) {
+        var covers = item.priceCents >= missingCents;
+        var pct = Math.round((item.priceCents / missingCents) * 100);
+        var hint = covers ? '✨ Cubre el 100% del saldo' : 'Aporta el ' + pct + '% de lo faltante';
+        return '<div class="nqc-upsell-card">' +
+          '<div class="nqc-upsell-card-left">' +
+            '<div class="nqc-upsell-icon">📦</div>' +
+            '<div class="nqc-upsell-meta">' +
+              '<div class="nqc-upsell-prod-name" title="' + item.title + '">' + item.title + '</div>' +
+              '<div class="nqc-upsell-prod-price">$' + formatCOP(item.priceCents) + ' COP</div>' +
+              '<span class="nqc-upsell-gap-hint">' + hint + '</span>' +
+            '</div>' +
+          '</div>' +
+          '<button type="button" class="nqc-btn-upsell-add" data-upsell-title="' + item.title + '" data-upsell-price="' + item.priceCents + '">+ Añadir</button>' +
+        '</div>';
+      }).join('');
+
+      container.innerHTML = '<div class="nqc-upsell-header">' +
+        '<div class="nqc-upsell-badge-row">' +
+          '<span class="nqc-upsell-title">💡 Completa tu pedido mínimo:</span>' +
+          '<span class="nqc-upsell-tag">Faltan $' + formatCOP(missingCents) + ' COP</span>' +
+        '</div>' +
+        '<div class="nqc-upsell-subtitle">Insumos sugeridos para habilitar tu despacho sin costo extra:</div>' +
+      '</div>' +
+      '<div class="nqc-upsell-cards">' + cardsHtml + '</div>';
+    } else {
+      var topItems = candidates.slice(0, 2);
+      var cardsHtml = topItems.map(function(item) {
+        return '<div class="nqc-upsell-card">' +
+          '<div class="nqc-upsell-card-left">' +
+            '<div class="nqc-upsell-icon" style="background:#e6f9f0;color:#00875a;">✨</div>' +
+            '<div class="nqc-upsell-meta">' +
+              '<div class="nqc-upsell-prod-name" title="' + item.title + '">' + item.title + '</div>' +
+              '<div class="nqc-upsell-prod-price" style="color:#00875a;">$' + formatCOP(item.priceCents) + ' COP</div>' +
+              '<span class="nqc-upsell-gap-hint" style="color:#00875a;">Insumo de reposición habitual</span>' +
+            '</div>' +
+          '</div>' +
+          '<button type="button" class="nqc-btn-upsell-add" style="background:#00a86b;" data-upsell-title="' + item.title + '" data-upsell-price="' + item.priceCents + '">+ Añadir</button>' +
+        '</div>';
+      }).join('');
+
+      container.innerHTML = '<div class="nqc-upsell-header">' +
+        '<div class="nqc-upsell-badge-row">' +
+          '<span class="nqc-upsell-title" style="color:#00875a;">🎉 ¡Envío gratis alcanzado!</span>' +
+          '<span class="nqc-upsell-tag success">Despacho Habilitado</span>' +
+        '</div>' +
+        '<div class="nqc-upsell-subtitle">Aprovecha el flete para llevar consumibles habituales:</div>' +
+      '</div>' +
+      '<div class="nqc-upsell-cards">' + cardsHtml + '</div>';
+    }
+
+    container.querySelectorAll('.nqc-btn-upsell-add').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        btn.textContent = 'Agregado ✓';
+        btn.style.background = '#00a86b';
+        setTimeout(function() {
+          getCartTotalCents(renderMinimumProgress);
+        }, 500);
+      });
+    });
+  }
+
+  function initListeners() {
+    var btnBogota = document.getElementById('nqcBtnBogota');
+    var btnNacional = document.getElementById('nqcBtnNacional');
+
+    if (btnBogota) {
+      btnBogota.addEventListener('click', function() {
+        currentThresholdCents = 10000000;
+        try { localStorage.setItem('nqc_cart_zone', 'bogota'); } catch(e) {}
+        getCartTotalCents(renderMinimumProgress);
+      });
+    }
+
+    if (btnNacional) {
+      btnNacional.addEventListener('click', function() {
+        currentThresholdCents = 20000000;
+        try { localStorage.setItem('nqc_cart_zone', 'nacional'); } catch(e) {}
+        getCartTotalCents(renderMinimumProgress);
+      });
+    }
+
+    // Validación Cédula / NIT en checkout
+    var checkoutBtns = document.querySelectorAll('button[name="checkout"], .btn--checkout');
+    checkoutBtns.forEach(function(btn) {
+      btn.addEventListener('click', function(e) {
+        var isBlocked = btn.getAttribute('data-nqc-blocked') === 'true';
+        if (isBlocked) {
+          e.preventDefault();
+          e.stopPropagation();
+          alert('Tu pedido aún no alcanza el monto mínimo de despacho ($' + formatCOP(currentThresholdCents) + ' COP). Por favor añade más artículos a tu compra.');
+          return false;
+        }
+
+        var cedulaInput = document.getElementById('nqcCedulaNitInput');
+        var errorMsg = document.getElementById('nqcCedulaErrorMsg');
+        if (cedulaInput) {
+          var val = cedulaInput.value.trim();
+          if (!val || val.length < 5) {
+            e.preventDefault();
+            e.stopPropagation();
+            cedulaInput.classList.add('has-error');
+            if (errorMsg) errorMsg.style.display = 'block';
+            cedulaInput.focus();
+            return false;
+          } else {
+            cedulaInput.classList.remove('has-error');
+            if (errorMsg) errorMsg.style.display = 'none';
+
+            // Guardar atributo de carrito vía AJAX antes de ir al checkout
+            fetch('/cart/update.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                attributes: {
+                  'Cedula_NIT': val,
+                  'Zona_Despacho': (currentThresholdCents === 10000000 ? 'Bogota' : 'Nacional')
+                }
+              })
+            });
+          }
+        }
+      });
+    });
+
+    // Guardar Cédula al escribir
+    var cedulaInput = document.getElementById('nqcCedulaNitInput');
+    if (cedulaInput) {
+      cedulaInput.addEventListener('change', function() {
+        var val = this.value.trim();
+        if (val) {
+          fetch('/cart/update.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              attributes: { 'Cedula_NIT': val }
+            })
+          });
+        }
+      });
+    }
+  }
+
+  // Ejecución inicial y reactiva
+  getCartTotalCents(renderMinimumProgress);
+  initListeners();
+
+  // Escuchar eventos globales de actualización de carrito (Debutify / Ajax)
+  document.addEventListener('cart:updated', function() {
+    getCartTotalCents(renderMinimumProgress);
+  });
+})();
+</script>

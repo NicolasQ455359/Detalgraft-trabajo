@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Centro de Seguimiento y Logística de Despachos — Detalgraf</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #f8fafc;
+      color: #1e293b;
+      padding: 20px;
+    }
+    .nqc-tracking-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 32px;
+      border-radius: 16px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    }
+    .nqc-header { text-align: center; margin-bottom: 24px; }
+    .nqc-header h1 { font-size: 26px; font-weight: 800; color: #0f172a; margin-bottom: 6px; }
+    .nqc-header p { font-size: 14px; color: #64748b; }
+    .nqc-search-box {
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border: 1.5px solid #cbd5e1;
+      border-radius: 12px;
+      padding: 6px 10px 6px 16px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      margin-bottom: 24px;
+    }
+    .nqc-search-box:focus-within { border-color: #1a4b8c; box-shadow: 0 0 0 3px rgba(26,75,140,0.15); }
+    .nqc-input {
+      flex: 1; border: none; outline: none; font-size: 15px; font-weight: 500;
+      color: #0f172a; background: transparent; padding: 10px 0;
+    }
+    .nqc-btn-track {
+      background: #1a4b8c; color: white; border: none; border-radius: 8px;
+      padding: 12px 24px; font-size: 14px; font-weight: 700; cursor: pointer;
+      transition: background 0.2s;
+    }
+    .nqc-btn-track:hover { background: #123666; }
+    .nqc-result-card {
+      border: 1px solid #e2e8f0; border-radius: 14px; padding: 24px; background: #ffffff;
+    }
+    .nqc-status-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 700;
+      background: #eff6ff; color: #1d4ed8; border: 1px solid #bfdbfe; margin-bottom: 12px;
+    }
+    .nqc-pulse-dot {
+      width: 8px; height: 8px; border-radius: 50%; background: #2563eb;
+      animation: pulse 1.8s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37,99,235,0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 6px rgba(37,99,235,0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(37,99,235,0); }
+    }
+    .nqc-meta { font-size: 14px; font-weight: 600; color: #334155; margin-bottom: 4px; }
+    .nqc-submeta { font-size: 13px; color: #64748b; margin-bottom: 24px; }
+    .nqc-sep { margin: 0 8px; color: #cbd5e1; }
+    .nqc-stepper {
+      display: flex; align-items: center; justify-content: space-between;
+      margin: 28px 0; position: relative;
+    }
+    .nqc-step {
+      display: flex; flex-direction: column; align-items: center; text-align: center;
+      position: relative; z-index: 2; min-width: 80px;
+    }
+    .nqc-circle {
+      width: 36px; height: 36px; border-radius: 50%; background: #f1f5f9;
+      border: 2px solid #cbd5e1; display: flex; align-items: center; justify-content: center;
+      margin-bottom: 8px; font-size: 14px;
+    }
+    .nqc-step.completed .nqc-circle { background: #00a86b; border-color: #00a86b; color: white; }
+    .nqc-step.active .nqc-circle { background: white; border-color: #1a4b8c; box-shadow: 0 0 0 4px rgba(26,75,140,0.15); }
+    .nqc-dot-inner { width: 12px; height: 12px; border-radius: 50%; background: #1a4b8c; }
+    .nqc-line { flex: 1; height: 3px; background: #e2e8f0; margin: 0 -8px 24px -8px; z-index: 1; }
+    .nqc-line.completed { background: #00a86b; }
+    .nqc-step strong { display: block; font-size: 12px; color: #1e293b; }
+    .nqc-step span { font-size: 11px; color: #64748b; }
+    .nqc-history { background: #f8fafc; border: 1px solid #f1f5f9; border-radius: 10px; padding: 18px; margin-bottom: 20px; }
+    .nqc-history h3 { font-size: 13px; font-weight: 700; color: #475569; margin-bottom: 12px; text-transform: uppercase; }
+    .nqc-history ul { list-style: none; }
+    .nqc-history li { display: flex; align-items: baseline; font-size: 13px; padding: 6px 0; border-bottom: 1px dashed #e2e8f0; }
+    .nqc-history li:last-child { border-bottom: none; }
+    .nqc-bullet { width: 8px; height: 8px; border-radius: 50%; background: #94a3b8; margin-right: 10px; }
+    .nqc-bullet.active { background: #2563eb; }
+    .nqc-time { font-weight: 700; color: #1e293b; margin-right: 8px; min-width: 130px; }
+    .nqc-btn-wa {
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      background: #00a86b; color: white; text-decoration: none; font-size: 15px; font-weight: 700;
+      padding: 14px; border-radius: 10px; box-shadow: 0 4px 12px rgba(0,168,107,0.25);
+    }
+    .nqc-btn-wa:hover { background: #008f5b; }
+    .nqc-footer { text-align: center; margin-top: 14px; font-size: 12px; color: #94a3b8; }
+    @media (max-width: 600px) {
+      .nqc-stepper { flex-wrap: wrap; gap: 10px; }
+      .nqc-line { display: none; }
+      .nqc-search-box { flex-direction: column; }
+      .nqc-btn-track { width: 100%; margin-top: 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="nqc-tracking-container">
+  <div class="nqc-header">
+    <h1>Centro de Seguimiento y Logística de Despachos</h1>
+    <p>Consulta el estado de tu despacho institucional en tiempo real</p>
+  </div>
+
+  <div class="nqc-search-box">
+    <span style="display: flex; align-items: center; margin-right: 10px;">
+      <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+        <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+        <line x1="12" y1="22.08" x2="12" y2="12"/>
+      </svg>
+    </span>
+    <input type="text" id="trackInput" class="nqc-input" placeholder="Ingrese número de guía o factura (Ej: DTL-2026-8941)" value="DTL-2026-8941">
+    <button type="button" id="btnTrack" class="nqc-btn-track">Rastrear Envío</button>
+  </div>
+
+  <div class="nqc-result-card" id="resultCard">
+    <div class="nqc-status-badge">
+      <span class="nqc-pulse-dot"></span>
+      <span id="txtStatus">Pedido en tránsito</span>
+    </div>
+    <div class="nqc-meta">
+      <span id="txtFactura">Factura B2B #FE-8942</span>
+      <span class="nqc-sep">|</span>
+      <span id="txtTrans">Transportadora: Envía / Flota Detalgraf</span>
+    </div>
+    <div class="nqc-submeta">
+      <span id="txtGuia">Guía: 0293848123</span>
+      <span class="nqc-sep">|</span>
+      <span id="txtDestino">Destino: Bogotá D.C.</span>
+    </div>
+
+    <div class="nqc-stepper">
+      <div class="nqc-step completed">
+        <div style="margin-bottom: 4px;">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <polyline points="8 13 11 16 16 10" stroke="#00A86B" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="nqc-circle">✓</div>
+        <strong>Confirmado</strong>
+        <span>12 Jun · 08:30</span>
+      </div>
+      <div class="nqc-line completed"></div>
+
+      <div class="nqc-step completed">
+        <div style="margin-bottom: 4px;">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+            <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+            <line x1="12" y1="22.08" x2="12" y2="12"/>
+            <path d="M7 11l3 3 6-6" stroke="#00A86B" stroke-width="2"/>
+          </svg>
+        </div>
+        <div class="nqc-circle">✓</div>
+        <strong>En Preparación</strong>
+        <span>12 Jun · 10:15</span>
+      </div>
+      <div class="nqc-line completed"></div>
+
+      <div class="nqc-step active">
+        <div style="margin-bottom: 4px;">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="1" y="5" width="13" height="10" rx="1"/>
+            <path d="M14 8h4l3 3v4h-7V8z"/>
+            <circle cx="5" cy="18" r="2" stroke="#00A86B"/>
+            <circle cx="16" cy="18" r="2" stroke="#00A86B"/>
+            <path d="M19 4a3 3 0 0 1 3 3c0 2-3 5-3 5s-3-3-3-5a3 3 0 0 1 3-3z" stroke="#00A86B" fill="#00A86B" transform="scale(0.6) translate(16, -2)"/>
+          </svg>
+        </div>
+        <div class="nqc-circle"><div class="nqc-dot-inner"></div></div>
+        <strong>En Tránsito</strong>
+        <span>13 Jun · 07:45</span>
+      </div>
+      <div class="nqc-line"></div>
+
+      <div class="nqc-step">
+        <div style="margin-bottom: 4px;">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01" stroke="#00A86B" stroke-width="2.5"/>
+          </svg>
+        </div>
+        <div class="nqc-circle"></div>
+        <strong>Entregado</strong>
+        <span>Pendiente</span>
+      </div>
+    </div>
+
+    <div class="nqc-history">
+      <h3>Historial cronológico</h3>
+      <ul>
+        <li>
+          <span class="nqc-bullet active"></span>
+          <span class="nqc-time">13 Sep · 07:45 AM</span>
+          <span>— En despacho hacia Bogotá D.C.</span>
+        </li>
+        <li>
+          <span class="nqc-bullet"></span>
+          <span class="nqc-time">12 Sep · 10:15 PM</span>
+          <span>— Recibido en centro de distribución Detalgraf</span>
+        </li>
+        <li>
+          <span class="nqc-bullet"></span>
+          <span class="nqc-time">12 Sep · 08:30 AM</span>
+          <span>— Pedido recibido y facturado con éxito</span>
+        </li>
+      </ul>
+    </div>
+
+    <a id="btnWa" href="https://wa.me/573001234567?text=Hola%20Detalgraf,%20deseo%20informaci%C3%B3n%20sobre%20mi%20despacho%20con%20gu%C3%ADa%20DTL-2026-8941" target="_blank" class="nqc-btn-wa">
+      <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+        <path d="M9.5 12h.01m2.5 0h.01m2.5 0h.01" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <span>Contactar al Conductor o Logística por WhatsApp</span>
+    </a>
+
+    <div class="nqc-footer">
+      Información actualizada para clientes Institucionales B2B
+    </div>
+  </div>
+</div>
+
+<script>
+  const input = document.getElementById("trackInput");
+  const btn = document.getElementById("btnTrack");
+  const wa = document.getElementById("btnWa");
+
+  function track() {
+    const val = input.value.trim().toUpperCase();
+    if (!val) return;
+    const phone = "573001234567";
+    wa.href = `https://wa.me/${phone}?text=${encodeURIComponent('Hola Detalgraf, requiero información sobre mi despacho: ' + val)}`;
+  }
+
+  btn.addEventListener("click", track);
+  input.addEventListener("keypress", (e) => { if (e.key === "Enter") track(); });
+</script>
+
+</body>
+</html>

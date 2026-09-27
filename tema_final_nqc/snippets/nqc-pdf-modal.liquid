@@ -1,0 +1,30 @@
+<div class="pdf-modal-overlay" id="pdfModalOverlay" onclick="closePdfModal()">
+    <div class="pdf-modal-card" onclick="event.stopPropagation()">
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
+        <div>
+          <span style="font-size: 10px; font-weight: 800; color: #004b87; background: #e0f2fe; padding: 2px 6px; border-radius: 4px;">DOCUMENTO TÉCNICO OFICIAL</span>
+          <h3 style="font-size: 16px; font-weight: 900; margin-top: 4px;" id="modalPdfTitle">Ficha Técnica Oficial — Detalgraf</h3>
+        </div>
+        <button onclick="closePdfModal()" style="background:none; border:none; font-size:18px; cursor:pointer;">✕</button>
+      </div>
+
+      <div style="font-size: 12.5px; color: #475569; line-height: 1.5; margin-bottom: 18px;">
+        Este producto cuenta con registro sanitario INVIMA y cumple con los estándares de biodegradabilidad y control de calidad institucional.
+      </div>
+
+      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 18px; font-size: 12px;">
+        <div><strong>Registro:</strong> <span id="modalPdfInvima">INVIMA NSOH-09823-21CO</span></div>
+        <div style="margin-top:4px;"><strong>pH Certificado:</strong> <span id="modalPdfPh">7.0 – 8.0 (Neutro)</span></div>
+        <div style="margin-top:4px;"><strong>Biodegradabilidad:</strong> <span id="modalPdfBio">≥ 90%</span></div>
+      </div>
+
+      <div style="display: flex; gap: 10px;">
+        <a id="modalPdfDownloadLink" href="{{ 'ficha-tecnica-detalgraf.pdf' | asset_url }}" target="_blank" download="Ficha_Tecnica_Detalgraf.pdf" onclick="if(window.downloadOrPrintPdf){window.downloadOrPrintPdf();}" style="flex:1; text-align:center; background:#1a4b8c; color:#fff; text-decoration:none; padding:10px; border-radius:6px; font-size:13px; font-weight:800; display:inline-flex; align-items:center; justify-content:center; gap:6px;">
+          ⬇️ Descargar PDF Oficial
+        </a>
+        <button onclick="closePdfModal()" style="background:#f1f5f9; border:none; padding:10px 16px; border-radius:6px; font-size:13px; font-weight:700; cursor:pointer;">
+          Cerrar
+        </button>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,107 @@
+<!-- /sections/nqc-testimonials.liquid — Testimonios Corporativos B2B DetalShop (Mes 2) -->
+<section class="nqc-testimonials-section">
+  <div class="wrapper">
+    <div class="nqc-section-header text-center">
+      <h2 class="nqc-section-title">{{ section.settings.title | default: "TESTIMONIOS DE NUESTROS CLIENTES" }}</h2>
+      <p class="nqc-section-subtitle">{{ section.settings.subtitle | default: "Empresas e instituciones colombianas que confían en DetalShop para su abastecimiento continuo" }}</p>
+    </div>
+
+    <div class="nqc-testimonials-grid">
+      <!-- Testimonio 1: RDD Market Research -->
+      <div class="nqc-testimonial-card">
+        <div class="nqc-test-quote-icon">“</div>
+        <div class="nqc-test-quote-text">
+          DetalShop es una alternativa innovadora, segura, eficiente y con precios justos. Para RDD Market Research &amp; Solutions es un placer contar con ellos como nuestros proveedores institucionales.
+        </div>
+        <div class="nqc-test-author-box">
+          <div class="nqc-test-avatar">RD</div>
+          <div>
+            <div class="nqc-test-author-name">RDD Market Research &amp; Solutions</div>
+            <div class="nqc-test-author-role">
+              <span class="nqc-badge-verified">✓ Cliente Corporativo Verificado</span> · Bogotá
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonio 2: Total Office SAS -->
+      <div class="nqc-testimonial-card">
+        <div class="nqc-test-quote-icon">“</div>
+        <div class="nqc-test-quote-text">
+          El servicio que presta DetalShop es sobresaliente, es notoria la experiencia que tienen como empresa y destacamos su atención al cliente. Recomendados por su profesionalismo en cada entrega.
+        </div>
+        <div class="nqc-test-author-box">
+          <div class="nqc-test-avatar" style="background: #005091;">TO</div>
+          <div>
+            <div class="nqc-test-author-name">Total Office SAS y Skål Drinks</div>
+            <div class="nqc-test-author-role">
+              <span class="nqc-badge-verified">✓ Compras Corporativas B2B</span> · Cundinamarca
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Testimonio 3: Somos la Despensa D.C -->
+      <div class="nqc-testimonial-card">
+        <div class="nqc-test-quote-icon">“</div>
+        <div class="nqc-test-quote-text">
+          El servicio nos pareció excelente. La entrega fue súper rápida, llegó todo a tiempo y lo que más nos gusta es que tienen mucha variedad para todo lo que necesitamos. ¡Súper recomendado!
+        </div>
+        <div class="nqc-test-author-box">
+          <div class="nqc-test-avatar" style="background: #00a86b;">SD</div>
+          <div>
+            <div class="nqc-test-author-name">Somos la Despensa D.C</div>
+            <div class="nqc-test-author-role">
+              <span class="nqc-badge-verified">✓ Sector Alimentos y Servicios</span> · Bogotá
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.nqc-testimonials-section { padding: 48px 0; background: #ffffff; border-bottom: 1px solid #e2e8f0; }
+.nqc-section-title { font-size: 26px; font-weight: 900; color: #0f172a; letter-spacing: -0.02em; margin-bottom: 6px; }
+.nqc-section-subtitle { font-size: 14px; color: #64748b; max-width: 680px; margin: 0 auto 32px auto; }
+.nqc-testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.nqc-testimonial-card { background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 24px; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s; }
+.nqc-testimonial-card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,0.06); border-color: #1a4b8c; }
+.nqc-test-quote-icon { font-size: 36px; line-height: 1; color: #1a4b8c; font-family: Georgia, serif; margin-bottom: 8px; }
+.nqc-test-quote-text { font-size: 13.5px; line-height: 1.6; color: #334155; font-style: italic; margin-bottom: 20px; flex: 1; }
+.nqc-test-author-box { display: flex; align-items: center; gap: 12px; padding-top: 14px; border-top: 1px solid #e2e8f0; }
+.nqc-test-avatar { width: 42px; height: 42px; border-radius: 50%; background: #1a4b8c; color: #ffffff; font-weight: 800; font-size: 14px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.nqc-test-author-name { font-size: 13.5px; font-weight: 800; color: #0f172a; }
+.nqc-test-author-role { font-size: 11.5px; color: #64748b; margin-top: 2px; }
+.nqc-badge-verified { color: #00a86b; font-weight: 700; }
+@media (max-width: 850px) {
+  .nqc-testimonials-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Testimonios B2B",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "TESTIMONIOS DE NUESTROS CLIENTES"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Empresas e instituciones colombianas que confían en DetalShop para su abastecimiento continuo"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Testimonios B2B",
+      "category": "Text"
+    }
+  ]
+}
+{% endschema %}

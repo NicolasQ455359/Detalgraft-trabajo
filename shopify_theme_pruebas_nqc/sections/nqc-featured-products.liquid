@@ -1,0 +1,538 @@
+<!-- /sections/nqc-featured-products.liquid — Catálogo Completo Multi-Categoría B2B (Mes 2) -->
+<section class="nqc-catalog-section" id="nqcCatalogSection">
+  <div class="wrapper">
+    <div class="nqc-catalog-header-bar">
+      <div class="nqc-catalog-title-group">
+        <h2 class="nqc-catalog-title">{{ section.settings.title | default: "PRODUCTOS DESTACADOS & CATÁLOGO B2B" }}</h2>
+        <p class="nqc-catalog-subtitle">{{ section.settings.subtitle | default: "Suministros certificados directos de fábrica en presentaciones institucionales y por volumen" }}</p>
+      </div>
+      <div class="nqc-catalog-search-wrap">
+        <span class="nqc-catalog-search-icon">🔍</span>
+        <input type="text" id="nqcCatalogSearchInput" oninput="nqcSearchCatalog(this.value)" placeholder="Buscar por producto, SKU o categoría...">
+      </div>
+    </div>
+
+    <!-- TABS DE CATEGORÍA -->
+    <div class="nqc-catalog-filter-tabs">
+      <button type="button" class="nqc-catalog-tab-btn active" onclick="nqcFilterCatalog('Todos', this)">Todos los Productos (16)</button>
+      <button type="button" class="nqc-catalog-tab-btn" onclick="nqcFilterCatalog('Aseo Profesional', this)">Aseo Profesional (5)</button>
+      <button type="button" class="nqc-catalog-tab-btn" onclick="nqcFilterCatalog('Bioseguridad', this)">Bioseguridad (4)</button>
+      <button type="button" class="nqc-catalog-tab-btn" onclick="nqcFilterCatalog('Cafetería', this)">Cafetería (3)</button>
+      <button type="button" class="nqc-catalog-tab-btn" onclick="nqcFilterCatalog('Papelería', this)">Papelería (3)</button>
+      <button type="button" class="nqc-catalog-tab-btn" onclick="nqcFilterCatalog('Seguridad Industrial', this)">Seguridad Industrial (1)</button>
+    </div>
+
+    <!-- GRID DE PRODUCTOS INSTITUCIONALES -->
+    <div class="nqc-catalog-grid" id="nqcCatalogGrid">
+
+      <!-- 1. Detergente 20L -->
+      <div class="nqc-product-catalog-card" data-category="Aseo Profesional">
+        <div class="nqc-card-badge-row">
+          <span class="nqc-card-cat-badge nqc-cat-aseo">Aseo Profesional</span>
+          <span class="nqc-card-stock-badge">🟢 En Stock B2B</span>
+        </div>
+        <div class="nqc-card-img-container" onclick="location.href='#nqc-dynamic-pricing-wrapper'">
+          <img src="{{ 'detalgraf_detergente_20l.jpg' | asset_url }}" alt="Detergente Líquido 20L" loading="lazy">
+          <span class="nqc-card-view-badge">👁️ 4 Vistas</span>
+        </div>
+        <div class="nqc-card-info">
+          <div class="nqc-card-sku-rating"><span class="nqc-card-sku">DL-20L-IND</span><span class="nqc-card-rating">★★★★★</span></div>
+          <h3 class="nqc-card-title">DETERGENTE LÍQUIDO CONCENTRADO 20L</h3>
+          <div class="nqc-card-pricing">
+            <div class="nqc-card-price-main">$48.500 COP</div>
+            <div class="nqc-card-price-tier">Desde $41.225 COP en estiba</div>
+          </div>
+          <div class="nqc-card-btn-row">
+            <button type="button" class="btn btn--primary nqc-btn-card-add" onclick="nqcQuickAdd('detalgraf-20l', 'Detergente Líquido 20L', 48500)">+ Agregar</button>
+            <a href="#nqc-dynamic-pricing-wrapper" class="btn btn--secondary nqc-btn-card-view">Ver Ficha</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Desengrasante 5L -->
+      <div class="nqc-product-catalog-card" data-category="Aseo Profesional">
+        <div class="nqc-card-badge-row">
+          <span class="nqc-card-cat-badge nqc-cat-aseo">Aseo Profesional</span>
+          <span class="nqc-card-stock-badge">🟢 En Stock B2B</span>
+        </div>
+        <div class="nqc-card-img-container">
+          <img src="https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?w=800" alt="Desengrasante 5L" loading="lazy">
+          <span class="nqc-card-view-badge">👁️ 4 Vistas</span>
+        </div>
+        <div class="nqc-card-info">
+          <div class="nqc-card-sku-rating"><span class="nqc-card-sku">DG-5L-IND</span><span class="nqc-card-rating">★★★★★</span></div>
+          <h3 class="nqc-card-title">DESENGRASANTE INDUSTRIAL 5L CONCENTRADO</h3>
+          <div class="nqc-card-pricing">
+            <div class="nqc-card-price-main">$29.500 COP</div>
+            <div class="nqc-card-price-tier">Desde $25.075 COP en estiba</div>
+          </div>
+          <div class="nqc-card-btn-row">
+            <button type="button" class="btn btn--primary nqc-btn-card-add" onclick="nqcQuickAdd('desengrasante-5l', 'Desengrasante Industrial 5L', 29500)">+ Agregar</button>
+            <a href="#nqc-dynamic-pricing-wrapper" class="btn btn--secondary nqc-btn-card-view">Ver Ficha</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3. Cloro 20L -->
+      <div class="nqc-product-catalog-card" data-category="Aseo Profesional">
+        <div class="nqc-card-badge-row">
+          <span class="nqc-card-cat-badge nqc-cat-aseo">Aseo Profesional</span>
+          <span class="nqc-card-stock-badge">🟢 En Stock B2B</span>
+        </div>
+        <div class="nqc-card-img-container">
+          <img src="https://images.unsplash.com/photo-1584744982491-665216d95f8b?w=800" alt="Cloro Industrial 20L" loading="lazy">
+          <span class="nqc-card-view-badge">👁️ 4 Vistas</span>
+        </div>
+        <div class="nqc-card-info">
+          <div class="nqc-card-sku-rating"><span class="nqc-card-sku">CL-20L-IND</span><span class="nqc-card-rating">★★★★★</span></div>
+          <h3 class="nqc-card-title">CLORO DESINFECTANTE INDUSTRIAL 5.25% 20L</h3>
+          <div class="nqc-card-pricing">
+            <div class="nqc-card-price-main">$38.000 COP</div>
+            <div class="nqc-card-price-tier">Desde $32.300 COP en estiba</div>
+          </div>
+          <div class="nqc-card-btn-row">
+            <button type="button" class="btn btn--primary nqc-btn-card-add" onclick="nqcQuickAdd('cloro-20l', 'Cloro Industrial 20L', 38000)">+ Agregar</button>
+            <a href="#nqc-dynamic-pricing-wrapper" class="btn btn--secondary nqc-btn-card-view">Ver Ficha</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4. Limpiador Pisos 20L -->
+      <div class="nqc-product-catalog-card" data-category="Aseo Profesional">
+        <div class="nqc-card-badge-row">
+          <span class="nqc-card-cat-badge nqc-cat-aseo">Aseo Profesional</span>
+          <span class="nqc-card-stock-badge">🟢 En Stock B2B</span>
+        </div>
+        <div class="nqc-card-img-container">
+          <img src="https://images.unsplash.com/photo-1608248597359-57352f758f69?w=800" alt="Limpiador Pisos Lavanda 20L" loading="lazy">
+          <span class="nqc-card-view-badge">👁️ 4 Vistas</span>
+        </div>
+        <div class="nqc-card-info">
+          <div class="nqc-card-sku-rating"><span class="nqc-card-sku">LP-20L-LAV</span><span class="nqc-card-rating">★★★★★</span></div>
+          <h3 class="nqc-card-title">LIMPIADOR DESINFECTANTE DE PISOS LAVANDA 20L</h3>
+          <div class="nqc-card-pricing">
+            <div class="nqc-card-price-main">$32.000 COP</div>
+            <div class="nqc-card-price-tier">Desde $27.200 COP en estiba</div>
+          </div>
+          <div class="nqc-card-btn-row">
+            <button type="button" class="btn btn--primary nqc-btn-card-add" onclick="nqcQuickAdd('limpiador-pisos-20l', 'Limpiador Pisos Lavanda 20L', 32000)">+ Agregar</button>
+            <a href="#nqc-dynamic-pricing-wrapper" class="btn btn--secondary nqc-btn-card-view">Ver Ficha</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Cera Pisos 5L -->
+      <div class="nqc-product-catalog-card" data-category="Aseo Profesional">
+        <div class="nqc-card-badge-row">
+          <span class="nqc-card-cat-badge nqc-cat-aseo">Aseo Profesional</span>
+          <span class="nqc-card-stock-badge">🟢 En Stock B2B</span>
+        </div>
+        <div class="nqc-card-img-container">
+          <img src="https://images.unsplash.com/photo-1585670210693-e7fdd16b142e?w=800" alt="Cera Pisos Tráfico Pesado 5L" loading="lazy">
+          <span class="nqc-card-view-badge">👁️ 4 Vistas</span>
+        </div>
+        <div class="nqc-card-info">
+          <div class="nqc-card-sku-rating"><span class="nqc-card-sku">CP-5L-TRF</span><span class="nqc-card-rating">★★★★★</span></div>
+          <h3 class="nqc-card-title">CERA POLIMÉRICA AUTOBRILLANTE TRÁFICO PESADO 5L</h3>
+          <div class="nqc-card-pricing">
+            <div class="nqc-card-price-main">$42.000 COP</div>
+            <div class="nqc-card-price-tier">Desde $35.700 COP en estiba</div>
+          </div>
+          <div class="nqc-card-btn-row">
+            <button type="button" class="btn btn--primary nqc-btn-card-add" onclick="nqcQuickAdd('cera-pisos-5l', 'Cera Pisos 5L', 42000)">+ Agregar</button>
+            <a href="#nqc-dynamic-pricing-wrapper" class="btn btn--secondary nqc-btn-card-view">Ver Ficha</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 6. Alcohol 70% Fuller 3.8L -->
+      <div class="nqc-product-catalog-card" data-category="Bioseguridad">
+        <div class="nqc-card-badge-row">
+          <span class="nqc-card-cat-badge nqc-cat-bio">Bioseguridad</span>
+          <span class="nqc-card-stock-badge">🟢 En Stock B2B</span>
+        </div>
+        <div class="nqc-card-img-container">
+          <img src="https://images.unsplash.com/photo-1584744982491-665216d95f8b?w=800" alt="Alcohol 70% Fuller" loading="lazy">
+          <span class="nqc-card-view-badge">👁️ 4 Vistas</span>
+        </div>
+        <div class="nqc-card-info">
+          <div class="nqc-card-sku-rating"><span class="nqc-card-sku">ALC-70-GAL</span><span class="nqc-card-rating">★★★★★</span></div>
+          <h3 class="nqc-card-title">ALCOHOL ANTISÉPTICO 70% GALÓN X 3.8L FULLER</h3>
+          <div class="nqc-card-pricing">
+            <div class="nqc-card-price-main">$34.000 COP</div>
+            <div class="nqc-card-price-tier">Desde $28.900 COP en estiba</div>
+          </div>
+          <div class="nqc-card-btn-row">
+            <button type="button" class="btn btn--primary nqc-btn-card-add" onclick="nqcQuickAdd('alcohol-galon', 'Alcohol Antiséptico 70% Galón', 34000)">+ Agregar</button>
+            <a href="#nqc-dynamic-pricing-wrapper" class="btn btn--secondary nqc-btn-card-view">Ver Ficha</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 7. Jabón Antibacterial 5L -->
+      <div class="nqc-product-catalog-card" data-category="Bioseguridad">
+        <div class="nqc-card-badge-row">
+          <span class="nqc-card-cat-badge nqc-cat-bio">Bioseguridad</span>
+          <span class="nqc-card-stock-badge">🟢 En Stock B2B</span>
+        </div>
+        <div class="nqc-card-img-container">
+          <img src="https://images.unsplash.com/photo-1608248597359-57352f758f69?w=800" alt="Jabón Antibacterial 5L" loading="lazy">
+          <span class="nqc-card-view-badge">👁️ 4 Vistas</span>
+        </div>
+        <div class="nqc-card-info">
+          <div class="nqc-card-sku-rating"><span class="nqc-card-sku">JB-5L-SUA</span><span class="nqc-card-rating">★★★★★</span></div>
+          <h3 class="nqc-card-title">JABÓN LÍQUIDO ANTIBACTERIAL TRICLOSÁN 5L</h3>
+          <div class="nqc-card-pricing">
+            <div class="nqc-card-price-main">$22.000 COP</div>
+            <div class="nqc-card-price-tier">Desde $18.700 COP en estiba</div>
+          </div>
+          <div class="nqc-card-btn-row">
+            <button type="button" class="btn btn--primary nqc-btn-card-add" onclick="nqcQuickAdd('jabon-5l', 'Jabón Antibacterial 5L', 22000)">+ Agregar</button>
+            <a href="#nqc-dynamic-pricing-wrapper" class="btn btn--secondary nqc-btn-card-view">Ver Ficha</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 8. Gel Antibacterial 3.8L -->
+      <div class="nqc-product-catalog-card" data-category="Bioseguridad">
+        <div class="nqc-card-badge-row">
+          <span class="nqc-card-cat-badge nqc-cat-bio">Bioseguridad</span>
+          <span class="nqc-card-stock-badge">🟢 En Stock B2B</span>
+        </div>
+        <div class="nqc-card-img-container">
+          <img src="https://images.unsplash.com/photo-1584744982491-665216d95f8b?w=800" alt="Gel Antibacterial 3.8L" loading="lazy">
+          <span class="nqc-card-view-badge">👁️ 4 Vistas</span>
+        </div>
+        <div class="nqc-card-info">
+          <div class="nqc-card-sku-rating"><span class="nqc-card-sku">GEL-70-38L</span><span class="nqc-card-rating">★★★★★</span></div>
+          <h3 class="nqc-card-title">GEL ANTIBACTERIAL CON ALOE VERA 70% 3.8L</h3>
+          <div class="nqc-card-pricing">
+            <div class="nqc-card-price-main">$36.500 COP</div>
+            <div class="nqc-card-price-tier">Desde $31.025 COP en estiba</div>
+          </div>
+          <div class="nqc-card-btn-row">
+            <button type="button" class="btn btn--primary nqc-btn-card-add" onclick="nqcQuickAdd('gel-antibacterial-38l', 'Gel Antibacterial 3.8L', 36500)">+ Agregar</button>
+            <a href="#nqc-dynamic-pricing-wrapper" class="btn btn--secondary nqc-btn-card-view">Ver Ficha</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 9. Guantes Nitrilo x100 -->
+      <div class="nqc-product-catalog-card" data-category="Bioseguridad">
+        <div class="nqc-card-badge-row">
+          <span class="nqc-card-cat-badge nqc-cat-bio">Bioseguridad</span>
+          <span class="nqc-card-stock-badge">🟢 En Stock B2B</span>
+        </div>
+        <div class="nqc-card-img-container">
+          <img src="https://images.unsplash.com/photo-1584744982491-665216d95f8b?w=800" alt="Guantes Nitrilo x100" loading="lazy">
+          <span class="nqc-card-view-badge">👁️ 4 Vistas</span>
+        </div>
+        <div class="nqc-card-info">
+          <div class="nqc-card-sku-rating"><span class="nqc-card-sku">GUA-NIT-100</span><span class="nqc-card-rating">★★★★★</span></div>
+          <h3 class="nqc-card-title">GUANTES DE NITRILO AZUL SIN POLVO CAJA X 100</h3>
+          <div class="nqc-card-pricing">
+            <div class="nqc-card-price-main">$26.000 COP</div>
+            <div class="nqc-card-price-tier">Desde $21.580 COP en estiba</div>
+          </div>
+          <div class="nqc-card-btn-row">
+            <button type="button" class="btn btn--primary nqc-btn-card-add" onclick="nqcQuickAdd('guantes-nitrilo-100', 'Guantes Nitrilo x100', 26000)">+ Agregar</button>
+            <a href="#nqc-dynamic-pricing-wrapper" class="btn btn--secondary nqc-btn-card-view">Ver Ficha</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 10. Bobina Papel Secante 300m -->
+      <div class="nqc-product-catalog-card" data-category="Papelería">
+        <div class="nqc-card-badge-row">
+          <span class="nqc-card-cat-badge nqc-cat-pap">Papelería</span>
+          <span class="nqc-card-stock-badge">🟢 En Stock B2B</span>
+        </div>
+        <div class="nqc-card-img-container">
+          <img src="https://images.unsplash.com/photo-1584556812952-905ffd0c611a?w=800" alt="Bobina Papel Secante 300m" loading="lazy">
+          <span class="nqc-card-view-badge">👁️ 4 Vistas</span>
+        </div>
+        <div class="nqc-card-info">
+          <div class="nqc-card-sku-rating"><span class="nqc-card-sku">PAP-SEC-300</span><span class="nqc-card-rating">★★★★★</span></div>
+          <h3 class="nqc-card-title">BOBINA PAPEL TOALLA SECANTE 300M DOBLE HOJA</h3>
+          <div class="nqc-card-pricing">
+            <div class="nqc-card-price-main">$25.000 COP</div>
+            <div class="nqc-card-price-tier">Desde $21.250 COP en estiba</div>
+          </div>
+          <div class="nqc-card-btn-row">
+            <button type="button" class="btn btn--primary nqc-btn-card-add" onclick="nqcQuickAdd('bobina-secante-300m', 'Bobina Papel Secante 300m', 25000)">+ Agregar</button>
+            <a href="#nqc-dynamic-pricing-wrapper" class="btn btn--secondary nqc-btn-card-view">Ver Ficha</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 11. Papel Jumbo Roll x4 -->
+      <div class="nqc-product-catalog-card" data-category="Papelería">
+        <div class="nqc-card-badge-row">
+          <span class="nqc-card-cat-badge nqc-cat-pap">Papelería</span>
+          <span class="nqc-card-stock-badge">🟢 En Stock B2B</span>
+        </div>
+        <div class="nqc-card-img-container">
+          <img src="https://images.unsplash.com/photo-1584556812952-905ffd0c611a?w=800" alt="Papel Higiénico Jumbo Roll" loading="lazy">
+          <span class="nqc-card-view-badge">👁️ 4 Vistas</span>
+        </div>
+        <div class="nqc-card-info">
+          <div class="nqc-card-sku-rating"><span class="nqc-card-sku">PAP-JUM-250</span><span class="nqc-card-rating">★★★★★</span></div>
+          <h3 class="nqc-card-title">PAPEL HIGIÉNICO JUMBO ROLL 250M X 4 ROLLOS</h3>
+          <div class="nqc-card-pricing">
+            <div class="nqc-card-price-main">$31.500 COP</div>
+            <div class="nqc-card-price-tier">Desde $26.775 COP en estiba</div>
+          </div>
+          <div class="nqc-card-btn-row">
+            <button type="button" class="btn btn--primary nqc-btn-card-add" onclick="nqcQuickAdd('papel-jumbo-roll', 'Papel Jumbo Roll x4', 31500)">+ Agregar</button>
+            <a href="#nqc-dynamic-pricing-wrapper" class="btn btn--secondary nqc-btn-card-view">Ver Ficha</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 12. Resma Papel Carta -->
+      <div class="nqc-product-catalog-card" data-category="Papelería">
+        <div class="nqc-card-badge-row">
+          <span class="nqc-card-cat-badge nqc-cat-pap">Papelería</span>
+          <span class="nqc-card-stock-badge">🟢 En Stock B2B</span>
+        </div>
+        <div class="nqc-card-img-container">
+          <img src="https://images.unsplash.com/photo-1584556812952-905ffd0c611a?w=800" alt="Resma Papel Carta 75g" loading="lazy">
+          <span class="nqc-card-view-badge">👁️ 4 Vistas</span>
+        </div>
+        <div class="nqc-card-info">
+          <div class="nqc-card-sku-rating"><span class="nqc-card-sku">PAP-RES-CAR</span><span class="nqc-card-rating">★★★★★</span></div>
+          <h3 class="nqc-card-title">PAPEL FOTOCOPIA CARTA 75G RESMA X 500 HOJAS</h3>
+          <div class="nqc-card-pricing">
+            <div class="nqc-card-price-main">$18.500 COP</div>
+            <div class="nqc-card-price-tier">Desde $15.725 COP en estiba</div>
+          </div>
+          <div class="nqc-card-btn-row">
+            <button type="button" class="btn btn--primary nqc-btn-card-add" onclick="nqcQuickAdd('papel-resma-carta', 'Resma Papel Carta 75g', 18500)">+ Agregar</button>
+            <a href="#nqc-dynamic-pricing-wrapper" class="btn btn--secondary nqc-btn-card-view">Ver Ficha</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 13. Café Institucional 2.5kg -->
+      <div class="nqc-product-catalog-card" data-category="Cafetería">
+        <div class="nqc-card-badge-row">
+          <span class="nqc-card-cat-badge nqc-cat-caf">Cafetería</span>
+          <span class="nqc-card-stock-badge">🟢 En Stock B2B</span>
+        </div>
+        <div class="nqc-card-img-container">
+          <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800" alt="Café Institucional 2500g" loading="lazy">
+          <span class="nqc-card-view-badge">👁️ 4 Vistas</span>
+        </div>
+        <div class="nqc-card-info">
+          <div class="nqc-card-sku-rating"><span class="nqc-card-sku">CAF-INS-2500</span><span class="nqc-card-rating">★★★★★</span></div>
+          <h3 class="nqc-card-title">CAFÉ TOSTADO Y MOLIDO INSTITUCIONAL 2.500G</h3>
+          <div class="nqc-card-pricing">
+            <div class="nqc-card-price-main">$55.000 COP</div>
+            <div class="nqc-card-price-tier">Desde $46.750 COP en estiba</div>
+          </div>
+          <div class="nqc-card-btn-row">
+            <button type="button" class="btn btn--primary nqc-btn-card-add" onclick="nqcQuickAdd('cafe-institucional-2500g', 'Café Institucional 2500g', 55000)">+ Agregar</button>
+            <a href="#nqc-dynamic-pricing-wrapper" class="btn btn--secondary nqc-btn-card-view">Ver Ficha</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 14. Vasos 7oz x1000 -->
+      <div class="nqc-product-catalog-card" data-category="Cafetería">
+        <div class="nqc-card-badge-row">
+          <span class="nqc-card-cat-badge nqc-cat-caf">Cafetería</span>
+          <span class="nqc-card-stock-badge">🟢 En Stock B2B</span>
+        </div>
+        <div class="nqc-card-img-container">
+          <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800" alt="Vasos Desechables 7oz" loading="lazy">
+          <span class="nqc-card-view-badge">👁️ 4 Vistas</span>
+        </div>
+        <div class="nqc-card-info">
+          <div class="nqc-card-sku-rating"><span class="nqc-card-sku">VAS-PLA-7OZ</span><span class="nqc-card-rating">★★★★★</span></div>
+          <h3 class="nqc-card-title">VASO PLÁSTICO DESECHABLE 7OZ CAJA X 1.000</h3>
+          <div class="nqc-card-pricing">
+            <div class="nqc-card-price-main">$44.000 COP</div>
+            <div class="nqc-card-price-tier">Desde $37.400 COP en estiba</div>
+          </div>
+          <div class="nqc-card-btn-row">
+            <button type="button" class="btn btn--primary nqc-btn-card-add" onclick="nqcQuickAdd('vasos-desechables-7oz', 'Vasos Desechables 7oz x1000', 44000)">+ Agregar</button>
+            <a href="#nqc-dynamic-pricing-wrapper" class="btn btn--secondary nqc-btn-card-view">Ver Ficha</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 15. Mezcladores Café x1000 -->
+      <div class="nqc-product-catalog-card" data-category="Cafetería">
+        <div class="nqc-card-badge-row">
+          <span class="nqc-card-cat-badge nqc-cat-caf">Cafetería</span>
+          <span class="nqc-card-stock-badge">🟢 En Stock B2B</span>
+        </div>
+        <div class="nqc-card-img-container">
+          <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800" alt="Mezcladores Plásticos x1000" loading="lazy">
+          <span class="nqc-card-view-badge">👁️ 4 Vistas</span>
+        </div>
+        <div class="nqc-card-info">
+          <div class="nqc-card-sku-rating"><span class="nqc-card-sku">MEZ-PLA-1000</span><span class="nqc-card-rating">★★★★★</span></div>
+          <h3 class="nqc-card-title">MEZCLADORES PLÁSTICOS PARA BEBIDAS CAJA X 1.000</h3>
+          <div class="nqc-card-pricing">
+            <div class="nqc-card-price-main">$12.500 COP</div>
+            <div class="nqc-card-price-tier">Desde $10.875 COP en estiba</div>
+          </div>
+          <div class="nqc-card-btn-row">
+            <button type="button" class="btn btn--primary nqc-btn-card-add" onclick="nqcQuickAdd('mezcladores-cafe-1000', 'Mezcladores Café x1000', 12500)">+ Agregar</button>
+            <a href="#nqc-dynamic-pricing-wrapper" class="btn btn--secondary nqc-btn-card-view">Ver Ficha</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- 16. Cinta de Embalaje 3M -->
+      <div class="nqc-product-catalog-card" data-category="Seguridad Industrial">
+        <div class="nqc-card-badge-row">
+          <span class="nqc-card-cat-badge nqc-cat-seg">Seguridad Industrial</span>
+          <span class="nqc-card-stock-badge">🟢 En Stock B2B</span>
+        </div>
+        <div class="nqc-card-img-container">
+          <img src="https://images.unsplash.com/photo-1584744982491-665216d95f8b?w=800" alt="Cinta de Embalaje 3M" loading="lazy">
+          <span class="nqc-card-view-badge">👁️ 4 Vistas</span>
+        </div>
+        <div class="nqc-card-info">
+          <div class="nqc-card-sku-rating"><span class="nqc-card-sku">CIN-3M-48100</span><span class="nqc-card-rating">★★★★★</span></div>
+          <h3 class="nqc-card-title">CINTA DE EMBALAJE TRANSPARENTE 3M 48MM X 100M</h3>
+          <div class="nqc-card-pricing">
+            <div class="nqc-card-price-main">$28.000 COP</div>
+            <div class="nqc-card-price-tier">Desde $24.360 COP en estiba</div>
+          </div>
+          <div class="nqc-card-btn-row">
+            <button type="button" class="btn btn--primary nqc-btn-card-add" onclick="nqcQuickAdd('cinta-embalaje-3m', 'Cinta Embalaje 3M x6', 28000)">+ Agregar</button>
+            <a href="#nqc-dynamic-pricing-wrapper" class="btn btn--secondary nqc-btn-card-view">Ver Ficha</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+.nqc-catalog-section { padding: 44px 0; background: #ffffff; border-bottom: 1px solid #e2e8f0; }
+.nqc-catalog-header-bar { display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 16px; margin-bottom: 24px; }
+.nqc-catalog-title { font-size: 26px; font-weight: 900; color: #0f172a; letter-spacing: -0.02em; margin-bottom: 4px; }
+.nqc-catalog-subtitle { font-size: 14px; color: #64748b; }
+.nqc-catalog-filter-tabs { display: flex; gap: 8px; flex-wrap: wrap; background: #f1f5f9; padding: 6px; border-radius: 12px; margin-bottom: 20px; }
+.nqc-catalog-tab-btn { background: transparent; border: none; padding: 8px 16px; border-radius: 8px; font-size: 13px; font-weight: 700; color: #475569; cursor: pointer; transition: all 0.2s; }
+.nqc-catalog-tab-btn:hover { color: #1a4b8c; background: rgba(255,255,255,0.6); }
+.nqc-catalog-tab-btn.active { background: #ffffff; color: #1a4b8c; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+.nqc-catalog-search-wrap { position: relative; max-width: 380px; width: 100%; }
+.nqc-catalog-search-wrap input { width: 100%; background: #ffffff; border: 1.5px solid #cbd5e1; border-radius: 24px; padding: 9px 16px 9px 38px; font-size: 13px; color: #0f172a; outline: none; transition: all 0.2s; }
+.nqc-catalog-search-wrap input:focus { border-color: #1a4b8c; box-shadow: 0 0 0 3px rgba(26, 75, 140, 0.15); }
+.nqc-catalog-search-icon { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); font-size: 14px; color: #94a3b8; }
+.nqc-catalog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+.nqc-product-catalog-card { background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; overflow: hidden; display: flex; flex-direction: column; transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s; }
+.nqc-product-catalog-card:hover { transform: translateY(-3px); box-shadow: 0 10px 24px rgba(0,0,0,0.08); border-color: #1a4b8c; }
+.nqc-card-badge-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px 0 14px; }
+.nqc-card-cat-badge { font-size: 10.5px; font-weight: 800; text-transform: uppercase; padding: 3px 8px; border-radius: 6px; letter-spacing: 0.04em; }
+.nqc-cat-aseo { background: #eff6ff; color: #1e40af; border: 1px solid #bfdbfe; }
+.nqc-cat-bio { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; }
+.nqc-cat-pap { background: #f5f3ff; color: #5b21b6; border: 1px solid #ddd6fe; }
+.nqc-cat-caf { background: #fffbeb; color: #92400e; border: 1px solid #fde68a; }
+.nqc-cat-seg { background: #fff1f2; color: #9f1239; border: 1px solid #fecdd3; }
+.nqc-card-stock-badge { font-size: 11px; font-weight: 700; color: #00a86b; display: flex; align-items: center; gap: 4px; }
+.nqc-card-img-container { height: 180px; display: flex; align-items: center; justify-content: center; padding: 16px; position: relative; cursor: pointer; background: radial-gradient(circle, #ffffff 40%, #f8fafc 100%); }
+.nqc-card-img-container img { max-height: 100%; max-width: 100%; object-fit: contain; transition: transform 0.25s; }
+.nqc-product-catalog-card:hover .nqc-card-img-container img { transform: scale(1.06); }
+.nqc-card-view-badge { position: absolute; bottom: 8px; right: 8px; background: rgba(15, 23, 42, 0.75); backdrop-filter: blur(4px); color: #ffffff; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 6px; pointer-events: none; }
+.nqc-card-info { padding: 14px; display: flex; flex-direction: column; flex: 1; border-top: 1px solid #f1f5f9; }
+.nqc-card-sku-rating { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.nqc-card-sku { font-size: 11px; font-weight: 700; color: #94a3b8; text-transform: uppercase; }
+.nqc-card-rating { font-size: 11px; color: #f59e0b; font-weight: 700; }
+.nqc-card-title { font-size: 14px; font-weight: 800; color: #1e293b; line-height: 1.35; margin-bottom: 10px; min-height: 38px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.nqc-card-pricing { margin-top: auto; margin-bottom: 12px; padding-top: 8px; border-top: 1px dashed #e2e8f0; }
+.nqc-card-price-main { font-size: 17px; font-weight: 900; color: #1a4b8c; }
+.nqc-card-price-tier { font-size: 11px; font-weight: 700; color: #00a86b; margin-top: 2px; }
+.nqc-card-btn-row { display: grid; grid-template-columns: 1.2fr 1fr; gap: 8px; }
+.nqc-btn-card-add { background: #1a4b8c; color: #ffffff; border: none; padding: 8px 10px; border-radius: 8px; font-size: 12.5px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 4px; transition: all 0.2s; }
+.nqc-btn-card-add:hover { background: #123666; transform: translateY(-1px); }
+.nqc-btn-card-view { background: #ffffff; color: #334155; border: 1.5px solid #cbd5e1; padding: 8px 10px; border-radius: 8px; font-size: 12px; font-weight: 700; text-align: center; text-decoration: none; display: block; transition: all 0.2s; }
+.nqc-btn-card-view:hover { border-color: #1a4b8c; color: #1a4b8c; background: #eff6ff; }
+</style>
+
+<script>
+function nqcFilterCatalog(category, btn) {
+  if (btn) {
+    document.querySelectorAll('.nqc-catalog-tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  const cards = document.querySelectorAll('.nqc-product-catalog-card');
+  cards.forEach(card => {
+    const cardCat = card.getAttribute('data-category');
+    if (category === 'Todos' || cardCat === category) {
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function nqcSearchCatalog(query) {
+  const q = query.toLowerCase().trim();
+  const cards = document.querySelectorAll('.nqc-product-catalog-card');
+  cards.forEach(card => {
+    const title = (card.querySelector('.nqc-card-title')?.textContent || '').toLowerCase();
+    const sku = (card.querySelector('.nqc-card-sku')?.textContent || '').toLowerCase();
+    const cat = (card.getAttribute('data-category') || '').toLowerCase();
+    if (!q || title.includes(q) || sku.includes(q) || cat.includes(q)) {
+      card.style.display = 'flex';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function nqcQuickAdd(id, title, price) {
+  if (typeof theme !== 'undefined' && theme.cart) {
+    // Standard Debutify Cart Add
+    const formData = {
+      'items': [{
+        'id': id,
+        'quantity': 1
+      }]
+    };
+    fetch('/cart/add.js', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(formData)
+    }).then(res => res.json()).then(data => {
+      document.dispatchEvent(new CustomEvent('theme:cart:updated'));
+    }).catch(err => {
+      console.log('Cart add:', err);
+    });
+  }
+  alert('Producto agregado al carrito institucional: ' + title);
+}
+</script>
+
+{% schema %}
+{
+  "name": "Catálogo B2B Completo",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título de la Sección",
+      "default": "PRODUCTOS DESTACADOS & CATÁLOGO B2B"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Suministros certificados directos de fábrica en presentaciones institucionales y por volumen"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Catálogo B2B Completo",
+      "category": "Collection"
+    }
+  ]
+}
+{% endschema %}

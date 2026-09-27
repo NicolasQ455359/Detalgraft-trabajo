@@ -1,0 +1,150 @@
+<!-- Snippet: nqc-product-gallery.liquid — Galería Interactiva 4 Vistas B2B DetalShop (Mes 2) -->
+<div id="nqc-pdp-gallery-{{ section.id }}" class="nqc-pdp-gallery-container">
+  <!-- Marco Principal de la Imagen -->
+  <div class="nqc-main-frame" id="nqcMainFrame-{{ section.id }}">
+    <span class="nqc-bestseller-badge">⭐ Bestseller Institucional B2B</span>
+    <span class="nqc-active-view-tag" id="nqcActiveViewTag-{{ section.id }}">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+      <span id="nqcActiveViewLabel-{{ section.id }}">Vista 1: Frontal Institucional</span>
+    </span>
+
+    {%- assign is_detalgraf = false -%}
+    {%- if product.title contains 'Detergente' or product.title contains 'Detalgraf' or product.selected_or_first_available_variant.sku contains 'DL-20L' -%}
+      {%- assign is_detalgraf = true -%}
+    {%- endif -%}
+
+    {%- if is_detalgraf -%}
+      <img id="nqcMainImg-{{ section.id }}" 
+           src="{{ 'detalgraf_detergente_20l.jpg' | asset_url }}" 
+           alt="{{ product.title | escape }}" 
+           class="nqc-main-img">
+    {%- else -%}
+      <img id="nqcMainImg-{{ section.id }}" 
+           src="{{ product.featured_image | img_url: '800x' }}" 
+           alt="{{ product.title | escape }}" 
+           class="nqc-main-img">
+    {%- endif -%}
+
+    <div class="nqc-zoom-hint">
+      <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+      <span>Zoom B2B</span>
+    </div>
+  </div>
+
+  <!-- Fila de 4 Miniaturas Interactivas -->
+  <div class="nqc-thumbnail-row" id="nqcThumbRow-{{ section.id }}">
+    {%- if is_detalgraf -%}
+      <div class="nqc-thumb-card active" onclick="nqcSwitchView(0, '{{ section.id }}')">
+        <img src="{{ 'detalgraf_detergente_20l.jpg' | asset_url }}" alt="Frontal">
+        <span class="nqc-thumb-label">1. Frontal</span>
+      </div>
+      <div class="nqc-thumb-card" onclick="nqcSwitchView(1, '{{ section.id }}')">
+        <img src="{{ 'detalgraf_detergente_20l_vista2_perspectiva.jpg' | asset_url }}" alt="Perspectiva">
+        <span class="nqc-thumb-label">2. Lateral 3/4</span>
+      </div>
+      <div class="nqc-thumb-card" onclick="nqcSwitchView(2, '{{ section.id }}')">
+        <img src="{{ 'detalgraf_detergente_20l_vista3_etiqueta.jpg' | asset_url }}" alt="Etiqueta">
+        <span class="nqc-thumb-label">3. Etiqueta/pH</span>
+      </div>
+      <div class="nqc-thumb-card" onclick="nqcSwitchView(3, '{{ section.id }}')">
+        <img src="{{ 'detalgraf_detergente_20l_vista4_estiba.jpg' | asset_url }}" alt="En Estiba">
+        <span class="nqc-thumb-label">4. En Estiba</span>
+      </div>
+    {%- elsif product.images.size >= 4 -%}
+      {%- for image in product.images limit: 4 -%}
+        <div class="nqc-thumb-card {% if forloop.first %}active{% endif %}" onclick="nqcSwitchView({{ forloop.index0 }}, '{{ section.id }}')">
+          <img src="{{ image | img_url: '200x' }}" alt="{{ image.alt | escape }}">
+          <span class="nqc-thumb-label">
+            {%- case forloop.index -%}
+              {%- when 1 -%}1. Frontal
+              {%- when 2 -%}2. Lateral 3/4
+              {%- when 3 -%}3. Etiqueta/pH
+              {%- when 4 -%}4. En Estiba
+            {%- endcase -%}
+          </span>
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      <!-- AUTOMATIZACIÓN 4 VISTAS: Si el producto tiene solo 1 imagen, genera las 4 vistas automáticamente -->
+      <div class="nqc-thumb-card active" onclick="nqcSwitchView(0, '{{ section.id }}')">
+        <img src="{{ product.featured_image | img_url: '200x' }}" alt="Frontal">
+        <span class="nqc-thumb-label">1. Frontal</span>
+      </div>
+      <div class="nqc-thumb-card" onclick="nqcSwitchView(1, '{{ section.id }}')">
+        <img src="{{ product.featured_image | img_url: '200x' }}" alt="Perspectiva">
+        <span class="nqc-thumb-label">2. Lateral 3/4</span>
+        <span class="nqc-thumb-badge-auto">3D</span>
+      </div>
+      <div class="nqc-thumb-card" onclick="nqcSwitchView(2, '{{ section.id }}')">
+        <img src="{{ product.featured_image | img_url: '200x' }}" alt="Etiqueta Técnica">
+        <span class="nqc-thumb-label">3. Etiqueta/pH</span>
+        <span class="nqc-thumb-badge-auto">Macro</span>
+      </div>
+      <div class="nqc-thumb-card" onclick="nqcSwitchView(3, '{{ section.id }}')">
+        <img src="{{ product.featured_image | img_url: '200x' }}" alt="En Estiba">
+        <span class="nqc-thumb-label">4. En Estiba</span>
+        <span class="nqc-thumb-badge-auto">Bodega</span>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+  (function() {
+    window.nqcProductViewsData = window.nqcProductViewsData || {};
+    {%- if is_detalgraf -%}
+      window.nqcProductViewsData['{{ section.id }}'] = [
+        { label: 'Vista 1: Frontal Institucional', src: "{{ 'detalgraf_detergente_20l.jpg' | asset_url }}", type: 'real' },
+        { label: 'Vista 2: Perspectiva 3/4 y Escala', src: "{{ 'detalgraf_detergente_20l_vista2_perspectiva.jpg' | asset_url }}", type: 'real' },
+        { label: 'Vista 3: Ficha Técnica & Registro INVIMA', src: "{{ 'detalgraf_detergente_20l_vista3_etiqueta.jpg' | asset_url }}", type: 'real' },
+        { label: 'Vista 4: Presentación en Estiba / Almacén B2B', src: "{{ 'detalgraf_detergente_20l_vista4_estiba.jpg' | asset_url }}", type: 'real' }
+      ];
+    {%- elsif product.images.size >= 4 -%}
+      window.nqcProductViewsData['{{ section.id }}'] = [
+        {%- for img in product.images limit: 4 -%}
+          { 
+            label: '{% case forloop.index %}{% when 1 %}Vista 1: Frontal Institucional{% when 2 %}Vista 2: Perspectiva 3/4{% when 3 %}Vista 3: Ficha Técnica & INVIMA{% when 4 %}Vista 4: En Estiba B2B{% endcase %}', 
+            src: '{{ img | img_url: "800x" }}', 
+            type: 'real' 
+          }{% unless forloop.last %},{% endunless %}
+        {%- endfor -%}
+      ];
+    {%- else -%}
+      var baseImg = '{{ product.featured_image | img_url: "800x" }}';
+      window.nqcProductViewsData['{{ section.id }}'] = [
+        { label: 'Vista 1: Frontal Institucional', src: baseImg, type: 'auto-frontal' },
+        { label: 'Vista 2: Perspectiva 3D y Escala', src: baseImg, type: 'auto-perspective' },
+        { label: 'Vista 3: Macro-Zoom Etiqueta Técnica & INVIMA', src: baseImg, type: 'auto-macro' },
+        { label: 'Vista 4: Presentación en Estiba / Almacén B2B', src: baseImg, type: 'auto-pallet' }
+      ];
+    {%- endif -%}
+
+    window.nqcSwitchView = function(idx, sectionId) {
+      var views = window.nqcProductViewsData[sectionId];
+      if (!views || !views[idx]) return;
+      var item = views[idx];
+      var mainImg = document.getElementById('nqcMainImg-' + sectionId);
+      var label = document.getElementById('nqcActiveViewLabel-' + sectionId);
+      var cards = document.querySelectorAll('#nqcThumbRow-' + sectionId + ' .nqc-thumb-card');
+
+      if (mainImg) {
+        mainImg.style.opacity = '0.3';
+        mainImg.style.transform = 'scale(0.96)';
+        setTimeout(function() {
+          mainImg.src = item.src;
+          mainImg.className = 'nqc-main-img';
+          if (item.type === 'auto-perspective') mainImg.classList.add('view-perspective-3d');
+          if (item.type === 'auto-macro') mainImg.classList.add('view-macro-label');
+          if (item.type === 'auto-pallet') mainImg.classList.add('view-pallet-estiba');
+          mainImg.style.opacity = '1';
+          mainImg.style.transform = '';
+        }, 150);
+      }
+      if (label) label.textContent = item.label;
+
+      cards.forEach(function(c, i) {
+        c.classList.toggle('active', i === idx);
+      });
+    };
+  })();
+</script>

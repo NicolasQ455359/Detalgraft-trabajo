@@ -1,0 +1,12 @@
+<!-- Snippet: drawer-cart.liquid — Cart Drawer con Pedido Mínimo y Cédula/NIT DIAN DetalShop (Mes 2) -->
+<div id="CartDrawer" class="drawer drawer--right overlay-content ajaxcart--is-loading" aria-hidden="true" tabindex="-1">
+  <div class="ajaxcart-loading">
+    <span class="icon-spin text-secondary text-large" aria-hidden="true"></span>
+  </div>
+
+  <div id="CartContainer" class="flex full">
+    {%- render 'nqc-cart-minimum' -%}
+  </div>
+</div>
+
+<div class="overlay-backdrop overlay-drawer"></div>

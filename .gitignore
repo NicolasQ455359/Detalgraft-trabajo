@@ -1,0 +1,10 @@
+# Antigravity & Scratch temporary files
+scratch/
+.agents/
+.codex/
+*.log
+*.tmp
+__pycache__/
+.DS_Store
+Thumbs.db
+desktop.ini

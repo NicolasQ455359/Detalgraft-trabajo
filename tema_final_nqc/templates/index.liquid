@@ -1,0 +1,2270 @@
+<!-- /templates/index.liquid — Portada Oficial DetalShop B2B y Catálogo Sincronizado (Mes 2) -->
+
+<!-- CONTENEDOR PRINCIPAL DEL CATÁLOGO Y VISTAS INTERACTIVAS (MES 2) -->
+<div class="nqc-store-wrapper" id="mainWebsite">
+  <div id="viewHome" class="page-view-block active">
+      
+      <!-- SECCIÓN "NUESTRAS LINEAS." (CON ICONOS OFICIALES FIGMA) -->
+      <section class="nuestras-lineas-section">
+        <div style="display:flex; justify-content:space-between; align-items:flex-end; margin-bottom: 22px; flex-wrap:wrap; gap:12px;">
+          <div>
+            <span style="font-size:11px; font-weight:800; color:#004b87; background:#e0f2fe; padding:4px 10px; border-radius:9999px; text-transform:uppercase; letter-spacing:0.06em;">Líneas Certificadas B2B</span>
+            <h2 class="nuestras-lineas-title" style="margin-top:6px; margin-bottom:0;">NUESTRAS LINEAS.</h2>
+          </div>
+          
+        </div>
+
+        <!-- FILA 1: 3 TARJETAS (Aseo, Bioseguridad, Cafetería) -->
+        <div class="lines-grid-row1">
+          <!-- Card 1: Aseo -->
+          <div class="line-collection-card" 
+               style="background-image: url('https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800');"
+               onclick="filterHomeCatalog('Aseo'); scrollToCatalog();">
+            <div class="line-card-overlay"></div>
+            <div class="line-card-content">
+              <div class="line-card-icon-badge" title="cat-aseo-profesional">
+                <svg class="ds-svg ds-svg-cat" width="26" height="26" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M14 12V8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4" stroke="#1A4B8C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M10 14a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v26a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V14z" stroke="#1A4B8C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="18" y="6" width="12" height="6" rx="2" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="rgba(26,75,140,0.08)"/>
+  <path d="M30 6h6v4h-6z" stroke="#1A4B8C" stroke-width="2" stroke-linejoin="round" fill="#1A4B8C"/>
+  <line x1="16" y1="20" x2="22" y2="20" stroke="#00A86B" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="16" y1="26" x2="20" y2="26" stroke="#00A86B" stroke-width="2" stroke-linecap="round"/>
+  <line x1="16" y1="32" x2="22" y2="32" stroke="#00A86B" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M31 23c0 3.314-2.686 6-6 6s-6-2.686-6-6c0-2.5 6-7 6-7s6 4.5 6 7z" stroke="#00A86B" stroke-width="2" stroke-linejoin="round" fill="rgba(0,168,107,0.12)"/>
+</svg>
+              </div>
+              <h3 class="line-card-heading">Aseo Profesional</h3>
+              <button class="btn-comprar-ahora">Comprar ahora</button>
+            </div>
+          </div>
+
+          <!-- Card 2: Bioseguridad -->
+          <div class="line-collection-card" 
+               style="background-image: url('https://images.unsplash.com/photo-1584744982491-665216d95f8b?w=800');"
+               onclick="filterHomeCatalog('Quimicos'); scrollToCatalog();">
+            <div class="line-card-overlay"></div>
+            <div class="line-card-content">
+              <div class="line-card-icon-badge" title="cat-bioseguridad">
+                <svg class="ds-svg ds-svg-cat" width="26" height="26" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M24 4L8 10v14c0 12 16 18 16 18s16-6 16-18V10L24 4z" stroke="#1A4B8C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="rgba(26,75,140,0.04)"/>
+  <path d="M35 11v6m-3-3h6" stroke="#00A86B" stroke-width="2" stroke-linecap="round"/>
+  <path d="M19 32v-6a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v-4a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v-3a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v6a2 2 0 0 0 2 2h1a3 3 0 0 1 3 3v3c0 3-4 6-9 6h-3c-3 0-4-2-4-4z" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="rgba(0,168,107,0.1)"/>
+  <path d="M17 32h14v3H17z" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+              </div>
+              <h3 class="line-card-heading">Bioseguridad & Salud</h3>
+              <button class="btn-comprar-ahora">Comprar ahora</button>
+            </div>
+          </div>
+
+          <!-- Card 3: Cafetería -->
+          <div class="line-collection-card" 
+               style="background-image: url('https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?w=800');"
+               onclick="filterHomeCatalog('Cafeteria'); scrollToCatalog();">
+            <div class="line-card-overlay"></div>
+            <div class="line-card-content">
+              <div class="line-card-icon-badge" title="cat-cafeteria">
+                <svg class="ds-svg ds-svg-cat" width="26" height="26" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12 12h20l-2 26a3 3 0 0 1-3 3H17a3 3 0 0 1-3-3l-2-26z" stroke="#1A4B8C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="rgba(26,75,140,0.04)"/>
+  <path d="M10 12h24V8a2 2 0 0 0-2-2H12a2 2 0 0 0-2 2v4z" stroke="#1A4B8C" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M22 6V3h4v3" stroke="#00A86B" stroke-width="2" stroke-linecap="round"/>
+  <path d="M10 12l-4 4h4" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M32 14h5a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4h-6" stroke="#1A4B8C" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="22" y1="18" x2="22" y2="34" stroke="#00A86B" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 3"/>
+  <circle cx="22" cy="35" r="2" fill="#00A86B"/>
+</svg>
+              </div>
+              <h3 class="line-card-heading">Cafetería & Alimentos</h3>
+              <button class="btn-comprar-ahora">Comprar ahora</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- FILA 2: 2 TARJETAS CENTRADAS (Papelería, Seguridad Industrial) -->
+        <div class="lines-grid-row2">
+          <!-- Card 4: Papelería -->
+          <div class="line-collection-card" 
+               style="background-image: url('https://images.unsplash.com/photo-1584556812952-905ffd0c611a?w=800');"
+               onclick="filterHomeCatalog('Papeleria'); scrollToCatalog();">
+            <div class="line-card-overlay"></div>
+            <div class="line-card-content">
+              <div class="line-card-icon-badge" title="cat-papeleria">
+                <svg class="ds-svg ds-svg-cat" width="26" height="26" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <ellipse cx="24" cy="14" rx="14" ry="6" stroke="#1A4B8C" stroke-width="2.5" fill="rgba(26,75,140,0.06)"/>
+  <ellipse cx="24" cy="14" rx="4" ry="2" stroke="#00A86B" stroke-width="2" fill="#00A86B"/>
+  <path d="M10 14v16c0 3.3 6.3 6 14 6s14-2.7 14-6V14" stroke="#1A4B8C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M24 36v6c0 1.5 2 2.5 5 2.5h8c3 0 5-1 5-2.5V28" stroke="#00A86B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="24" y1="39" x2="42" y2="39" stroke="#00A86B" stroke-width="1.5" stroke-dasharray="3 3"/>
+</svg>
+              </div>
+              <h3 class="line-card-heading">Papelería & Desechables</h3>
+              <button class="btn-comprar-ahora">Comprar ahora</button>
+            </div>
+          </div>
+
+          <!-- Card 5: Seguridad Industrial -->
+          <div class="line-collection-card" 
+               style="background-image: url('https://images.unsplash.com/photo-1578885136359-16c8bd4d3a8e?w=800');"
+               onclick="filterHomeCatalog('Seguridad'); scrollToCatalog();">
+            <div class="line-card-overlay"></div>
+            <div class="line-card-content">
+              <div class="line-card-icon-badge" title="cat-seguridad-industrial">
+                <svg class="ds-svg ds-svg-cat" width="26" height="26" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M8 24c0-8.837 7.163-16 16-16s16 7.163 16 16v3H8v-3z" stroke="#1A4B8C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="rgba(26,75,140,0.05)"/>
+  <path d="M24 8v16" stroke="#00A86B" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M4 27h40v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4z" stroke="#1A4B8C" stroke-width="2.5" stroke-linejoin="round" fill="#1A4B8C"/>
+  <path d="M12 36h8a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2z" stroke="#00A86B" stroke-width="2" stroke-linejoin="round" fill="rgba(0,168,107,0.1)"/>
+  <path d="M26 36h8a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2z" stroke="#00A86B" stroke-width="2" stroke-linejoin="round" fill="rgba(0,168,107,0.1)"/>
+  <line x1="22" y1="38" x2="26" y2="38" stroke="#00A86B" stroke-width="2"/>
+</svg>
+              </div>
+              <h3 class="line-card-heading">Seguridad Industrial</h3>
+              <button class="btn-comprar-ahora">Comprar ahora</button>
+            </div>
+          </div>
+                </div>
+
+        </section>
+
+      <!-- SECCIÓN "PRODUCTOS DESTACADOS" (CATÁLOGO COMPLETO CON MULTI-ADD) -->
+            <!-- SECCIÓN "PRODUCTOS DESTACADOS" (CATÁLOGO COMPLETO CON 486 PRODUCTOS REALES) -->
+            <!-- SECCIÓN "PRODUCTOS DESTACADOS" (CATÁLOGO COMPLETO CON 486 PRODUCTOS REALES) -->
+      <section class="featured-products-section" id="catalogSection">
+        <div class="section-title-center">
+          <h2 class="section-catalog-title">CATÁLOGO DE PRODUCTOS</h2>
+        </div>
+
+        <!-- BUSCADOR REACTIVO EN TIEMPO REAL PERFECTAMENTE CENTRADO -->
+        <div class="catalog-search-container">
+          <div class="catalog-search-bar-wrap">
+            <span class="catalog-search-icon">🔍</span>
+            <input type="text" id="catalogSearchInput" class="catalog-search-input" placeholder="Buscar productos (ej. Tapaboca, Wypall, Guantes, Detergente, Café, Papel, Alcohol...)" oninput="handleCatalogSearch(this.value)" autocomplete="off">
+            <button type="button" class="catalog-search-clear" id="catalogSearchClear" onclick="clearCatalogSearch()" title="Limpiar búsqueda" style="display:none;">✕</button>
+          </div>
+        </div>
+
+        <script>
+          // Sincronización automática de productos, precios y descuentos reales de la tienda Shopify
+          window.SHOPIFY_STORE_PRODUCTS = [
+            {%- for product in collections.all.products limit: 250 -%}
+              {
+                id: {{ product.id | json }},
+                title: {{ product.title | json }},
+                category: {{ product.type | default: "General" | json }},
+                subcat: {{ product.type | default: "General" | json }},
+                price: {{ product.price | divided_by: 100.0 }},
+                compare_price: {% if product.compare_at_price > product.price %}{{ product.compare_at_price | divided_by: 100.0 }}{% else %}null{% endif %},
+                image: {{ product.featured_image | image_url: width: 600 | json }},
+                handle: {{ product.handle | json }},
+                unit: "Unidad",
+                rating: "4.8 ★★★★★ (25 clientes B2B)"
+              }{%- unless forloop.last -%},{%- endunless -%}
+            {%- endfor -%}
+          ];
+        </script>
+
+        <!-- TABS DE CATEGORÍA INTERACTIVOS TIPO PÍLDORA (SIN ICONOS GIGANTES) -->
+        <div class="cat-tabs-row" id="catalogCategoryTabs">
+          <button type="button" class="cat-tab-pill active" onclick="filterHomeCatalog('Todos', this)" id="tab-todos">Todos los Productos (486)</button>
+          <button type="button" class="cat-tab-pill" onclick="filterHomeCatalog('Aseo', this)" id="tab-aseo">Aseo Profesional (180)</button>
+          <button type="button" class="cat-tab-pill" onclick="filterHomeCatalog('Papeleria', this)" id="tab-papeleria">Papelería y Desechables (111)</button>
+          <button type="button" class="cat-tab-pill" onclick="filterHomeCatalog('Cafeteria', this)" id="tab-cafeteria">Cafetería y Alimentos (96)</button>
+          <button type="button" class="cat-tab-pill" onclick="filterHomeCatalog('Quimicos', this)" id="tab-quimicos">Químicos y Desinfección (62)</button>
+          <button type="button" class="cat-tab-pill" onclick="filterHomeCatalog('Seguridad', this)" id="tab-seguridad">Seguridad Industrial (37)</button>
+        </div>
+
+        <!-- GRID CON PRODUCTOS PRE-RENDERIZADOS PARA VISUALIZACIÓN INMEDIATA -->
+                <div class="products-grid-store" id="homeProductsGrid">
+
+      <div class="p-card-store" data-category="Quimicos" id="card-905152021238">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('905152021238')">
+          <img src="{{ 'tapaboca-handel.png' | asset_url }}" alt="TAPABOCA CIRUGIA BLANCO CAJA X 50 UNDS - INVIMA - TERMOSELLADOS TRES CAPAS" loading="lazy" onerror="this.src='https://cdn.shopify.com/s/files/1/0285/4309/0820/files/IMG-0621.jpg?v=1789132618'">
+          <span class="p-card-badge-discount">
+            <svg class="ds-svg ds-svg-tag" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px; vertical-align:-1px;">
+              <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+              <line x1="7" y1="7" x2="7.01" y2="7"/>
+            </svg>
+            AHORRA $15.720 COP
+          </span>
+        </div>
+        <div class="p-card-cat">
+          <span>Bioseguridad & Salud</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('905152021238')" title="TAPABOCA CIRUGIA BLANCO CAJA X 50 UNDS - INVIMA - TERMOSELLADOS TRES CAPAS">TAPABOCA CIRUGIA BLANCO CAJA X 50 UNDS - INVIMA - TERMOSELLADOS TRES CAPAS</div>
+        <div class="p-card-rating">4.9 ★★★★★ (48 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price-wrap">
+            <span class="p-card-price on-sale">$9.280 COP</span>
+            <span class="p-card-compare-price">$25.000 COP</span>
+          </div>
+          <div class="p-card-unit">Caja x 50</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('905152021238', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-905152021238" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('905152021238', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('905152021238')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-905152021238">
+          <div class="card-in-cart-pill" id="in-cart-905152021238"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('905152021238', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('905152021238', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('905152021238', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('905152021238')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Seguridad" id="card-9624669618434">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9624669618434')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/IMG-0621.jpg?v=1789132618" alt="WYPALL X-75 PLUS INDUSTRIAL AZUL ROLLO X 60 PAÑOS" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Marca Líder</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Seguridad e Higiene B2B</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9624669618434')" title="WYPALL X-75 PLUS INDUSTRIAL AZUL ROLLO X 60 PAÑOS">WYPALL X-75 PLUS INDUSTRIAL AZUL ROLLO X 60 PAÑOS</div>
+        <div class="p-card-rating">4.8 ★★★★★ (24 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$44,602 COP</div>
+          <div class="p-card-unit">Rollo Ind.</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9624669618434', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9624669618434" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9624669618434', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9624669618434')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9624669618434">
+          <div class="card-in-cart-pill" id="in-cart-9624669618434"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9624669618434', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9624669618434', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9624669618434', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9624669618434')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Seguridad" id="card-9445152522498">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9445152522498')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/IMG-8307.jpg?v=1780515130" alt="STRECH TRANSPARENTE FILM 30 CM X 300 MTS CL 0.6" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Seguridad e Higiene B2B</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9445152522498')" title="STRECH TRANSPARENTE FILM 30 CM X 300 MTS CL 0.6">STRECH TRANSPARENTE FILM 30 CM X 300 MTS CL 0.6</div>
+        <div class="p-card-rating">4.8 ★★★★★ (38 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$22,747 COP</div>
+          <div class="p-card-unit">Unidad</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9445152522498', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9445152522498" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9445152522498', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9445152522498')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9445152522498">
+          <div class="card-in-cart-pill" id="in-cart-9445152522498"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9445152522498', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9445152522498', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9445152522498', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9445152522498')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Cafeteria" id="card-9402589610242">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9402589610242')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/IMG-8134.jpg?v=1779217128" alt="MEZCLADOR EL SOL REDONDO DE MADERA 14 CM PAQ. X 1000 UND" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Cafetería y Alimentos</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9402589610242')" title="MEZCLADOR EL SOL REDONDO DE MADERA 14 CM PAQ. X 1000 UND">MEZCLADOR EL SOL REDONDO DE MADERA 14 CM PAQ. X 1000 UND</div>
+        <div class="p-card-rating">4.8 ★★★★★ (32 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$12,187 COP</div>
+          <div class="p-card-unit">Paquete</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9402589610242', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9402589610242" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9402589610242', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9402589610242')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9402589610242">
+          <div class="card-in-cart-pill" id="in-cart-9402589610242"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9402589610242', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9402589610242', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9402589610242', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9402589610242')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Papeleria" id="card-9370930839810">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9370930839810')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/IMG-7800_11ed8125-ff36-48d7-85fa-9d570c6f7674.jpg?v=1777409260" alt="TECLADO USB GENIUS KB-118 NEGRO ESPAÑOL" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Papelería y Desechables</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9370930839810')" title="TECLADO USB GENIUS KB-118 NEGRO ESPAÑOL">TECLADO USB GENIUS KB-118 NEGRO ESPAÑOL</div>
+        <div class="p-card-rating">4.8 ★★★★★ (25 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$39,866 COP</div>
+          <div class="p-card-unit">Unidad</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9370930839810', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9370930839810" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9370930839810', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9370930839810')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9370930839810">
+          <div class="card-in-cart-pill" id="in-cart-9370930839810"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9370930839810', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9370930839810', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9370930839810', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9370930839810')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Papeleria" id="card-9370620363010">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9370620363010')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/IMG-7799.jpg?v=1777398858" alt="SOBRE YOYO OFICIO VERTICAL AZUL OSCURO" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Papelería y Desechables</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9370620363010')" title="SOBRE YOYO OFICIO VERTICAL AZUL OSCURO">SOBRE YOYO OFICIO VERTICAL AZUL OSCURO</div>
+        <div class="p-card-rating">4.8 ★★★★★ (25 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$2,213 COP</div>
+          <div class="p-card-unit">Unidad</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9370620363010', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9370620363010" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9370620363010', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9370620363010')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9370620363010">
+          <div class="card-in-cart-pill" id="in-cart-9370620363010"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9370620363010', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9370620363010', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9370620363010', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9370620363010')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Aseo" id="card-9362319180034">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9362319180034')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/IMG-7661.jpg?v=1776702751" alt="GUANTE DOMESTICO NEGRO CAL. 18 TALLA 8 - LATEXPORT" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Aseo Profesional</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9362319180034')" title="GUANTE DOMESTICO NEGRO CAL. 18 TALLA 8 - LATEXPORT">GUANTE DOMESTICO NEGRO CAL. 18 TALLA 8 - LATEXPORT</div>
+        <div class="p-card-rating">4.8 ★★★★★ (24 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$4,828 COP</div>
+          <div class="p-card-unit">Unidad</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9362319180034', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9362319180034" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9362319180034', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9362319180034')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9362319180034">
+          <div class="card-in-cart-pill" id="in-cart-9362319180034"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9362319180034', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9362319180034', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9362319180034', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9362319180034')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Papeleria" id="card-9315478044930">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9315478044930')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/IMG-7010.jpg?v=1773264390" alt="BOLSILLO LAMINACION CARTA PAQ X 100 CL. 5" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Mayorista Ahorro</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Papelería y Desechables</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9315478044930')" title="BOLSILLO LAMINACION CARTA PAQ X 100 CL. 5">BOLSILLO LAMINACION CARTA PAQ X 100 CL. 5</div>
+        <div class="p-card-rating">4.8 ★★★★★ (20 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$65,411 COP</div>
+          <div class="p-card-unit">Paquete</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9315478044930', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9315478044930" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9315478044930', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9315478044930')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9315478044930">
+          <div class="card-in-cart-pill" id="in-cart-9315478044930"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9315478044930', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9315478044930', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9315478044930', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9315478044930')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Aseo" id="card-9307433959682">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9307433959682')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/011141.jpg?v=1772549345" alt="JABON MANOS ESPUMA KLEENEX FOAM X 1000 ML SIN COLORANTES SIN AROMA" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Mayorista Ahorro</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Aseo Profesional</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9307433959682')" title="JABON MANOS ESPUMA KLEENEX FOAM X 1000 ML SIN COLORANTES SIN AROMA">JABON MANOS ESPUMA KLEENEX FOAM X 1000 ML SIN COLORANTES SIN AROMA</div>
+        <div class="p-card-rating">4.8 ★★★★★ (22 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$68,425 COP</div>
+          <div class="p-card-unit">Unidad</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9307433959682', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9307433959682" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9307433959682', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9307433959682')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9307433959682">
+          <div class="card-in-cart-pill" id="in-cart-9307433959682"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9307433959682', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9307433959682', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9307433959682', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9307433959682')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Papeleria" id="card-9307433206018">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9307433206018')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/011112.jpg?v=1772549068" alt="COMBO 1 DISPENSADOR (83454) + 1 ROLLO JUMBO MINI (71198) TORK" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Mayorista Ahorro</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Papelería y Desechables</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9307433206018')" title="COMBO 1 DISPENSADOR (83454) + 1 ROLLO JUMBO MINI (71198) TORK">COMBO 1 DISPENSADOR (83454) + 1 ROLLO JUMBO MINI (71198) TORK</div>
+        <div class="p-card-rating">4.8 ★★★★★ (33 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$78,723 COP</div>
+          <div class="p-card-unit">Rollo Ind.</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9307433206018', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9307433206018" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9307433206018', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9307433206018')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9307433206018">
+          <div class="card-in-cart-pill" id="in-cart-9307433206018"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9307433206018', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9307433206018', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9307433206018', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9307433206018')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Papeleria" id="card-9307433042178">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9307433042178')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/011131.jpg?v=1772548895" alt="PAÑO DE LIMPIEZA LARGA DURACION ROJO 40X40X17.7 CM PAQ. X 40 UND - TORK" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Marca Líder</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Papelería y Desechables</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9307433042178')" title="PAÑO DE LIMPIEZA LARGA DURACION ROJO 40X40X17.7 CM PAQ. X 40 UND - TORK">PAÑO DE LIMPIEZA LARGA DURACION ROJO 40X40X17.7 CM PAQ. X 40 UND - TORK</div>
+        <div class="p-card-rating">4.8 ★★★★★ (18 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$38,426 COP</div>
+          <div class="p-card-unit">Paquete</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9307433042178', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9307433042178" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9307433042178', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9307433042178')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9307433042178">
+          <div class="card-in-cart-pill" id="in-cart-9307433042178"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9307433042178', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9307433042178', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9307433042178', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9307433042178')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Papeleria" id="card-9307432911106">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9307432911106')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/011132.jpg?v=1772548819" alt="PAÑO DE LIMPIEZA LARGA DURACION VERDE 40X40X17.7 CM PAQ. X 40 UND - TORK" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Marca Líder</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Papelería y Desechables</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9307432911106')" title="PAÑO DE LIMPIEZA LARGA DURACION VERDE 40X40X17.7 CM PAQ. X 40 UND - TORK">PAÑO DE LIMPIEZA LARGA DURACION VERDE 40X40X17.7 CM PAQ. X 40 UND - TORK</div>
+        <div class="p-card-rating">4.8 ★★★★★ (21 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$38,426 COP</div>
+          <div class="p-card-unit">Paquete</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9307432911106', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9307432911106" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9307432911106', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9307432911106')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9307432911106">
+          <div class="card-in-cart-pill" id="in-cart-9307432911106"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9307432911106', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9307432911106', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9307432911106', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9307432911106')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Papeleria" id="card-9307432681730">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9307432681730')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/011133.jpg?v=1772548736" alt="PAÑO DE LIMPIEZA LARGA DURACION AZUL 40X40X17.7 CM PAQ. X 40 UND - TORK" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Marca Líder</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Papelería y Desechables</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9307432681730')" title="PAÑO DE LIMPIEZA LARGA DURACION AZUL 40X40X17.7 CM PAQ. X 40 UND - TORK">PAÑO DE LIMPIEZA LARGA DURACION AZUL 40X40X17.7 CM PAQ. X 40 UND - TORK</div>
+        <div class="p-card-rating">4.8 ★★★★★ (20 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$38,426 COP</div>
+          <div class="p-card-unit">Paquete</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9307432681730', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9307432681730" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9307432681730', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9307432681730')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9307432681730">
+          <div class="card-in-cart-pill" id="in-cart-9307432681730"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9307432681730', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9307432681730', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9307432681730', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9307432681730')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Papeleria" id="card-9307432354050">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9307432354050')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/011130.jpg?v=1772548656" alt="PAÑO DE LIMPIEZA LARGA DURACION AMARILLO 40X40X17.7 CM PQ. X 40 UND-TORK" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Marca Líder</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Papelería y Desechables</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9307432354050')" title="PAÑO DE LIMPIEZA LARGA DURACION AMARILLO 40X40X17.7 CM PQ. X 40 UND-TORK">PAÑO DE LIMPIEZA LARGA DURACION AMARILLO 40X40X17.7 CM PQ. X 40 UND-TORK</div>
+        <div class="p-card-rating">4.8 ★★★★★ (15 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$38,426 COP</div>
+          <div class="p-card-unit">Unidad</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9307432354050', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9307432354050" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9307432354050', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9307432354050')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9307432354050">
+          <div class="card-in-cart-pill" id="in-cart-9307432354050"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9307432354050', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9307432354050', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9307432354050', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9307432354050')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Papeleria" id="card-9271079469314">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9271079469314')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/010070.jpg?v=1768830469" alt="DISPENSADOR WYPALL DE PARED METALICO NEGRO - KIMBERLY" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Mayorista Ahorro</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Papelería y Desechables</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9271079469314')" title="DISPENSADOR WYPALL DE PARED METALICO NEGRO - KIMBERLY">DISPENSADOR WYPALL DE PARED METALICO NEGRO - KIMBERLY</div>
+        <div class="p-card-rating">4.8 ★★★★★ (29 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$315,330 COP</div>
+          <div class="p-card-unit">Unidad</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9271079469314', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9271079469314" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9271079469314', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9271079469314')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9271079469314">
+          <div class="card-in-cart-pill" id="in-cart-9271079469314"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9271079469314', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9271079469314', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9271079469314', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9271079469314')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Aseo" id="card-9225266168066">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9225266168066')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/IMG-5013.jpg?v=1764883570" alt="SET MOPA PLANA MICROACTIVA 43 CM SIN MANGO" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Aseo Profesional</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9225266168066')" title="SET MOPA PLANA MICROACTIVA 43 CM SIN MANGO">SET MOPA PLANA MICROACTIVA 43 CM SIN MANGO</div>
+        <div class="p-card-rating">4.8 ★★★★★ (31 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$31,980 COP</div>
+          <div class="p-card-unit">Unidad</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9225266168066', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9225266168066" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9225266168066', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9225266168066')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9225266168066">
+          <div class="card-in-cart-pill" id="in-cart-9225266168066"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9225266168066', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9225266168066', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9225266168066', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9225266168066')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Aseo" id="card-9225242640642">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9225242640642')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/IMG-5012.jpg?v=1764880031" alt="MOPA PLANA REPUESTO MICROACTIVA 43 CM RPTO TASK" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Aseo Profesional</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9225242640642')" title="MOPA PLANA REPUESTO MICROACTIVA 43 CM RPTO TASK">MOPA PLANA REPUESTO MICROACTIVA 43 CM RPTO TASK</div>
+        <div class="p-card-rating">4.8 ★★★★★ (32 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$18,618 COP</div>
+          <div class="p-card-unit">Unidad</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9225242640642', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9225242640642" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9225242640642', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9225242640642')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9225242640642">
+          <div class="card-in-cart-pill" id="in-cart-9225242640642"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9225242640642', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9225242640642', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9225242640642', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9225242640642')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Cafeteria" id="card-9202091360514">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9202091360514')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/032624.png?v=1762960265" alt="AROMATICA INFUSION PIÑA/TE VERDE/FLOR JAMAICA CJ X 10 SOBRES ISASHII" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Cafetería y Alimentos</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9202091360514')" title="AROMATICA INFUSION PIÑA/TE VERDE/FLOR JAMAICA CJ X 10 SOBRES ISASHII">AROMATICA INFUSION PIÑA/TE VERDE/FLOR JAMAICA CJ X 10 SOBRES ISASHII</div>
+        <div class="p-card-rating">4.8 ★★★★★ (29 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$19,066 COP</div>
+          <div class="p-card-unit">Unidad</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9202091360514', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9202091360514" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9202091360514', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9202091360514')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9202091360514">
+          <div class="card-in-cart-pill" id="in-cart-9202091360514"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9202091360514', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9202091360514', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9202091360514', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9202091360514')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Cafeteria" id="card-9202091262210">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9202091262210')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/032623.png?v=1762960214" alt="AROMATICA INFUSION MANGO COCO Y MENTA CAJA X 10 SOBRES ISASHII" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Cafetería y Alimentos</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9202091262210')" title="AROMATICA INFUSION MANGO COCO Y MENTA CAJA X 10 SOBRES ISASHII">AROMATICA INFUSION MANGO COCO Y MENTA CAJA X 10 SOBRES ISASHII</div>
+        <div class="p-card-rating">4.8 ★★★★★ (25 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$19,636 COP</div>
+          <div class="p-card-unit">Caja B2B</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9202091262210', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9202091262210" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9202091262210', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9202091262210')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9202091262210">
+          <div class="card-in-cart-pill" id="in-cart-9202091262210"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9202091262210', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9202091262210', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9202091262210', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9202091262210')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Cafeteria" id="card-9202091163906">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9202091163906')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/032622.png?v=1762960143" alt="AROMATICA INFUSION PITAHAYA/MORA/FRESA/LIMONARIA CX10 SOBRES ISASHII" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Cafetería y Alimentos</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9202091163906')" title="AROMATICA INFUSION PITAHAYA/MORA/FRESA/LIMONARIA CX10 SOBRES ISASHII">AROMATICA INFUSION PITAHAYA/MORA/FRESA/LIMONARIA CX10 SOBRES ISASHII</div>
+        <div class="p-card-rating">4.8 ★★★★★ (21 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$20,646 COP</div>
+          <div class="p-card-unit">Unidad</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9202091163906', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9202091163906" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9202091163906', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9202091163906')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9202091163906">
+          <div class="card-in-cart-pill" id="in-cart-9202091163906"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9202091163906', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9202091163906', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9202091163906', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9202091163906')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Cafeteria" id="card-9202090803458">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9202090803458')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/032621.png?v=1762960090" alt="AROMATICA INFUSION UCHUVA Y TE NEGRO CAJA X 10 SOBRES ISASHII" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Cafetería y Alimentos</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9202090803458')" title="AROMATICA INFUSION UCHUVA Y TE NEGRO CAJA X 10 SOBRES ISASHII">AROMATICA INFUSION UCHUVA Y TE NEGRO CAJA X 10 SOBRES ISASHII</div>
+        <div class="p-card-rating">4.8 ★★★★★ (23 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$16,404 COP</div>
+          <div class="p-card-unit">Caja B2B</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9202090803458', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9202090803458" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9202090803458', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9202090803458')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9202090803458">
+          <div class="card-in-cart-pill" id="in-cart-9202090803458"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9202090803458', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9202090803458', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9202090803458', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9202090803458')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Papeleria" id="card-9157703008514">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9157703008514')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/011108.jpg?v=1774882164" alt="TOALLA MANO Z NATURAL H.D. 21.4 X 23.8 CM PQ. X 150 UD TORK" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Marca Líder</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Papelería y Desechables</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9157703008514')" title="TOALLA MANO Z NATURAL H.D. 21.4 X 23.8 CM PQ. X 150 UD TORK">TOALLA MANO Z NATURAL H.D. 21.4 X 23.8 CM PQ. X 150 UD TORK</div>
+        <div class="p-card-rating">4.8 ★★★★★ (29 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$8,754 COP</div>
+          <div class="p-card-unit">Unidad</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9157703008514', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9157703008514" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9157703008514', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9157703008514')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9157703008514">
+          <div class="card-in-cart-pill" id="in-cart-9157703008514"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9157703008514', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9157703008514', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9157703008514', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9157703008514')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Papeleria" id="card-9157676237058">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9157676237058')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/011004.jpg?v=1761229688" alt="DISPENSADOR TOALLA DE MANOS EN ROLLO BASIC COMPACTO TAPA LATERAL" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Mayorista Ahorro</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Papelería y Desechables</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9157676237058')" title="DISPENSADOR TOALLA DE MANOS EN ROLLO BASIC COMPACTO TAPA LATERAL">DISPENSADOR TOALLA DE MANOS EN ROLLO BASIC COMPACTO TAPA LATERAL</div>
+        <div class="p-card-rating">4.8 ★★★★★ (23 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$101,227 COP</div>
+          <div class="p-card-unit">Rollo Ind.</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9157676237058', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9157676237058" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9157676237058', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9157676237058')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9157676237058">
+          <div class="card-in-cart-pill" id="in-cart-9157676237058"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9157676237058', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9157676237058', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9157676237058', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9157676237058')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Papeleria" id="card-9132397854978">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9132397854978')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/052355.jpg?v=1760021959" alt="DISPENSADOR DE CINTA DE EMPAQUE TESA" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Papelería y Desechables</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9132397854978')" title="DISPENSADOR DE CINTA DE EMPAQUE TESA">DISPENSADOR DE CINTA DE EMPAQUE TESA</div>
+        <div class="p-card-rating">4.8 ★★★★★ (18 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$35,295 COP</div>
+          <div class="p-card-unit">Paquete</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9132397854978', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9132397854978" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9132397854978', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9132397854978')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9132397854978">
+          <div class="card-in-cart-pill" id="in-cart-9132397854978"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9132397854978', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9132397854978', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9132397854978', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9132397854978')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Quimicos" id="card-9124316938498">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9124316938498')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/027146.jpg?v=1759420229" alt="CREOLINA CONCENTRADA GALON X  3800 C.C. - PROASEO" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Químicos y Desinfección</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9124316938498')" title="CREOLINA CONCENTRADA GALON X  3800 C.C. - PROASEO">CREOLINA CONCENTRADA GALON X  3800 C.C. - PROASEO</div>
+        <div class="p-card-rating">4.8 ★★★★★ (38 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$20,084 COP</div>
+          <div class="p-card-unit">Galón 3.8L</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9124316938498', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9124316938498" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9124316938498', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9124316938498')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9124316938498">
+          <div class="card-in-cart-pill" id="in-cart-9124316938498"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9124316938498', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9124316938498', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9124316938498', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9124316938498')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Papeleria" id="card-9117659496706">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9117659496706')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/051006.jpg?v=1758727047" alt="PAPEL KRAFT POR ROLLO 24&quot; X 150 MTS" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Papelería y Desechables</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9117659496706')" title="PAPEL KRAFT POR ROLLO 24&quot; X 150 MTS">PAPEL KRAFT POR ROLLO 24" X 150 MTS</div>
+        <div class="p-card-rating">4.8 ★★★★★ (21 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$47,707 COP</div>
+          <div class="p-card-unit">Rollo Ind.</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9117659496706', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9117659496706" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9117659496706', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9117659496706')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9117659496706">
+          <div class="card-in-cart-pill" id="in-cart-9117659496706"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9117659496706', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9117659496706', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9117659496706', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9117659496706')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Aseo" id="card-9098346103042">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9098346103042')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/023916.jpg?v=1757429409" alt="ESPONJILLA SABRA-PAÑO ABRASIVO 9.5 X 13 CM  COLOR AZUL" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Aseo Profesional</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9098346103042')" title="ESPONJILLA SABRA-PAÑO ABRASIVO 9.5 X 13 CM  COLOR AZUL">ESPONJILLA SABRA-PAÑO ABRASIVO 9.5 X 13 CM  COLOR AZUL</div>
+        <div class="p-card-rating">4.8 ★★★★★ (32 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$408 COP</div>
+          <div class="p-card-unit">Unidad</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9098346103042', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9098346103042" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9098346103042', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9098346103042')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9098346103042">
+          <div class="card-in-cart-pill" id="in-cart-9098346103042"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9098346103042', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9098346103042', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9098346103042', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9098346103042')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Cafeteria" id="card-9093031854338">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9093031854338')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/032585.png?v=1756756762" alt="INFUSION FRUTAL HINDU SURTIDA CAJA X 100 SOBRES" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Mayorista Ahorro</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Cafetería y Alimentos</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9093031854338')" title="INFUSION FRUTAL HINDU SURTIDA CAJA X 100 SOBRES">INFUSION FRUTAL HINDU SURTIDA CAJA X 100 SOBRES</div>
+        <div class="p-card-rating">4.8 ★★★★★ (28 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$50,237 COP</div>
+          <div class="p-card-unit">Caja B2B</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9093031854338', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9093031854338" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9093031854338', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9093031854338')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9093031854338">
+          <div class="card-in-cart-pill" id="in-cart-9093031854338"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9093031854338', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9093031854338', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9093031854338', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9093031854338')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Papeleria" id="card-9065242001666">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9065242001666')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/011045.jpg?v=1753109216" alt="DISPENSADOR SERVILLETA MEGA DISPENSADOR DE PEDESTAL" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Mayorista Ahorro</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Papelería y Desechables</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9065242001666')" title="DISPENSADOR SERVILLETA MEGA DISPENSADOR DE PEDESTAL">DISPENSADOR SERVILLETA MEGA DISPENSADOR DE PEDESTAL</div>
+        <div class="p-card-rating">4.8 ★★★★★ (31 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$441,435 COP</div>
+          <div class="p-card-unit">Unidad</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9065242001666', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9065242001666" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9065242001666', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9065242001666')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9065242001666">
+          <div class="card-in-cart-pill" id="in-cart-9065242001666"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9065242001666', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9065242001666', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9065242001666', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9065242001666')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Cafeteria" id="card-9061898158338">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9061898158338')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/products/031381.jpg?v=1588387963" alt="VASO CARTON 7 OZ PAQ. X 40 SIN IMPRESION BLANCO - BARVAL" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Cafetería y Alimentos</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9061898158338')" title="VASO CARTON 7 OZ PAQ. X 40 SIN IMPRESION BLANCO - BARVAL">VASO CARTON 7 OZ PAQ. X 40 SIN IMPRESION BLANCO - BARVAL</div>
+        <div class="p-card-rating">4.8 ★★★★★ (28 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$5,591 COP</div>
+          <div class="p-card-unit">Paquete</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9061898158338', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9061898158338" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9061898158338', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9061898158338')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9061898158338">
+          <div class="card-in-cart-pill" id="in-cart-9061898158338"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9061898158338', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9061898158338', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9061898158338', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9061898158338')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Aseo" id="card-9051526627586">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9051526627586')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/024079.jpg?v=1751557196" alt="PAÑITOS HUMEDOS ANTIBACTERIAL DAMPY CON ALOE VERA X 150 UNIDADES" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Aseo Profesional</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9051526627586')" title="PAÑITOS HUMEDOS ANTIBACTERIAL DAMPY CON ALOE VERA X 150 UNIDADES">PAÑITOS HUMEDOS ANTIBACTERIAL DAMPY CON ALOE VERA X 150 UNIDADES</div>
+        <div class="p-card-rating">4.8 ★★★★★ (26 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$11,211 COP</div>
+          <div class="p-card-unit">Unidad</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9051526627586', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9051526627586" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9051526627586', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9051526627586')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9051526627586">
+          <div class="card-in-cart-pill" id="in-cart-9051526627586"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9051526627586', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9051526627586', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9051526627586', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9051526627586')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Seguridad" id="card-9051522793730">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9051522793730')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/081214.jpg?v=1751557036" alt="GUANTE NITRILO SIN POLVO NEGRO CAJA X 100 UD TALLA L" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Seguridad e Higiene B2B</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9051522793730')" title="GUANTE NITRILO SIN POLVO NEGRO CAJA X 100 UD TALLA L">GUANTE NITRILO SIN POLVO NEGRO CAJA X 100 UD TALLA L</div>
+        <div class="p-card-rating">4.8 ★★★★★ (20 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$24,324 COP</div>
+          <div class="p-card-unit">Caja B2B</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9051522793730', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9051522793730" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9051522793730', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9051522793730')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9051522793730">
+          <div class="card-in-cart-pill" id="in-cart-9051522793730"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9051522793730', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9051522793730', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9051522793730', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9051522793730')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Seguridad" id="card-9051521384706">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9051521384706')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/081213.jpg?v=1751556924" alt="GUANTE NITRILO SIN POLVO NEGRO CAJA X 100 UD TALLA M" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Seguridad e Higiene B2B</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9051521384706')" title="GUANTE NITRILO SIN POLVO NEGRO CAJA X 100 UD TALLA M">GUANTE NITRILO SIN POLVO NEGRO CAJA X 100 UD TALLA M</div>
+        <div class="p-card-rating">4.8 ★★★★★ (21 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$24,324 COP</div>
+          <div class="p-card-unit">Caja B2B</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9051521384706', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9051521384706" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9051521384706', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9051521384706')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9051521384706">
+          <div class="card-in-cart-pill" id="in-cart-9051521384706"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9051521384706', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9051521384706', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9051521384706', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9051521384706')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Seguridad" id="card-9051521024258">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9051521024258')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/081212_434d4801-6dc2-460e-bf43-d4642cb6cd2a.jpg?v=1751556764" alt="GUANTE NITRILO SIN POLVO NEGRO CAJA X 100 UD TALLA S" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Seguridad e Higiene B2B</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9051521024258')" title="GUANTE NITRILO SIN POLVO NEGRO CAJA X 100 UD TALLA S">GUANTE NITRILO SIN POLVO NEGRO CAJA X 100 UD TALLA S</div>
+        <div class="p-card-rating">4.8 ★★★★★ (23 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$24,324 COP</div>
+          <div class="p-card-unit">Caja B2B</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9051521024258', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9051521024258" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9051521024258', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9051521024258')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9051521024258">
+          <div class="card-in-cart-pill" id="in-cart-9051521024258"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9051521024258', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9051521024258', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9051521024258', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9051521024258')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Seguridad" id="card-9051514274050">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9051514274050')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/040682.jpg?v=1751556356" alt="GUANTE NITRILO SIN POLVO AZUL CAJA X 100 UD TALLA L" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Seguridad e Higiene B2B</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9051514274050')" title="GUANTE NITRILO SIN POLVO AZUL CAJA X 100 UD TALLA L">GUANTE NITRILO SIN POLVO AZUL CAJA X 100 UD TALLA L</div>
+        <div class="p-card-rating">4.8 ★★★★★ (15 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$23,547 COP</div>
+          <div class="p-card-unit">Caja B2B</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9051514274050', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9051514274050" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9051514274050', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9051514274050')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9051514274050">
+          <div class="card-in-cart-pill" id="in-cart-9051514274050"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9051514274050', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9051514274050', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9051514274050', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9051514274050')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Seguridad" id="card-9051512570114">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9051512570114')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/081183.jpg?v=1751556115" alt="GUANTE NITRILO SIN POLVO AZUL CAJA X 100 UD TALLA M" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Seguridad e Higiene B2B</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9051512570114')" title="GUANTE NITRILO SIN POLVO AZUL CAJA X 100 UD TALLA M">GUANTE NITRILO SIN POLVO AZUL CAJA X 100 UD TALLA M</div>
+        <div class="p-card-rating">4.8 ★★★★★ (29 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$23,547 COP</div>
+          <div class="p-card-unit">Caja B2B</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9051512570114', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9051512570114" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9051512570114', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9051512570114')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9051512570114">
+          <div class="card-in-cart-pill" id="in-cart-9051512570114"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9051512570114', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9051512570114', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9051512570114', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9051512570114')">Ficha 📄</button>
+        </div>
+      </div>
+
+      <div class="p-card-store" data-category="Seguridad" id="card-9051510178050">
+        <div class="p-card-img-wrap" onclick="openPdpWithProduct('9051510178050')">
+          <img src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/081173.jpg?v=1751555875" alt="GUANTE NITRILO SIN POLVO AZUL CAJA X 100 UD TALLA S" loading="lazy" onerror="this.src='https://detalshop.com/cdn/shop/files/logo_detal_shop_color.png'">
+          <span class="p-card-badge">Certificado B2B</span>
+        </div>
+        <div class="p-card-cat">
+          <span>Seguridad e Higiene B2B</span>
+          <span style="font-size:9.5px; color:#16a34a; font-weight:800;">INVIMA OK</span>
+        </div>
+        <div class="p-card-title" onclick="openPdpWithProduct('9051510178050')" title="GUANTE NITRILO SIN POLVO AZUL CAJA X 100 UD TALLA S">GUANTE NITRILO SIN POLVO AZUL CAJA X 100 UD TALLA S</div>
+        <div class="p-card-rating">4.8 ★★★★★ (15 clientes B2B)</div>
+        
+        <div class="p-card-price-row">
+          <div class="p-card-price">$23,547 COP</div>
+          <div class="p-card-unit">Caja B2B</div>
+        </div>
+
+        <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+        <div class="card-add-controls">
+          <div class="card-stepper">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9051510178050', -1)" title="Disminuir">-</button>
+            <input type="number" id="qty-9051510178050" class="input-card-qty" value="1" min="1" max="999">
+            <button type="button" class="btn-card-step" onclick="changeCardQty('9051510178050', 1)" title="Aumentar">+</button>
+          </div>
+          <button type="button" class="btn-card-add" onclick="addCardQtyToCart('9051510178050')" title="Agregar cantidad seleccionada al pedido">
+            🛒 + Agregar
+          </button>
+        </div>
+
+        <!-- INDICADOR DE ESTADO EN CARRITO Y BOTÓN QUITAR DIRECTO -->
+        <div id="in-cart-wrap-9051510178050">
+          <div class="card-in-cart-pill" id="in-cart-9051510178050"></div>
+        </div>
+
+        <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+        <div class="card-bulk-chips">
+          <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9051510178050', 1)">+1</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9051510178050', 5)">+5</button>
+          <button type="button" class="chip-qty" onclick="setAndAddQty('9051510178050', 10)">+10</button>
+          <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('9051510178050')">Ficha 📄</button>
+        </div>
+      </div>
+
+        </div>
+
+        <!-- PAGINACIÓN / CARGAR MÁS -->
+        <div class="catalog-pagination-wrap" id="catalogPaginationWrap">
+          <div class="catalog-counter-hint" id="catalogCounterHint">Mostrando 36 de 486 productos oficiales</div>
+          <button type="button" class="btn-load-more" id="btnLoadMore" onclick="loadMoreProducts()">
+            <span>📦 Cargar Más Productos (+36)</span>
+          </button>
+        </div>
+      </section>
+
+      <!-- TESTIMONIOS REALES DE CLIENTES -->
+      <section style="padding: 44px 36px; background: #ffffff;">
+        <h2 style="text-align: center; font-size: 22px; font-weight: 900; margin-bottom: 28px;">TESTIMONIOS DE NUESTROS CLIENTES</h2>
+        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; max-width: 1100px; margin: 0 auto;">
+          <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 22px;">
+            <p style="font-size: 13.5px; line-height: 1.6; font-style: italic; color: #334155; margin-bottom: 16px;">
+              “DetalShop es una alternativa innovadora, segura, eficiente y con precios justos. Para RDD Market Research & Solutions es un placer contar con ellos como nuestros proveedores.”
+            </p>
+            <strong style="font-size: 13px; color: #0f172a;">RDD Market Research & Solutions</strong>
+          </div>
+          <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 22px;">
+            <p style="font-size: 13.5px; line-height: 1.6; font-style: italic; color: #334155; margin-bottom: 16px;">
+              “El servicio que presta DetalShop es sobresaliente, es notoria la experiencia que tienen como empresa y destacamos su atención al cliente. Recomendados por su profesionalismo.”
+            </p>
+            <strong style="font-size: 13px; color: #0f172a;">Total Office SAS y Skål Drinks</strong>
+          </div>
+          <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 12px; padding: 22px;">
+            <p style="font-size: 13.5px; line-height: 1.6; font-style: italic; color: #334155; margin-bottom: 16px;">
+              “El servicio nos pareció excelente. La entrega fue súper rápida, llegó todo a tiempo y lo que más nos gusta es que tienen mucha variedad para todo lo que necesitamos. ¡Súper recomendado!”
+            </p>
+            <strong style="font-size: 13px; color: #0f172a;">Somos la Despensa D.C</strong>
+          </div>
+        </div>
+      </section>
+
+      <!-- GARANTÍAS INSTITUCIONALES (CON ICONOS B2B OFICIALES FIGMA) -->
+      <section style="padding: 28px 36px; background: #f8fafc; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; text-align: center; max-width: 1200px; margin: 0 auto;">
+          <div class="trust-col">
+            <div class="trust-icon-badge" title="icon-shipping-truck">
+              <svg class="ds-svg ds-svg-trust" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+  <path d="M1 3h14v13H1z"/>
+  <path d="M15 8h4l3 3v5h-7V8z"/>
+  <circle cx="5.5" cy="18.5" r="2.5" stroke="#00A86B" fill="#ffffff"/>
+  <circle cx="17.5" cy="18.5" r="2.5" stroke="#00A86B" fill="#ffffff"/>
+  <line x1="1" y1="19" x2="3" y2="19"/>
+  <line x1="8" y1="19" x2="15" y2="19"/>
+</svg>
+            </div>
+            <h5 style="font-size: 13.5px; font-weight: 800; color: #1a4b8c; margin-bottom: 4px;">Envío gratis > $100k</h5>
+            <p style="font-size: 12px; color: #64748b;">Bogotá ($100k) y Nacional ($200k)</p>
+          </div>
+          <div class="trust-col">
+            <div class="trust-icon-badge" title="icon-express-clock">
+              <svg class="ds-svg ds-svg-trust" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="12" cy="13" r="9"/>
+  <polyline points="12 8 12 13 15 15"/>
+  <path d="M12 4V1"/>
+  <path d="M9 1h6"/>
+  <polygon points="19 6 15 11 18 11 16 16 21 10 18 10 19 6" stroke="#00A86B" fill="#00A86B" stroke-width="1"/>
+</svg>
+            </div>
+            <h5 style="font-size: 13.5px; font-weight: 800; color: #1a4b8c; margin-bottom: 4px;">Entrega 24 a 48 Horas</h5>
+            <p style="font-size: 12px; color: #64748b;">Despacho rápido con flota propia</p>
+          </div>
+          <div class="trust-col">
+            <div class="trust-icon-badge" title="icon-dian-shield">
+              <svg class="ds-svg ds-svg-trust" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+  <polyline points="9 12 11 14 15 10" stroke="#00A86B" stroke-width="2.2"/>
+</svg>
+            </div>
+            <h5 style="font-size: 13.5px; font-weight: 800; color: #1a4b8c; margin-bottom: 4px;">Factura Electrónica DIAN</h5>
+            <p style="font-size: 12px; color: #64748b;">100% legal con RUT y NIT empresarial</p>
+          </div>
+          <div class="trust-col">
+            <div class="trust-icon-badge" title="icon-b2b-support">
+              <svg class="ds-svg ds-svg-trust" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" xmlns="http://www.w3.org/2000/svg">
+  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+  <path d="M9.5 12h.01m2.5 0h.01m2.5 0h.01" stroke="#00A86B" stroke-width="2.5" stroke-linecap="round"/>
+</svg>
+            </div>
+            <h5 style="font-size: 13.5px; font-weight: 800; color: #1a4b8c; margin-bottom: 4px;">Asesoría B2B WhatsApp</h5>
+            <p style="font-size: 12px; color: #64748b;">Atención directa para cotizaciones</p>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- ====================================================================
+         VISTA 2: FICHA DE PRODUCTO (PDP HI-FI 1440PX)
+         ==================================================================== -->
+    <main id="viewPdp" class="page-view-block">
+      <div class="pdp-page-wrapper">
+        <div class="pdp-breadcrumb">
+          <a href="#" onclick="switchView('home'); return false;">Inicio</a> <span>/</span>
+          <a href="#" id="pdpBreadCat" onclick="switchView('home'); return false;">Aseo Profesional</a> <span>/</span>
+          <span id="pdpBreadTitle" style="color: var(--slate-900); font-weight: 700;">DETERGENTE LÍQUIDO CONCENTRADO 20L</span>
+        </div>
+
+        <div class="pdp-grid-figma">
+          <!-- COLUMNA IZQUIERDA: GALERÍA 4 VISTAS -->
+          <div>
+            <div class="pdp-gallery-main">
+              <img id="pdpMainImg" src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/IMG-0621.jpg?v=1789132618" alt="Producto DetalShop">
+              <div class="gallery-view-caption" id="galleryViewCaption">Vista 1: Frontal Institucional</div>
+            </div>
+
+            <!-- MINIATURAS INTERACTIVAS (DINÁMICAS POR PRODUCTO) -->
+            <div class="pdp-thumbs-row">
+              <div class="pdp-thumb-card active" onclick="switchPdpImage(0)">
+                <img id="thumb0" src="{{ 'logo_DETALSHOP-01.png' | asset_url }}" alt="Vista 1" loading="lazy">
+                <div class="pdp-thumb-label" id="thumbLabel0">1. Frontal</div>
+              </div>
+              <div class="pdp-thumb-card" onclick="switchPdpImage(1)">
+                <img id="thumb1" src="{{ 'logo_DETALSHOP-01.png' | asset_url }}" alt="Vista 2" loading="lazy">
+                <div class="pdp-thumb-label" id="thumbLabel1">2. Zoom (1.6x)</div>
+              </div>
+              <div class="pdp-thumb-card" onclick="switchPdpImage(2)">
+                <img id="thumb2" src="{{ 'logo_DETALSHOP-01.png' | asset_url }}" alt="Vista 3" loading="lazy">
+                <div class="pdp-thumb-label" id="thumbLabel2">3. Detalle (2x)</div>
+              </div>
+              <div class="pdp-thumb-card" onclick="switchPdpImage(3)">
+                <img id="thumb3" src="{{ 'logo_DETALSHOP-01.png' | asset_url }}" alt="Vista 4" loading="lazy">
+                <div class="pdp-thumb-label" id="thumbLabel3">4. Empaque (1.3x)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- COLUMNA DERECHA: DATOS CORPORATIVOS & COMPRA -->
+          <div>
+            <div class="badge-bestseller">
+              <span>⭐</span> <span id="pdpBadge">Bestseller Institucional</span>
+            </div>
+
+            <h1 class="pdp-title-h1" id="pdpTitle">DETERGENTE LÍQUIDO CONCENTRADO 20L</h1>
+            
+            <div class="pdp-meta-row">
+              <span id="pdpRating">4.9 ★★★★★ (24 clientes B2B)</span>
+              <span>•</span>
+              <span id="pdpSku">SKU: DL-20L-IND</span>
+              <span>•</span>
+              <span id="pdpInvima" style="color: #16a34a; font-weight: 700;">INVIMA NSOH-09823-21CO</span>
+            </div>
+
+            <div class="pdp-price-box">
+              <div style="font-size: 12px; color: var(--slate-500); margin-bottom: 2px;">Precio Unitario Institucional:</div>
+              <div class="pdp-price-hero" id="pdpPrice">$48.500 COP</div>
+              <div style="font-size: 12px; color: #16a34a; font-weight: 700; margin-top: 4px;">
+                ✓ IVA incluido · Facturación electrónica DIAN inmediata
+              </div>
+            </div>
+
+            
+
+            <!-- CONTROL DE CANTIDAD -->
+            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+              <div style="font-size: 13px; font-weight: 800; color: #0f172a;">Cantidad a pedir:</div>
+              <div class="card-stepper" style="border-width: 1.5px;">
+                <button type="button" class="btn-card-step" style="width:36px; height:40px; font-size:18px;" onclick="changePdpQty(-1)">-</button>
+                <input type="number" id="pdpQtyInput" class="input-card-qty" style="width:48px; height:40px; font-size:15px;" value="1" min="1" max="999" onchange="updatePdpTotal()">
+                <button type="button" class="btn-card-step" style="width:36px; height:40px; font-size:18px;" onclick="changePdpQty(1)">+</button>
+              </div>
+              <div style="font-size: 14px; font-weight: 900; color: #004b87;" id="pdpSubtotalDisplay">
+                Subtotal: $48.500 COP
+              </div>
+            </div>
+
+            <!-- BOTONES DE ACCIÓN -->
+            <div class="pdp-actions-row">
+              <button class="btn-add-cart-figma" onclick="addPdpToCart()">
+                🛒 Agregar al Carrito
+              </button>
+              <a href="https://wa.me/573100000000?text=Hola,%20solicito%20cotizaci%C3%B3n%20empresarial%20de%20suministros" target="_blank" class="btn-quote-whatsapp">
+                💬 Cotizar WhatsApp
+              </a>
+            </div>
+
+            <!-- DESCARGA FICHA TÉCNICA -->
+            <button onclick="openPdfModal()" style="background:#eff6ff; border:1.5px dashed #004b87; color:#004b87; width:100%; padding:12px; border-radius:8px; font-size:13px; font-weight:800; cursor:pointer;">
+              ⬇️ Ver / Descargar Ficha Técnica Oficial (PDF)
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ====================================================================
+         VISTA 3: PORTAL DE RASTREO (/TRACKING)
+         ==================================================================== -->
+        <!-- ====================================================================
+         VISTA 3: PORTAL DE RASTREO (/TRACKING) — DISEÑO OFICIAL FIGMA
+         CON PANEL DE ACTUALIZACIÓN GERENCIAL EN VIVO (WIX CMS)
+         ==================================================================== -->
+    <main id="viewTrack" class="page-view-block">
+      <div class="tracking-view-wrapper">
+        <div class="nqc-tracking-header">
+          <h1 class="nqc-tracking-title">Centro de Seguimiento y Logística de Despachos</h1>
+          <p class="nqc-tracking-subtitle">Consulta el estado de tu despacho institucional en tiempo real</p>
+        </div>
+
+        <!-- Formulario de Búsqueda -->
+        <div class="nqc-search-box-wrapper">
+          <div class="nqc-search-box">
+            <span class="nqc-search-icon">📦</span>
+            <input type="text" 
+                   id="nqcTrackingInput" 
+                   class="nqc-tracking-input" 
+                   placeholder="Ingrese número de guía o factura (Ej: DTL-2026-8941)" 
+                   value="DTL-2026-8941" 
+                   autocomplete="off">
+            <button type="button" id="nqcBtnTrack" class="nqc-btn-track" onclick="doTrackingLookup()">
+              Rastrear Envío
+            </button>
+          </div>
+          <div class="nqc-quick-pills">
+            <span style="font-size: 11.5px; font-weight: 800; color: #64748b;">Guías de ejemplo:</span>
+            <button type="button" class="nqc-pill-btn" onclick="setAndTrackGuia('DTL-2026-8941')">DTL-2026-8941 (En Tránsito - Bogotá)</button>
+            <button type="button" class="nqc-pill-btn" onclick="setAndTrackGuia('DTL-2026-1001')">DTL-2026-1001 (Entregado - Chía)</button>
+            <button type="button" class="nqc-pill-btn" onclick="setAndTrackGuia('DTL-2026-9050')">DTL-2026-9050 (En Preparación)</button>
+          </div>
+        </div>
+
+        <!-- Tarjeta de Resultados (Timeline Hi-Fi Figma) -->
+        <div id="nqcTrackingResult" class="nqc-result-card">
+          <div class="nqc-result-header">
+            <div>
+              <div class="nqc-status-badge nqc-badge-transit" id="nqcStatusBadge">
+                <span class="nqc-pulse-dot"></span>
+                <span id="nqcStatusText">Pedido en tránsito</span>
+              </div>
+              <div class="nqc-order-meta">
+                <span id="nqcFacturaText">Factura B2B #FE-8942</span>
+                <span class="nqc-meta-sep">|</span>
+                <span id="nqcTransportadoraText">Transportadora: Envía / Flota Detalgraf</span>
+              </div>
+              <div class="nqc-order-submeta">
+                <span>Guía: <strong id="nqcGuiaText">DTL-2026-8941</strong></span>
+                <span class="nqc-meta-sep">|</span>
+                <span>Destino: <strong id="nqcDestinoText">Total Office SAS — Cra 45 # 108-20, Bogotá D.C.</strong></span>
+              </div>
+            </div>
+            <button type="button" onclick="switchView('home')" style="background:#f1f5f9; color:#0f172a; border:1px solid #cbd5e1; padding:8px 16px; border-radius:8px; font-size:12.5px; font-weight:800; cursor:pointer; display:inline-flex; align-items:center; gap:6px;">
+              ← Volver a la Tienda
+            </button>
+          </div>
+
+          <!-- Stepper Gráfico de 4 Estados Con Iconos Oficiales Figma -->
+          <div class="nqc-timeline-stepper">
+            <!-- Paso 1: Confirmado -->
+            <div class="nqc-step completed" id="nqcStep1">
+              <div class="nqc-step-icon-top">
+                <svg class="ds-svg ds-svg-step" width="22" height="22" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                  <polyline points="14 2 14 8 20 8"/>
+                  <polyline points="8 13 11 16 16 10" stroke="#00A86B" stroke-width="2"/>
+                </svg>
+              </div>
+              <div class="nqc-step-circle" id="nqcStepCirc1">✓</div>
+              <div class="nqc-step-label">
+                <strong>Confirmado</strong>
+                <span id="nqcStep1Date">12 Jun · 08:30</span>
+              </div>
+            </div>
+            <div class="nqc-step-line nqc-line-completed" id="nqcLine1"></div>
+
+            <!-- Paso 2: En Preparación -->
+            <div class="nqc-step completed" id="nqcStep2">
+              <div class="nqc-step-icon-top">
+                <svg class="ds-svg ds-svg-step" width="22" height="22" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                  <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+                  <line x1="12" y1="22.08" x2="12" y2="12"/>
+                  <path d="M7 11l3 3 6-6" stroke="#00A86B" stroke-width="2"/>
+                </svg>
+              </div>
+              <div class="nqc-step-circle" id="nqcStepCirc2">✓</div>
+              <div class="nqc-step-label">
+                <strong>En Preparación</strong>
+                <span id="nqcStep2Date">12 Jun · 10:15</span>
+              </div>
+            </div>
+            <div class="nqc-step-line nqc-line-completed" id="nqcLine2"></div>
+
+            <!-- Paso 3: En Tránsito (Activo) -->
+            <div class="nqc-step active" id="nqcStep3">
+              <div class="nqc-step-icon-top">
+                <svg class="ds-svg ds-svg-step" width="22" height="22" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="1" y="5" width="13" height="10" rx="1"/>
+                  <path d="M14 8h4l3 3v4h-7V8z"/>
+                  <circle cx="5" cy="18" r="2" stroke="#00A86B"/>
+                  <circle cx="16" cy="18" r="2" stroke="#00A86B"/>
+                  <path d="M19 4a3 3 0 0 1 3 3c0 2-3 5-3 5s-3-3-3-5a3 3 0 0 1 3-3z" stroke="#00A86B" fill="#00A86B" transform="scale(0.6) translate(16, -2)"/>
+                </svg>
+              </div>
+              <div class="nqc-step-circle" id="nqcStepCirc3"><div class="nqc-inner-active-dot"></div></div>
+              <div class="nqc-step-label">
+                <strong>En Tránsito</strong>
+                <span id="nqcStep3Date">13 Jun · 07:45</span>
+              </div>
+            </div>
+            <div class="nqc-step-line" id="nqcLine3"></div>
+
+            <!-- Paso 4: Entregado -->
+            <div class="nqc-step" id="nqcStep4">
+              <div class="nqc-step-icon-top">
+                <svg class="ds-svg ds-svg-step" width="22" height="22" viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="#64748B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                  <polyline points="22 4 12 14.01 9 11.01" stroke="#00A86B" stroke-width="2.5"/>
+                </svg>
+              </div>
+              <div class="nqc-step-circle" id="nqcStepCirc4"></div>
+              <div class="nqc-step-label">
+                <strong>Entregado</strong>
+                <span id="nqcStep4Date">Pendiente</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Historial Cronológico Detallado -->
+          <div class="nqc-history-section">
+            <h3 class="nqc-history-title">Historial Cronológico de Movimientos</h3>
+            <ul class="nqc-history-list" id="nqcHistoryList">
+              <li class="nqc-history-item nqc-item-active">
+                <span class="nqc-history-bullet"></span>
+                <span class="nqc-history-time">13 Sep · 07:45 AM</span>
+                <span class="nqc-history-desc">— En despacho hacia Bogotá D.C. con vehículo propio N° 4 · Conductor: Carlos Mendoza</span>
+              </li>
+              <li class="nqc-history-item">
+                <span class="nqc-history-bullet"></span>
+                <span class="nqc-history-time">12 Sep · 10:15 PM</span>
+                <span class="nqc-history-desc">— Recibido en centro de distribución y alistado para ruta de entrega</span>
+              </li>
+              <li class="nqc-history-item">
+                <span class="nqc-history-bullet"></span>
+                <span class="nqc-history-time">12 Sep · 08:30 AM</span>
+                <span class="nqc-history-desc">— Pedido recibido y facturado con éxito (Factura B2B #FE-8942)</span>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Botón de Asistencia WhatsApp -->
+          <div class="nqc-whatsapp-action">
+            <a id="nqcBtnWhatsappLogistic" 
+               href="https://wa.me/573001234567?text=Hola%20Detalgraf,%20deseo%20informaci%C3%B3n%20sobre%20mi%20despacho%20con%20gu%C3%ADa%20DTL-2026-8941" 
+               target="_blank" 
+               rel="noopener" 
+               class="nqc-btn-wa-full">
+              <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                <path d="M9.5 12h.01m2.5 0h.01m2.5 0h.01" stroke="#ffffff" stroke-width="2.5" stroke-linecap="round"/>
+              </svg>
+              <span>Contactar al Conductor o Logística por WhatsApp</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Discreto disparador de autenticación para Gerencia -->
+        <div id="gerenteAuthTriggerWrap" style="margin-top: 24px; text-align: center;">
+          <button type="button" onclick="openGerenteAuthModal()" style="background: none; border: none; font-size: 11.5px; color: #94a3b8; cursor: pointer; text-decoration: underline; display: inline-flex; align-items: center; gap: 5px;">
+            🔒 Acceso Gerencia (Actualizar Estados de Despacho)
+          </button>
+        </div>
+
+        <!-- ==================================================================
+             PANEL DE CONTROL GERENCIAL: ACTUALIZACIÓN DE ESTADOS EN VIVO
+             (OCULTO POR DEFECTO: Solo accesible con PIN para el Jefe)
+             ================================================================== -->
+        <div id="gerenteControlPanel" class="gerente-control-panel" style="display: none;">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; flex-wrap:wrap; gap:10px;">
+            <div>
+              <span class="gerente-panel-badge">👑 PANEL DE CONTROL GERENCIA / WIX CMS</span>
+              <h3 class="gerente-panel-title">Actualizador de Estados de Despacho en Tiempo Real</h3>
+              <p class="gerente-panel-subtitle">
+                Los estados de cada pedido son administrados por el <strong>Gerente General / Director de Operaciones</strong>. Selecciona un estado para actualizar inmediatamente lo que ve el cliente:
+              </p>
+            </div>
+            <div style="font-size:12px; color:#38bdf8; font-weight:700; background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.3); padding:6px 12px; border-radius:8px;">
+              Guía Activa: <span id="gerenteActiveGuiaTag" style="color:#ffffff;">DTL-2026-8941</span>
+            </div>
+          </div>
+
+          <!-- Selector de Estado de 4 Pasos para el Gerente -->
+          <div class="gerente-step-buttons">
+            <button type="button" class="btn-gerente-step" id="btnGerenteStep1" onclick="gerenteSetStep(1)">
+              🟡 1. Confirmado
+            </button>
+            <button type="button" class="btn-gerente-step" id="btnGerenteStep2" onclick="gerenteSetStep(2)">
+              🟠 2. En Preparación
+            </button>
+            <button type="button" class="btn-gerente-step active-step" id="btnGerenteStep3" onclick="gerenteSetStep(3)">
+              🔵 3. En Tránsito (Ruta)
+            </button>
+            <button type="button" class="btn-gerente-step" id="btnGerenteStep4" onclick="gerenteSetStep(4)">
+              🟢 4. Entregado
+            </button>
+          </div>
+
+          <!-- Campo de Novedad / Nota oficial del Gerente -->
+          <div class="gerente-novedad-row">
+            <input type="text" 
+                   id="gerenteNovedadInput" 
+                   class="gerente-novedad-input" 
+                   value="En despacho hacia Bogotá D.C. con vehículo propio N° 4 · Conductor: Carlos Mendoza" 
+                   placeholder="Escribe la novedad o ubicación actual del envío...">
+            <button type="button" class="btn-gerente-save" onclick="gerenteApplyUpdate()">
+              💾 Aplicar Cambio como Gerente
+            </button>
+          </div>
+
+          <div class="gerente-info-note">
+            <span>ℹ️</span>
+            <span>En producción, la Gerencia realiza este cambio en la colección <em>'Despachos'</em> de Wix Studio o desde la app móvil de Wix/Google Sheets, reflejándose en esta pantalla en menos de 1 segundo sin tocar código.</span>
+          </div>
+        </div>
+
+        <!-- Modal PIN Exclusivo Gerente / Admin -->
+        <div id="gerenteAuthModal" class="nqc-modal-overlay" style="display: none;" onclick="closeGerenteAuthModal(event)">
+          <div class="nqc-modal-card" style="max-width: 420px; text-align: center; padding: 28px 24px; position: relative;" onclick="event.stopPropagation()">
+            <button type="button" class="btn-modal-close-pin" onclick="closeGerenteAuthModal()" style="position: absolute; top: 12px; right: 14px; background: none; border: none; font-size: 20px; color: #94a3b8; cursor: pointer;">✕</button>
+            <div style="font-size: 36px; margin-bottom: 8px;">🔐</div>
+            <h3 style="font-size: 17px; font-weight: 800; color: #0f172a; margin-bottom: 6px;">Acceso Exclusivo de Gerencia</h3>
+            <p style="font-size: 12.5px; color: #64748b; line-height: 1.4; margin-bottom: 18px;">
+              Este módulo es de uso restringido para el Gerente General y Logística de Detalgraf para actualizar guías y estados en tiempo real.
+            </p>
+            <div style="margin-bottom: 14px; text-align: left;">
+              <label style="display: block; font-size: 11.5px; font-weight: 700; color: #334155; margin-bottom: 6px;">Código PIN de Seguridad:</label>
+              <input type="password" id="inputGerentePin" placeholder="Ingrese PIN (Ej: 2026)" maxlength="10" 
+                     style="width: 100%; padding: 10px 14px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 14px; box-sizing: border-box; text-align: center; letter-spacing: 3px;"
+                     onkeydown="if(event.key==='Enter') verifyGerentePin()">
+              <div id="gerentePinError" style="display: none; color: #dc2626; font-size: 11.5px; font-weight: 700; margin-top: 6px; text-align: center;">
+                ❌ PIN incorrecto. Acceso denegado.
+              </div>
+            </div>
+            <div style="display: flex; gap: 10px; justify-content: center;">
+              <button type="button" onclick="closeGerenteAuthModal()" style="padding: 9px 18px; border: 1px solid #cbd5e1; background: #f8fafc; border-radius: 8px; font-size: 12.5px; font-weight: 700; cursor: pointer; color: #475569;">
+                Cancelar
+              </button>
+              <button type="button" onclick="verifyGerentePin()" style="padding: 9px 22px; border: none; background: #005091; color: #ffffff; border-radius: 8px; font-size: 12.5px; font-weight: 800; cursor: pointer; box-shadow: 0 2px 6px rgba(0,80,145,0.3);">
+                Desbloquear Panel
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </main>
+
+    </div>
+<div class="index-sections" style="display:none;">
+  {{ content_for_index }}
+</div>

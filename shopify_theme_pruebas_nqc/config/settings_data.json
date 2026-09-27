@@ -1,0 +1,816 @@
+{
+  "current": {
+    "sticky_announcement_bar": true,
+    "hero_header": false,
+    "search_product": true,
+    "icon": "material-icons-outlined",
+    "grid_product_hover": false,
+    "tag_placement": "top-left",
+    "collection_grid_card": false,
+    "collection_grid_products_count": false,
+    "collection_grid_animation": true,
+    "collection_grid_button_label": "Comprar ahora",
+    "collection_grid_button_style": "btn--primary",
+    "collection_grid_button_size": "btn--small",
+    "show_author": true,
+    "show_locale_selector": false,
+    "show_currency_selector": false,
+    "newsletter_name": true,
+    "newsletter_optin": false,
+    "show_hero": false,
+    "border_radius": 6,
+    "border_width": "2",
+    "top_button_mobile": true,
+    "show_breadcrumbs": false,
+    "page_wrapper": "1480",
+    "cart_type": "drawer",
+    "icon_cart": "shopping_cart",
+    "color_announcement_bg": "#005091",
+    "color_nav_bg": "#fdfdfd",
+    "color_body_bg": "#f5f5f5",
+    "color_default": "#ffffff",
+    "color_primary": "#2e9945",
+    "color_secondary": "#005091",
+    "color_input": "#ffffff",
+    "color_drawer_bg": "#ffffff",
+    "color_drawer_default": "#ffffff",
+    "color_drawer_border": "#000000",
+    "color_drawer_text": "#000000",
+    "color_drawer_primary": "#2e9945",
+    "color_drawer_button_text": "#ffffff",
+    "color_drawer_secondary": "#318929",
+    "color_drawer_input": "#efefef",
+    "color_footer_bg": "#005091",
+    "color_footer_default": "#318929",
+    "color_footer_border": "#ffffff",
+    "color_footer_primary": "#2e9945",
+    "color_footer_button_text": "#ffffff",
+    "color_footer_secondary": "#2e9945",
+    "color_footer_input": "#446d8e",
+    "color_overlay": "rgba(0,0,0,0)",
+    "favicon": "shopify://shop_images/favicon.png",
+    "review_app": "",
+    "review_badge_product_grid": false,
+    "share_pinterest": false,
+    "share_messenger": false,
+    "social_facebook_link": "https://www.facebook.com/detalgraf.sa",
+    "social_instagram_link": "https://www.instagram.com/detalshop2020/",
+    "social_youtube_link": "https://www.youtube.com/channel/UCz23GzkXWd3J8wos35K3Llw",
+    "header_family": "sans-serif",
+    "header_font_size": 24,
+    "header_font_size_big": 50,
+    "accent_family": "sans-serif",
+    "base_family": "archivo_n4",
+    "base_font_size": 14,
+    "dbtfy_addtocart_animation": false,
+    "dbtfy_cart_countdown": false,
+    "dbtfy_cart_discount": false,
+    "dbtfy_cart_goal": false,
+    "dbtfy_cart_savings": false,
+    "dbtfy_cart_upsell": true,
+    "dbtfy_collection_addtocart": true,
+    "dbtfy_color_swatches": false,
+    "dbtfy_cookie_box": false,
+    "dbtfy_custom_currencies": false,
+    "dbtfy_delivery_time": true,
+    "dbtfy_discount_saved": false,
+    "dbtfy_faq_page": false,
+    "dbtfy_infinite_scroll": false,
+    "dbtfy_instagram_feed": false,
+    "dbtfy_inventory_quantity": false,
+    "dbtfy_live_view": true,
+    "dbtfy_mega_menu": false,
+    "dbtfy_mobile_menu": false,
+    "dbtfy_newsletter_popup": false,
+    "dbtfy_order_tracking": false,
+    "dbtfy_pricing_table": false,
+    "dbtfy_product_image_crop": false,
+    "dbtfy_product_tabs": false,
+    "dbtfy_quantity_breaks": false,
+    "dbtfy_quick_view": false,
+    "dbtfy_recently_viewed": false,
+    "dbtfy_sales_countdown": false,
+    "dbtfy_sales_pop": false,
+    "dbtfy_shop_protect": false,
+    "dbtfy_size_chart": false,
+    "dbtfy_smart_search": false,
+    "dbtfy_social_discount": false,
+    "dbtfy_sticky_addtocart": false,
+    "dbtfy_trust_badge": false,
+    "dbtfy_upsell_bundles": false,
+    "dbtfy_upsell_popup": false,
+    "dbtfy_wish_list": false,
+    "dbtfy_delivery_time_position": "under_add_to_cart_button",
+    "dbtfy_delivery_time_prefix": "Compra ahora para recibir en",
+    "dbtfy_delivery_time_suffix": "",
+    "dbtfy_delivery_time_date": true,
+    "dbtfy_delivery_time_format": "%a %d %b",
+    "dbtfy_delivery_time_from": 1,
+    "dbtfy_delivery_time_to": 4,
+    "dbtfy_specific_delivery_time_from_1": 1,
+    "dbtfy_specific_delivery_time_to_1": 1,
+    "dbtfy_specific_delivery_collection_1": "",
+    "dbtfy_live_view_position": "under_product_price",
+    "dbtfy_live_view_people": "visitantes",
+    "dbtfy_live_view_suffix": "están navegando por nuestra tienda",
+    "dbtfy_live_view_min": 100,
+    "dbtfy_live_view_max": 95,
+    "dbtfy_live_view_interval_steps": 11,
+    "dbtfy_trust_badge_product": false,
+    "dbtfy_trust_badge_cart": false,
+    "checkout_logo_image": "shopify://shop_images/LOGO_DETALSHOP_PAGINA_WEB.JPG",
+    "checkout_accent_color": "#005091",
+    "checkout_button_color": "#2e9945",
+    "sections": {
+      "drawer-menu": {
+        "type": "drawer-menu",
+        "settings": {
+          "drawer_link_toggle": true,
+          "email": true,
+          "phone": true,
+          "show_social_medias": true,
+          "title": "Menu",
+          "drawer_top_link_list": "main-menu",
+          "drawer_bottom_link_list": "footer"
+        }
+      },
+      "announcement": {
+        "type": "announcement",
+        "blocks": {
+          "announcement-0": {
+            "type": "message",
+            "settings": {
+              "announcement_text": "<p><strong>Monto mínimo Pedido: $100,000 Bogotá /  $200.000 a nivel Nacional**</strong></p>"
+            }
+          }
+        },
+        "block_order": [
+          "announcement-0"
+        ],
+        "settings": {
+          "show_announcement": true,
+          "show_social": true,
+          "email": true,
+          "phone": false,
+          "left_message": "<p>¡Síganos!</p>",
+          "right_message": "<p>Contactanos</p>",
+          "announcement_autoplayspeed": 5
+        }
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "main_menu_link_list": "main-menu",
+          "navigation_type": "center",
+          "logo_link": true,
+          "default_logo": "shopify://shop_images/logo_DETALSHOP-01.png",
+          "mobile_logo": "shopify://shop_images/logo_DETALSHOP-01.png",
+          "default_logo_svg": "",
+          "inverted_logo_svg": "",
+          "mobile_logo_svg": "",
+          "logo_width": 200,
+          "logo_mobile_width": 134
+        }
+      },
+      "dbtfy-instagram-feed": {
+        "type": "dbtfy-instagram-feed",
+        "settings": {
+          "dbtfy_instagram_feed_icon": true,
+          "dbtfy_instagram_feed_access_token": "",
+          "dbtfy_instagram_feed_resolution": "low_resolution",
+          "dbtfy_instagram_feed_full_width": false,
+          "title": "From our Instagram",
+          "subtitle": "",
+          "dbtfy_instagram_feed_section_style": "section-border",
+          "dbtfy_instagram_feed_rows": "1",
+          "dbtfy_instagram_feed_desktop_grid": "6",
+          "dbtfy_instagram_feed_mobile_grid": "3"
+        }
+      },
+      "guarantee": {
+        "type": "guarantee",
+        "blocks": {
+          "guarantee-0": {
+            "type": "text",
+            "settings": {
+              "image": "shopify://shop_images/vehicle.png",
+              "guarantee_icon": "loyalty",
+              "title": "Envío gratis en pedidos superiores a 100.000 COP en Bogotá y $200.00 a nivel Nacional***",
+              "text": "",
+              "button_style": "btn-outline-primary",
+              "button_label": "",
+              "button_link": ""
+            }
+          },
+          "0986869d-54eb-4578-a086-67178636bd50": {
+            "type": "text",
+            "settings": {
+              "image": "shopify://shop_images/winner.png",
+              "guarantee_icon": "loyalty",
+              "title": "Entrega de Pedidos de Lunes a Viernes  en 24 horas  para Bogotá y 72 horas en ciudades principales a nivel nacional",
+              "text": "",
+              "button_style": "btn-outline-primary",
+              "button_label": "",
+              "button_link": ""
+            }
+          },
+          "guarantee-1": {
+            "type": "text",
+            "settings": {
+              "image": "shopify://shop_images/secure-shield.png",
+              "guarantee_icon": "loyalty",
+              "title": "Pago seguro y protegido con Shopify y MercadoPago",
+              "text": "",
+              "button_style": "btn-outline-primary",
+              "button_label": "",
+              "button_link": ""
+            }
+          },
+          "3694d76d-3515-4d0e-b466-45b427d9c9ea": {
+            "type": "text",
+            "settings": {
+              "image": "shopify://shop_images/customer-service.png",
+              "guarantee_icon": "loyalty",
+              "title": "Atención al cliente rápida en Whatsapp & Email",
+              "text": "",
+              "button_style": "btn-outline-primary",
+              "button_label": "",
+              "button_link": ""
+            }
+          }
+        },
+        "block_order": [
+          "guarantee-0",
+          "0986869d-54eb-4578-a086-67178636bd50",
+          "guarantee-1",
+          "3694d76d-3515-4d0e-b466-45b427d9c9ea"
+        ],
+        "settings": {
+          "show_guarantee": true,
+          "guarantee_size": "xl",
+          "section_style": "section-border"
+        }
+      },
+      "footer": {
+        "type": "footer",
+        "blocks": {
+          "footer-0": {
+            "type": "text",
+            "settings": {
+              "column_width": 2,
+              "svg": "",
+              "img_url": "",
+              "logo_width": 150,
+              "title": "",
+              "subtitle": "",
+              "text": "<p>Si tienes alguna duda o novedad con tu pedido te puedes contactar al </p><p>info@detalgraf.com</p>",
+              "email": false,
+              "phone": false
+            }
+          },
+          "footer-1": {
+            "type": "link_list",
+            "settings": {
+              "column_width": 1,
+              "title": "Información",
+              "subtitle": "",
+              "footer_link_list": "footer"
+            }
+          },
+          "footer-2": {
+            "type": "newsletter",
+            "settings": {
+              "column_width": 2,
+              "title": "Suscríbete a nuestro boletín",
+              "subtitle": ""
+            }
+          }
+        },
+        "block_order": [
+          "footer-0",
+          "footer-1",
+          "footer-2"
+        ],
+        "settings": {
+          "show_social_media": false,
+          "social_title": "Follow-us on social media!",
+          "show_payment_icons": true,
+          "show_shopify_footer": false,
+          "show_debutify_footer": false,
+          "custom_credential": ""
+        }
+      },
+      "dbtfy-upsell-popup": {
+        "type": "dbtfy-upsell-popup",
+        "blocks": {
+          "160dc94d-95ef-4f56-979b-77d0735c4f54": {
+            "type": "upsell",
+            "settings": {
+              "dbtfy_upsell_popup_title": "Special Offer!",
+              "dbtfy_upsell_popup_text": "",
+              "dbtfy_upsell_popup_product_trigger": "",
+              "dbtfy_upsell_popup_product_offer": "",
+              "dbtfy_upsell_popup_icons": "card_giftcard",
+              "button_label": "Claim offer!",
+              "dbtfy_upsell_popup_discount_name": "",
+              "dbtfy_upsell_popup_discount_amount": "",
+              "dbtfy_upsell_popup_discount_type": "%"
+            }
+          }
+        },
+        "block_order": [
+          "160dc94d-95ef-4f56-979b-77d0735c4f54"
+        ],
+        "settings": {
+          "dbtfy_upsell_popup_width": "",
+          "dbtfy_upsell_popup_description": "See product details",
+          "dbtfy_upsell_popup_cart": "No thanks",
+          "dbtfy_upsell_popup_checkout": "Go to checkout →",
+          "text_alignment": "text-center",
+          "dbtfy_upsell_popup_range": 75
+        }
+      },
+      "dbtfy-quantity-breaks": {
+        "type": "dbtfy-quantity-breaks",
+        "settings": {
+          "dbtfy_quantity_breaks_text": "",
+          "dbtfy_quantity_breaks_single_text": "Buy _COUNT_: _PRICE_ _SAVED_AMOUNT_",
+          "dbtfy_quantity_breaks_more_discount_text_before": "Add",
+          "dbtfy_quantity_breaks_more_discount_text_after": "more item to unlock",
+          "dbtfy_quantity_breaks_more_discount_text_after_percentage": "off",
+          "dbtfy_quantity_breaks_highest_discount_text": "Highest discount applied!"
+        }
+      },
+      "dbtfy-cart-upsell": {
+        "type": "dbtfy-cart-upsell",
+        "blocks": {
+          "9f6341c3-f505-4e66-b1ed-ac5f045b2fa1": {
+            "type": "cart-item-upsell",
+            "settings": {
+              "dbtfy_cart_upsell_replace_item": "add",
+              "dbtfy_cart_specific_upsell_title": "You might also like:",
+              "dbtfy_cart_specific_upsell_product_trigger": "",
+              "dbtfy_cart_specific_upsell_product_offer": "",
+              "dbtfy_cart_specific_upsell_btn_title": ""
+            }
+          },
+          "4881bd9c-aa81-4cad-a5fa-2a1bbcd6e8d7": {
+            "type": "cart-upsell",
+            "settings": {
+              "dbtfy_cart_general_upsell_title": "You might also like:",
+              "dbtfy_cart_general_upsell_product_offer": "alcohol-antiseptico-70-gl-x-3-8-litros-fuller",
+              "dbtfy_cart_general_upsell_btn_title": ""
+            }
+          }
+        },
+        "block_order": [
+          "9f6341c3-f505-4e66-b1ed-ac5f045b2fa1",
+          "4881bd9c-aa81-4cad-a5fa-2a1bbcd6e8d7"
+        ],
+        "settings": {
+          "dbtfy_cart_upsell_button_style": "btn--primary"
+        }
+      },
+      "dbtfy-color-swatches": {
+        "type": "dbtfy-color-swatches",
+        "settings": {}
+      },
+      "collection-template": {
+        "type": "collection-template",
+        "settings": {
+          "collection_tags_enable": true,
+          "collection_tags_count": true,
+          "collection_tags_multiple": true,
+          "collection_sort_enable": true,
+          "tag_selector": "button",
+          "rows": "4",
+          "desktop_grid": "4",
+          "mobile_grid": "2"
+        }
+      },
+      "product-template": {
+        "type": "product-template",
+        "settings": {
+          "dbtfy_product_tabs_position": "under_addtocart",
+          "show_product_vendor": false,
+          "show_product_type": true,
+          "show_product_sku": true,
+          "product_title_large": false,
+          "show_product_tags": true,
+          "show_product_collections": false,
+          "enable_image_zoom": true,
+          "enable_video_looping": true,
+          "media_layout": "stacked",
+          "quantity_enabled": true,
+          "product_selector": "select",
+          "show_product_description": true,
+          "description_full": false,
+          "dbtfy_product_description_position": "under_addtocart",
+          "description_style": "section-blank",
+          "text_alignment": "",
+          "text_alignment_mobile": "small--text-left"
+        }
+      },
+      "dbtfy-upsell-bundles": {
+        "type": "dbtfy-upsell-bundles",
+        "settings": {
+          "dbtfy_upsell_bundles_title": "Frequently bought together",
+          "dbtfy_upsell_bundles_subtitle": "",
+          "dbtfy_upsell_bundles_total": "Total price:",
+          "dbtfy_upsell_bundles_cart": "Add selected items",
+          "dbtfy_upsell_bundles_icons": "library_add_check",
+          "dbtfy_upsell_bundles_current": "This item:",
+          "section_style": "section-border",
+          "dbtfy_upsell_bundles_reviews": false,
+          "dbtfy_upsell_bundles_limit": "2",
+          "dbtfy_upsell_bundles_position": "product"
+        }
+      },
+      "product-row": {
+        "type": "product-row",
+        "settings": {
+          "show_product_row": true
+        }
+      },
+      "dbtfy-pricing-table": {
+        "type": "dbtfy-pricing-table",
+        "settings": {
+          "title": "Pricing table",
+          "subtitle": "",
+          "section_style": "section-blank",
+          "dbtfy_button_position": "middle"
+        }
+      },
+      "product-recommendations": {
+        "type": "product-recommendations",
+        "settings": {
+          "show_product_recommendations": true,
+          "title": "Recomendado para ti",
+          "subtitle": "",
+          "section_style": "section-border",
+          "rows": "2",
+          "desktop_grid": "4",
+          "mobile_grid": "2",
+          "slider_related_products": true,
+          "arrows": true,
+          "dots": true,
+          "autoplay": false,
+          "autoplayspeed": 5
+        }
+      },
+      "dbtfy-faq-section": {
+        "type": "dbtfy-faq-section",
+        "settings": {
+          "title": "FAQ",
+          "subtitle": "",
+          "section_style": "section-border",
+          "dbtfy_faq_searchbox": true,
+          "dbtfy_faq_search_placeholder": "Search questions...",
+          "dbtfy_faq_bannerbox": true,
+          "dbtfy_faq_banner_icon": "live_help",
+          "dbtfy_faq_banner_text": "Didn't find your answer?",
+          "dbtfy_faq_banner_subtitle": "Our customer service will be happy to help you.",
+          "dbtfy_faq_btn": "Get in Touch",
+          "dbtfy_faq_link": ""
+        }
+      },
+      "related-products": {
+        "type": "related-products",
+        "settings": {
+          "show_related_products": false,
+          "related_collection": true,
+          "same_vendor": false,
+          "same_type": false,
+          "never_empty": true,
+          "title": "You may also like",
+          "subtitle": "",
+          "section_style": "section-border",
+          "rows": "1",
+          "desktop_grid": "4",
+          "mobile_grid": "2",
+          "slider_related_products": true,
+          "arrows": true,
+          "dots": true,
+          "autoplay": false,
+          "autoplayspeed": 5
+        }
+      },
+      "quotes": {
+        "type": "quotes",
+        "settings": {
+          "show_testimonials": false,
+          "title": "Testimonials",
+          "subtitle": "",
+          "section_style": "section-blank",
+          "quote_width": "60",
+          "arrows": true,
+          "dots": true,
+          "autoplay": true,
+          "autoplayspeed": 5
+        }
+      },
+      "dbtfy-size-chart": {
+        "type": "dbtfy-size-chart",
+        "settings": {
+          "dbtfy_size_chart_icon": "straighten",
+          "dbtfy_size_chart_title": "Size chart",
+          "dbtfy_size_chart_width": "large"
+        }
+      },
+      "1620632129d6fc7cfa": {
+        "type": "featured-products",
+        "settings": {
+          "title": "PRODUCTOS DESTACADOS",
+          "subtitle": "",
+          "section_style": "section-border",
+          "home_featured_products": "aseo",
+          "rows": "5",
+          "desktop_grid": "4",
+          "mobile_grid": "2",
+          "show_view_all": true,
+          "button_label": "Ver Más",
+          "button_link": "",
+          "button_style": "btn-outline-primary",
+          "slider_related_products": false,
+          "arrows": true,
+          "dots": true,
+          "autoplay": false,
+          "autoplayspeed": 5
+        }
+      },
+      "162089772047f1ae5c": {
+        "type": "featured-collections",
+        "blocks": {
+          "162089772047f1ae5c-0": {
+            "type": "collection",
+            "settings": {
+              "collection": "aseo"
+            }
+          },
+          "162089772047f1ae5c-1": {
+            "type": "collection",
+            "settings": {
+              "collection": "bioseguridad"
+            }
+          },
+          "162089772047f1ae5c-2": {
+            "type": "collection",
+            "settings": {
+              "collection": "cafeteria"
+            }
+          },
+          "866fec34-aae7-4cdb-8953-ffd55b070f7f": {
+            "type": "collection",
+            "settings": {
+              "collection": "papeleria"
+            }
+          },
+          "b42470dd-0190-41c0-b2d3-581a73f33d26": {
+            "type": "collection",
+            "settings": {
+              "collection": "seguridad-industrial"
+            }
+          }
+        },
+        "block_order": [
+          "162089772047f1ae5c-0",
+          "162089772047f1ae5c-1",
+          "162089772047f1ae5c-2",
+          "866fec34-aae7-4cdb-8953-ffd55b070f7f",
+          "b42470dd-0190-41c0-b2d3-581a73f33d26"
+        ],
+        "settings": {
+          "full_width": false,
+          "title": "NUESTRAS LINEAS.",
+          "subtitle": "",
+          "section_style": "section-blank",
+          "section_height": "small",
+          "show_view_all": false,
+          "button_label": "View all",
+          "button_link": "shopify://collections",
+          "button_style": "btn--primary",
+          "slider_featured_collections": false,
+          "arrows": true,
+          "dots": true
+        }
+      },
+      "list-collections-template": {
+        "type": "list-collections-template",
+        "settings": {
+          "display_type": "all",
+          "sort": "alphabetical",
+          "section_height": "medium",
+          "collection_per_page": 12
+        }
+      },
+      "1620933384cfb38e8e": {
+        "type": "quotes",
+        "blocks": {
+          "1620933384cfb38e8e-0": {
+            "type": "quote",
+            "settings": {
+              "icon": "format_quote",
+              "quote": "<p>DetalShop es una alternativa innovadora, segura, eficiente y con precios justos. Para RDD Market Research &amp; Solutions es un placer contar con ellos como nuestros proveedores.</p>",
+              "author": "RDD Market Research & Solutions"
+            }
+          },
+          "1620933384cfb38e8e-1": {
+            "type": "quote",
+            "settings": {
+              "icon": "format_quote",
+              "quote": "<p>El servicio que presta DetalShop es sobresaliente, es notoria la experiencia que tienen como empresa y destacamos su atención al cliente. Recomendados por su profesionalismo</p>",
+              "author": "Total Office SAS y Skål Drinks"
+            }
+          },
+          "1620933384cfb38e8e-2": {
+            "type": "quote",
+            "settings": {
+              "icon": "format_quote",
+              "quote": "<p>El servicio nos pareció excelente. La entrega fue súper rápida, llego todo a tiempo y lo que más nos gusta es que tienen mucha variedad para todo lo que necesitamos. Súper recomendando!</p>",
+              "author": "Somos la Despensa D.C"
+            }
+          }
+        },
+        "block_order": [
+          "1620933384cfb38e8e-0",
+          "1620933384cfb38e8e-1",
+          "1620933384cfb38e8e-2"
+        ],
+        "settings": {
+          "show_testimonials": true,
+          "title": "TESTIMONIOS DE NUESTROS CLIENTES",
+          "subtitle": "",
+          "section_style": "section-blank",
+          "quote_width": "60",
+          "arrows": true,
+          "dots": true,
+          "autoplay": true,
+          "autoplayspeed": 5
+        }
+      },
+      "1655911015e32d7884": {
+        "type": "dbtfy-pricing-table",
+        "blocks": {
+          "1655911015e32d7884-0": {
+            "type": "plan",
+            "settings": {
+              "dbtfy_full_background": false,
+              "dbtfy_plan_badge": "Most popular",
+              "dbtfy_plan_icon": "local_offer",
+              "dbtfy_plan_title": "Title",
+              "dbtfy_plan_description": "",
+              "dbtfy_plan_price": "$19.99",
+              "dbtfy_plan_price_text": "",
+              "dbtfy_plan_button_label": "Get started",
+              "dbtfy_plan_button_link": "",
+              "dbtfy_plan_button_style": "btn-outline-primary",
+              "dbtfy_plan_button_description": "",
+              "dbtfy_plan_details": "<p>point 1, point 2, point 3</p>",
+              "dbtfy_plan_details_icon": "check_circle"
+            }
+          },
+          "1655911015e32d7884-1": {
+            "type": "plan",
+            "settings": {
+              "dbtfy_full_background": false,
+              "dbtfy_plan_badge": "Most popular",
+              "dbtfy_plan_icon": "local_offer",
+              "dbtfy_plan_title": "Title",
+              "dbtfy_plan_description": "",
+              "dbtfy_plan_price": "$19.99",
+              "dbtfy_plan_price_text": "",
+              "dbtfy_plan_button_label": "Get started",
+              "dbtfy_plan_button_link": "",
+              "dbtfy_plan_button_style": "btn-outline-primary",
+              "dbtfy_plan_button_description": "",
+              "dbtfy_plan_details": "<p>point 1, point 2, point 3</p>",
+              "dbtfy_plan_details_icon": "check_circle"
+            }
+          },
+          "1655911015e32d7884-2": {
+            "type": "plan",
+            "settings": {
+              "dbtfy_full_background": false,
+              "dbtfy_plan_badge": "Most popular",
+              "dbtfy_plan_icon": "local_offer",
+              "dbtfy_plan_title": "Title",
+              "dbtfy_plan_description": "",
+              "dbtfy_plan_price": "$19.99",
+              "dbtfy_plan_price_text": "",
+              "dbtfy_plan_button_label": "Get started",
+              "dbtfy_plan_button_link": "",
+              "dbtfy_plan_button_style": "btn-outline-primary",
+              "dbtfy_plan_button_description": "",
+              "dbtfy_plan_details": "<p>point 1, point 2, point 3</p>",
+              "dbtfy_plan_details_icon": "check_circle"
+            }
+          }
+        },
+        "block_order": [
+          "1655911015e32d7884-0",
+          "1655911015e32d7884-1",
+          "1655911015e32d7884-2"
+        ],
+        "settings": {
+          "title": "Pricing table",
+          "subtitle": "",
+          "section_style": "section-blank",
+          "dbtfy_button_position": "middle"
+        }
+      },
+      "1656600018a9a62c38": {
+        "type": "hero",
+        "blocks": {
+          "703f3810-3403-441f-8b15-a526f7a9cfd3": {
+            "type": "slide",
+            "disabled": true,
+            "settings": {
+              "overlay": false,
+              "image": "shopify://shop_images/Banner_Website_Interes_V2_10-09-2021.jpg",
+              "image_mobile": "shopify://shop_images/Banner_Website_Interes_V2_10-09-2021.jpg",
+              "image_position": "bottom left",
+              "image_position_mobile": "bottom left",
+              "video": "",
+              "title": "",
+              "text": "",
+              "text_position": "align-center",
+              "text_position_mobile": "align-center",
+              "text_alignment": "text-center",
+              "text_alignment_mobile": "text-center",
+              "enable_custom_fonts": false,
+              "slideshow_family": "poppins_n4",
+              "button_label": "",
+              "button_link": "",
+              "button_style": "btn--primary",
+              "button_label_2": "",
+              "button_link_2": "",
+              "button_style_2": ""
+            }
+          },
+          "c71a5c6d-90d9-472a-b6f2-e2c404832de5": {
+            "type": "slide",
+            "disabled": true,
+            "settings": {
+              "overlay": false,
+              "image": "shopify://shop_images/Banner_Infografia_HomeKCP_V3_02-09-2021.jpg",
+              "image_mobile": "shopify://shop_images/Banner_Infografia_HomeKCP_V3_02-09-2021.jpg",
+              "image_position": "bottom center",
+              "image_position_mobile": "bottom center",
+              "video": "",
+              "title": "",
+              "text": "",
+              "text_position": "align-center",
+              "text_position_mobile": "align-center",
+              "text_alignment": "text-center",
+              "text_alignment_mobile": "text-center",
+              "enable_custom_fonts": false,
+              "slideshow_family": "poppins_n4",
+              "button_label": "",
+              "button_link": "",
+              "button_style": "btn--primary",
+              "button_label_2": "",
+              "button_link_2": "",
+              "button_style_2": ""
+            }
+          }
+        },
+        "block_order": [
+          "703f3810-3403-441f-8b15-a526f7a9cfd3",
+          "c71a5c6d-90d9-472a-b6f2-e2c404832de5"
+        ],
+        "disabled": true,
+        "settings": {
+          "section_height": "xlarge",
+          "section_height_mobile": "xlarge",
+          "arrows": true,
+          "dots": true,
+          "autoplay": false,
+          "autoplayspeed": 8
+        }
+      }
+    },
+    "content_for_index": [
+      "1656600018a9a62c38",
+      "162089772047f1ae5c",
+      "1620632129d6fc7cfa",
+      "1620933384cfb38e8e",
+      "1655911015e32d7884"
+    ],
+    "blocks": {
+      "15683396631634586217": {
+        "type": "shopify://apps/inbox/blocks/chat/841fc607-4181-4ad1-842d-e24d7f8bad6b",
+        "disabled": true,
+        "settings": {
+          "button_color": "#0163dc",
+          "secondary_color": "#FFFFFF",
+          "ternary_color": "#6A6A6A",
+          "button_icon": "chat_bubble",
+          "button_text": "no_text",
+          "button_horizontal_position": "bottom_right",
+          "button_vertical_position": "lowest",
+          "greeting_message": "👋 ¡Hola! Hazme saber si tienes alguna pregunta específica, o dame una idea de lo que estás buscando y con gusto te daré una recomendación."
+        }
+      }
+    }
+  }
+}

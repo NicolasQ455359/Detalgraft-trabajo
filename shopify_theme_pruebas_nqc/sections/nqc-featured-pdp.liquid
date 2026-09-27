@@ -1,0 +1,240 @@
+<!-- Section: nqc-featured-pdp.liquid — Ficha de Producto Destacado B2B DetalShop (Mes 2) -->
+<section class="nqc-pdp-main-section wrapper" id="pdpFeaturedSection">
+  <!-- BREADCRUMBS B2B -->
+  <div class="nqc-breadcrumbs-bar">
+    <a href="/">Inicio</a>
+    <span>/</span>
+    <a href="/collections/all">Aseo Profesional</a>
+    <span>/</span>
+    <a href="/collections/all">Químicos y Detergentes Concentrados</a>
+    <span>/</span>
+    <strong id="nqcBreadcrumbTitle">Detergente Líquido Concentrado 20L</strong>
+  </div>
+
+  <div class="nqc-pdp-grid">
+    <!-- Columna Galería 4 Vistas -->
+    <div class="nqc-pdp-gallery-col">
+      <div class="nqc-main-frame" id="nqcMainPdpFrame">
+        <span class="nqc-bestseller-badge">⭐ Bestseller Institucional B2B</span>
+        <span class="nqc-active-view-tag" id="nqcActiveViewTag">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+          <span id="nqcActiveViewLabel">Vista 1: Frontal Institucional</span>
+        </span>
+        <img id="nqcPdpMainImg" 
+             src="{{ 'detalgraf_detergente_20l.jpg' | asset_url }}" 
+             alt="Detergente Líquido Concentrado 20L" 
+             class="nqc-main-img">
+        <div class="nqc-zoom-hint">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/><line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/></svg>
+          <span>Vista Alta Resolución</span>
+        </div>
+      </div>
+
+      <!-- 4 VISTAS INTERACTIVAS -->
+      <div class="nqc-thumbnail-row" id="nqcPdpThumbRow">
+        <div class="nqc-thumb-card active" onclick="nqcSwitchPdpView(0)">
+          <img src="{{ 'detalgraf_detergente_20l.jpg' | asset_url }}" alt="Frontal">
+          <span class="nqc-thumb-label">1. Frontal</span>
+        </div>
+        <div class="nqc-thumb-card" onclick="nqcSwitchPdpView(1)">
+          <img src="{{ 'detalgraf_detergente_20l_vista2_perspectiva.jpg' | asset_url }}" alt="Lateral 3/4">
+          <span class="nqc-thumb-label">2. Lateral 3/4</span>
+        </div>
+        <div class="nqc-thumb-card" onclick="nqcSwitchPdpView(2)">
+          <img src="{{ 'detalgraf_detergente_20l_vista3_etiqueta.jpg' | asset_url }}" alt="Etiqueta Técnica">
+          <span class="nqc-thumb-label">3. Etiqueta/pH</span>
+        </div>
+        <div class="nqc-thumb-card" onclick="nqcSwitchPdpView(3)">
+          <img src="{{ 'detalgraf_detergente_20l_vista4_estiba.jpg' | asset_url }}" alt="En Estiba">
+          <span class="nqc-thumb-label">4. En Estiba</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Columna Detalles y Pricing Dinámico -->
+    <div class="nqc-pdp-details-col">
+      <h1 class="nqc-pdp-title" id="nqcPdpTitle">DETERGENTE LÍQUIDO CONCENTRADO 20L</h1>
+      <div class="nqc-pdp-meta-row">
+        <span>SKU: <strong id="nqcPdpSku">DL-20L-IND</strong></span>
+        <span>Registro INVIMA: <strong id="nqcPdpInvima">Vigente</strong></span>
+        <span>Calificación: <strong>4.9 ★★★★★</strong> (24 clientes B2B)</span>
+      </div>
+
+      <!-- BADGE VERDE DESPACHO PRIORITARIO -->
+      <div class="nqc-priority-dispatch-badge">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#00A86B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="13" r="9"/>
+          <polyline points="12 8 12 13 15 15"/>
+          <polygon points="19 6 15 11 18 11 16 16 21 10 18 10 19 6" stroke="#00A86B" fill="#00A86B" stroke-width="1"/>
+        </svg>
+        <span>Despacho prioritario en 24-48h a Bogotá y Alrededores</span>
+      </div>
+
+      <!-- PRECIO BASE -->
+      <div class="nqc-pdp-price-box">
+        <div class="nqc-pdp-price-amount" id="nqcPdpPrice">$48.500 COP</div>
+        <div class="nqc-pdp-price-notes">IVA incluido · Precio especial por estiba o volumen institucional</div>
+      </div>
+
+      <!-- STEPPER REACTIVO -->
+      <div class="nqc-pdp-stepper-row">
+        <label class="nqc-pdp-stepper-label">Cantidad a solicitar:</label>
+        <div class="nqc-pdp-stepper-box">
+          <button type="button" class="nqc-pdp-stepper-btn" onclick="nqcAdjustFeaturedQty(-1)">−</button>
+          <input type="number" id="nqcFeaturedQty" class="nqc-pdp-stepper-input" value="1" min="1" oninput="nqcOnFeaturedQtyChange(this.value)">
+          <button type="button" class="nqc-pdp-stepper-btn" onclick="nqcAdjustFeaturedQty(1)">+</button>
+        </div>
+      </div>
+
+      <!-- SUBTOTAL DINÁMICO REACTIVO EN VIVO -->
+      <div class="nqc-dynamic-pricing-box">
+        <div class="nqc-subtotal-header">
+          <strong>Subtotal estimado:</strong>
+          <span id="nqcFeaturedFormula">(1 un. × $48.500)</span>
+        </div>
+        <div class="nqc-amount-row">
+          <span class="nqc-currency">$</span>
+          <span id="nqcFeaturedSubtotal" class="nqc-total-num">48.500</span>
+          <span class="nqc-curr-code">COP</span>
+        </div>
+      </div>
+
+      <!-- BOTONES DE ACCIÓN -->
+      <div class="nqc-pdp-action-group">
+        <button type="button" class="nqc-btn-pdp-cart" onclick="nqcAddFeaturedToCart()">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#ffffff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="9" cy="21" r="1"/>
+            <circle cx="20" cy="21" r="1"/>
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+          </svg>
+          <span>Agregar al Carrito</span>
+        </button>
+
+        <a id="nqcFeaturedWaBtn" href="https://wa.me/573001234567?text=Hola%20DetalShop,%20deseo%20cotizar%20por%20volumen%20el%20producto:%20Detergente%20L%C3%ADquido%20Concentrado%2020L%20(Cantidad:%201)" target="_blank" rel="noopener" class="nqc-btn-pdp-wa">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="#00A86B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+            <path d="M9.5 12h.01m2.5 0h.01m2.5 0h.01" stroke="#00A86B" stroke-width="2.5" stroke-linecap="round"/>
+          </svg>
+          <span>Cotizar por Volumen con Asesor WhatsApp</span>
+        </a>
+      </div>
+
+      <!-- ESPECIFICACIONES TÉCNICAS Y PDF OFICIAL -->
+      <div class="nqc-spec-card">
+        <div class="nqc-spec-card-head">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+            <polyline points="14 2 14 8 20 8"/>
+            <line x1="16" y1="13" x2="8" y2="13"/>
+            <line x1="16" y1="17" x2="8" y2="17"/>
+          </svg>
+          <span>Especificaciones y Certificados Oficiales</span>
+        </div>
+        <div class="nqc-spec-card-body">
+          <div class="nqc-spec-grid">
+            <div class="nqc-spec-item"><span class="nqc-spec-key">pH:</span><span class="nqc-spec-val">7.0 – 8.0</span></div>
+            <div class="nqc-spec-item"><span class="nqc-spec-key">Biodegradabilidad:</span><span class="nqc-spec-val">≥ 90%</span></div>
+            <div class="nqc-spec-item"><span class="nqc-spec-key">Registro:</span><span class="nqc-spec-val">INVIMA vigente</span></div>
+            <div class="nqc-spec-item"><span class="nqc-spec-key">Uso:</span><span class="nqc-spec-val">Institucional B2B</span></div>
+          </div>
+          <a href="/05_Insumos_y_Documentos/5._DMS_020940-020941_F-T_BLANCOX_AROMA_PODER_NATURAL.pdf" target="_blank" rel="noopener" class="nqc-btn-pdf-dl">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="7 10 12 15 17 10"/>
+              <line x1="12" y1="15" x2="12" y2="3"/>
+            </svg>
+            <span>Descargar Ficha Técnica Oficial PDF</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<script>
+  (function() {
+    var views = [
+      { label: 'Vista 1: Frontal Institucional', src: "{{ 'detalgraf_detergente_20l.jpg' | asset_url }}" },
+      { label: 'Vista 2: Perspectiva 3/4 y Escala', src: "{{ 'detalgraf_detergente_20l_vista2_perspectiva.jpg' | asset_url }}" },
+      { label: 'Vista 3: Ficha Técnica & Registro INVIMA', src: "{{ 'detalgraf_detergente_20l_vista3_etiqueta.jpg' | asset_url }}" },
+      { label: 'Vista 4: Presentación en Estiba / Almacén B2B', src: "{{ 'detalgraf_detergente_20l_vista4_estiba.jpg' | asset_url }}" }
+    ];
+
+    window.nqcSwitchPdpView = function(idx) {
+      var item = views[idx];
+      if (!item) return;
+      var mainImg = document.getElementById('nqcPdpMainImg');
+      var label = document.getElementById('nqcActiveViewLabel');
+      var cards = document.querySelectorAll('#nqcPdpThumbRow .nqc-thumb-card');
+
+      if (mainImg) {
+        mainImg.style.opacity = '0.3';
+        mainImg.style.transform = 'scale(0.96)';
+        setTimeout(function() {
+          mainImg.src = item.src;
+          mainImg.style.opacity = '1';
+          mainImg.style.transform = '';
+        }, 150);
+      }
+      if (label) label.textContent = item.label;
+
+      cards.forEach(function(c, i) {
+        c.classList.toggle('active', i === idx);
+      });
+    };
+
+    var featuredQty = 1;
+    var featuredPrice = 48500;
+
+    function formatNumber(n) {
+      return n.toLocaleString('es-CO');
+    }
+
+    function updateFeaturedPrice() {
+      var total = featuredQty * featuredPrice;
+      var subtotalEl = document.getElementById('nqcFeaturedSubtotal');
+      var formulaEl = document.getElementById('nqcFeaturedFormula');
+      var waBtn = document.getElementById('nqcFeaturedWaBtn');
+
+      if (subtotalEl) subtotalEl.textContent = formatNumber(total);
+      if (formulaEl) formulaEl.textContent = '(' + featuredQty + ' un. × $' + formatNumber(featuredPrice) + ')';
+      if (waBtn) {
+        var msg = encodeURIComponent('Hola DetalShop, deseo cotizar por volumen el producto: Detergente Líquido Concentrado 20L (Cantidad: ' + featuredQty + ')');
+        waBtn.href = 'https://wa.me/573001234567?text=' + msg;
+      }
+    }
+
+    window.nqcAdjustFeaturedQty = function(delta) {
+      featuredQty = Math.max(1, featuredQty + delta);
+      var input = document.getElementById('nqcFeaturedQty');
+      if (input) input.value = featuredQty;
+      updateFeaturedPrice();
+    };
+
+    window.nqcOnFeaturedQtyChange = function(val) {
+      var parsed = parseInt(val, 10);
+      featuredQty = (isNaN(parsed) || parsed < 1) ? 1 : parsed;
+      updateFeaturedPrice();
+    };
+
+    window.nqcAddFeaturedToCart = function() {
+      // Open drawer cart and add
+      var cartBtn = document.querySelector('.js-drawer-open-button-right');
+      if (cartBtn) cartBtn.click();
+    };
+  })();
+</script>
+
+{% schema %}
+{
+  "name": "B2B Featured PDP",
+  "settings": [],
+  "presets": [
+    {
+      "name": "B2B Featured PDP",
+      "category": "Products"
+    }
+  ]
+}
+{% endschema %}

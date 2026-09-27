@@ -1,0 +1,414 @@
+<!-- Snippet: nqc-dynamic-pricing.liquid — Cálculo Dinámico y Componentes PDP Hi-Fi DetalShop (Mes 2) -->
+
+<!-- Badge: Despacho Prioritario Bogotá y Alrededores -->
+<div class="nqc-priority-dispatch-badge">
+  <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#00A86B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px;">
+    <circle cx="12" cy="13" r="9"/>
+    <polyline points="12 8 12 13 15 15"/>
+    <polygon points="19 6 15 11 18 11 16 16 21 10 18 10 19 6" stroke="#00A86B" fill="#00A86B" stroke-width="1"/>
+  </svg>
+  <span>Despacho prioritario en 24-48h a Bogotá y Alrededores</span>
+</div>
+
+<!-- Contenedor del Subtotal Dinámico en Tiempo Real (Precio x Cantidad) -->
+<div id="nqc-dynamic-pricing-wrapper" class="nqc-dynamic-pricing-box">
+  <div class="nqc-subtotal-header">
+    <span class="nqc-subtotal-title">Total estimado:</span>
+    <span class="nqc-subtotal-formula" id="nqcSubtotalFormula">(1 un. × {{ product.selected_or_first_available_variant.price | money }})</span>
+  </div>
+  <div class="nqc-subtotal-amount-row">
+    <span class="nqc-currency-symbol">$</span>
+    <span id="nqc-dynamic-price-value" class="nqc-amount-number">
+      {{ product.selected_or_first_available_variant.price | money_without_currency }}
+    </span>
+    <span class="nqc-currency-code">COP</span>
+  </div>
+  <div class="nqc-subtotal-caption">
+    IVA incluido · Precio actualizado automáticamente al modificar cantidad
+  </div>
+</div>
+
+<!-- Botón de Cotización por Volumen con Asesor WhatsApp -->
+<div class="nqc-volume-quote-container">
+  <a id="nqcBtnVolumeQuote" 
+     href="https://wa.me/573001234567?text=Hola%20DetalShop,%20deseo%20cotizar%20por%20volumen%20el%20producto:%20{{ product.title | escape }}%20(Cantidad:%201)" 
+     target="_blank" 
+     rel="noopener" 
+     class="nqc-btn-volume-quote"
+     style="display: flex; align-items: center; justify-content: center; gap: 8px;">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="#00A86B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+      <path d="M9.5 12h.01m2.5 0h.01m2.5 0h.01" stroke="#00A86B" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+    <span>Cotizar por Volumen con Asesor WhatsApp</span>
+  </a>
+</div>
+
+<!-- Caja de Especificaciones y Ficha Técnica Oficial (Figma) -->
+<div class="nqc-specifications-box">
+  <div class="nqc-spec-tab-bar">
+    <div class="nqc-spec-tab active" style="display: flex; align-items: center; gap: 6px;">
+      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+        <polyline points="14 2 14 8 20 8"/>
+        <line x1="16" y1="13" x2="8" y2="13"/>
+        <line x1="16" y1="17" x2="8" y2="17"/>
+      </svg>
+      <span>Ficha Técnica y Especificaciones</span>
+    </div>
+  </div>
+  <div class="nqc-spec-body">
+    <div class="nqc-spec-table">
+      <div class="nqc-spec-item">
+        <span class="nqc-spec-name">pH:</span>
+        <strong class="nqc-spec-val">7.0 – 8.0</strong>
+      </div>
+      <div class="nqc-spec-item">
+        <span class="nqc-spec-name">Biodegradabilidad:</span>
+        <strong class="nqc-spec-val">≥ 90%</strong>
+      </div>
+      <div class="nqc-spec-item">
+        <span class="nqc-spec-name">Registro Sanitario:</span>
+        <strong class="nqc-spec-val">INVIMA vigente</strong>
+      </div>
+      <div class="nqc-spec-item">
+        <span class="nqc-spec-name">Uso:</span>
+        <strong class="nqc-spec-val">Institucional / Profesional</strong>
+      </div>
+    </div>
+
+    {%- assign ft_url = product.metafields.custom.ficha_tecnica | file_url -%}
+    {%- if ft_url == blank -%}
+      {%- assign ft_url = "/05_Insumos_y_Documentos/5._DMS_020940-020941_F-T_BLANCOX_AROMA_PODER_NATURAL.pdf" -%}
+    {%- endif -%}
+
+    <div class="nqc-spec-action">
+      <a href="{{ ft_url }}" target="_blank" rel="noopener" download class="nqc-btn-pdf-download">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+          <polyline points="7 10 12 15 17 10"></polyline>
+          <line x1="12" y1="15" x2="12" y2="3"></line>
+        </svg>
+        Descargar Ficha Técnica Oficial PDF
+      </a>
+    </div>
+  </div>
+</div>
+
+<style>
+/* ==========================================================================
+   ESTILOS COMPONENTES PDP DETALSHOP — DISEÑO FIGMA HI-FI (MES 2)
+   ========================================================================== */
+.nqc-priority-dispatch-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #e6f9f0;
+  border: 1px solid #bbf0d8;
+  color: #00875a;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  margin: 12px 0 16px 0;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nqc-pulse-green {
+  font-size: 12px;
+  animation: nqcPulseGreen 2s infinite;
+}
+
+@keyframes nqcPulseGreen {
+  0% { opacity: 0.7; }
+  50% { opacity: 1; transform: scale(1.1); }
+  100% { opacity: 0.7; }
+}
+
+/* Caja de Subtotal Dinámico */
+.nqc-dynamic-pricing-box {
+  background: #f8fafc;
+  border: 1.5px solid #e2e8f0;
+  border-left: 4px solid #1a4b8c;
+  border-radius: 10px;
+  padding: 14px 18px;
+  margin: 16px 0;
+  transition: all 0.2s ease;
+}
+
+.nqc-subtotal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.nqc-subtotal-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #475569;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.nqc-subtotal-formula {
+  font-size: 12px;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.nqc-subtotal-amount-row {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+}
+
+.nqc-currency-symbol {
+  font-size: 18px;
+  font-weight: 800;
+  color: #1a4b8c;
+}
+
+.nqc-amount-number {
+  font-size: 26px;
+  font-weight: 900;
+  color: #1a4b8c;
+  letter-spacing: -0.02em;
+  transition: opacity 0.15s ease;
+}
+
+.nqc-amount-number.updating {
+  opacity: 0.4;
+}
+
+.nqc-currency-code {
+  font-size: 13px;
+  font-weight: 700;
+  color: #64748b;
+  margin-left: 4px;
+}
+
+.nqc-subtotal-caption {
+  font-size: 11px;
+  color: #94a3b8;
+  margin-top: 4px;
+}
+
+/* Botón WhatsApp Cotización */
+.nqc-volume-quote-container {
+  margin: 12px 0 20px 0;
+}
+
+.nqc-btn-volume-quote {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: #ffffff;
+  border: 1.5px solid #00a86b;
+  color: #00a86b !important;
+  text-decoration: none !important;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 18px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nqc-btn-volume-quote:hover {
+  background: #00a86b;
+  color: #ffffff !important;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 168, 107, 0.2);
+}
+
+.nqc-wa-icon-bubble {
+  font-size: 16px;
+}
+
+/* Caja de Especificaciones y Ficha Técnica */
+.nqc-specifications-box {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  margin: 24px 0 16px 0;
+}
+
+.nqc-spec-tab-bar {
+  background: #f1f5f9;
+  padding: 12px 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.nqc-spec-tab {
+  font-size: 13px;
+  font-weight: 700;
+  color: #1e293b;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nqc-spec-body {
+  padding: 16px;
+}
+
+.nqc-spec-table {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+.nqc-spec-item {
+  background: #f8fafc;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #f1f5f9;
+  font-size: 12px;
+}
+
+.nqc-spec-name {
+  color: #64748b;
+  display: block;
+  margin-bottom: 2px;
+}
+
+.nqc-spec-val {
+  color: #0f172a;
+  font-size: 13px;
+}
+
+.nqc-btn-pdf-download {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #1a4b8c;
+  color: #ffffff !important;
+  text-decoration: none !important;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 12px 16px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.nqc-btn-pdf-download:hover {
+  background: #123666;
+}
+
+@media (max-width: 600px) {
+  .nqc-spec-table {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+
+<script>
+(function() {
+  // Datos del producto inyectados desde Shopify Liquid
+  var productVariants = {{ product.variants | json }};
+  var productTitle = {{ product.title | json }};
+  var currentVariantId = {{ product.selected_or_first_available_variant.id }};
+  var basePriceInCents = {{ product.selected_or_first_available_variant.price }};
+
+  // Función formateadora de moneda en Pesos Colombianos (COP)
+  function formatCOP(cents) {
+    var pesos = Math.round(cents / 100);
+    return pesos.toLocaleString('es-CO');
+  }
+
+  function getActiveVariantPrice() {
+    var select = document.querySelector('select[name="id"]');
+    if (select && select.value) {
+      var found = productVariants.find(function(v) { return String(v.id) === String(select.value); });
+      if (found) return found.price;
+    }
+    return basePriceInCents;
+  }
+
+  function getSelectedQuantity() {
+    var qtyInput = document.querySelector('input[name="quantity"]') || 
+                   document.querySelector('.qty-input') || 
+                   document.querySelector('#Quantity-product-' + {{ product.id }});
+    if (qtyInput) {
+      var parsed = parseInt(qtyInput.value, 10);
+      return (isNaN(parsed) || parsed < 1) ? 1 : parsed;
+    }
+    return 1;
+  }
+
+  function updateDynamicPrice() {
+    var priceEl = document.getElementById('nqc-dynamic-price-value');
+    var formulaEl = document.getElementById('nqcSubtotalFormula');
+    var waBtn = document.getElementById('nqcBtnVolumeQuote');
+    if (!priceEl) return;
+
+    var unitPriceCents = getActiveVariantPrice();
+    var quantity = getSelectedQuantity();
+    var totalCents = unitPriceCents * quantity;
+
+    priceEl.classList.add('updating');
+    setTimeout(function() {
+      priceEl.textContent = formatCOP(totalCents);
+      if (formulaEl) {
+        formulaEl.textContent = '(' + quantity + ' un. × $' + formatCOP(unitPriceCents) + ')';
+      }
+      priceEl.classList.remove('updating');
+    }, 80);
+
+    // Actualizar enlace dinámico de WhatsApp con la cantidad seleccionada
+    if (waBtn) {
+      var phone = "573001234567";
+      var msg = encodeURIComponent("Hola DetalShop, deseo cotizar por volumen el producto: " + productTitle + " (Cantidad: " + quantity + " unidades)");
+      waBtn.href = "https://wa.me/" + phone + "?text=" + msg;
+    }
+  }
+
+  function attachListeners() {
+    // Escuchar inputs de cantidad
+    document.querySelectorAll('input[name="quantity"], .qty-input').forEach(function(input) {
+      input.addEventListener('input', updateDynamicPrice);
+      input.addEventListener('change', updateDynamicPrice);
+      input.addEventListener('keyup', updateDynamicPrice);
+    });
+
+    // Escuchar clics en botones de incremento y decremento
+    document.querySelectorAll('.qty-adjust, .qty-plus, .qty-minus, .js-qty__adjust--plus, .js-qty__adjust--minus').forEach(function(btn) {
+      btn.addEventListener('click', function() {
+        setTimeout(updateDynamicPrice, 50);
+      });
+    });
+
+    // Escuchar cambios de variante
+    var variantSelect = document.querySelector('select[name="id"]');
+    if (variantSelect) {
+      variantSelect.addEventListener('change', updateDynamicPrice);
+    }
+
+    // Escuchar radios de variante si existen
+    document.querySelectorAll('.single-option-selector__radio, input[type="radio"][name^="option"]').forEach(function(radio) {
+      radio.addEventListener('change', function() {
+        setTimeout(updateDynamicPrice, 100);
+      });
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', function() {
+      attachListeners();
+      updateDynamicPrice();
+    });
+  } else {
+    attachListeners();
+    updateDynamicPrice();
+  }
+})();
+</script>

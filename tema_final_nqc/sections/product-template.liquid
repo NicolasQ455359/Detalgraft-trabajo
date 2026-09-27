@@ -1,0 +1,432 @@
+{%- assign first_3d_model = product.media | where: "media_type", "model" | first -%}
+<div itemscope itemtype="http://schema.org/Product"
+     id="section-{{ section.id }}"
+     data-picker-type="{{ section.settings.product_selector }}"
+     data-section-id="{{ section.id }}"
+     data-section-type="product-template"
+     data-image-zoom-type="{{ section.settings.enable_image_zoom }}"
+     data-enable-history-state="true"
+     data-stacked-layout="{% if section.settings.media_layout == "stacked" %}true{% else %}false{% endif %}"
+     {%- if first_3d_model -%}data-has-model="true"{%- endif -%}>
+  {%- render 'product-template' with product as product -%}
+<style>
+  .btn-ficha-tecnica {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    background-color: #007bff; /* azul Bootstrap */
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .btn-ficha-tecnica:hover {
+    background-color: #0056b3; /* azul oscuro al hacer hover */
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 600px) {
+    .btn-ficha-tecnica {
+      font-size: 0.95rem;
+      padding: 0.65rem 1.2rem;
+    }
+  }
+
+  .btn-ficha-tecnica svg {
+    width: 20px;
+    height: 20px;
+    fill: white;
+  }
+</style>
+
+<div style="text-align: center; margin-top: 1rem;">
+  <a href="{{ product.metafields.custom.ficha_tecnica | file_url }}"
+     target="_blank"
+     rel="noopener"
+     download
+     class="btn-ficha-tecnica">
+    <!-- Ícono PDF -->
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+      <path d="M181.9 256.4c-5.5-14.1-11.4-27.5-17.6-39.8-9.2-17.4-19.3-33.1-30.4-46.7-11.2-13.6-23.6-24.9-36.9-33.3C82.3 121.2 66.1 112 48 112c-17.7 0-32 14.3-32 32v96c0 17.7 14.3 32 32 32h20.1c3.7 0 7.1-1.2 10.1-3.4 8.2-6.1 20.2-9.4 35.8-9.4 12.3 0 22.2 2.1 29.7 6.3s12.5 10.7 15.2 19.4l.4 1.3 13.4 37.2-24.1 66.9-1.5 4.2c-3.5 9.6-7.4 17.2-11.7 22.8-4.3 5.6-8.6 9.5-12.7 11.6s-7.8 3.2-11.5 3.2H48c-17.7 0-32 14.3-32 32v16c0 17.7 14.3 32 32 32h88c24.7 0 44.5-10.7 59.1-31.9 14.7-21.3 27.6-51.3 38.4-89.3 10.9-38 19.5-81.7 25.7-129.8H352c17.7 0 32-14.3 32-32v-16c0-17.7-14.3-32-32-32H224V32c0-17.7-14.3-32-32-32H112c-17.7 0-32 14.3-32 32v80h72v64H64v-64h16v-80h160v80h-40v64h48c17.7 0 32 14.3 32 32v16c0 17.7-14.3 32-32 32h-66.1z"/>
+    </svg>
+    Descargar Ficha Técnica
+  </a>
+</div>
+
+{% schema %}
+  {
+    "name": "Product pages",
+  	"class": "product-section",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Product tabs"
+      },
+      {
+        "type": "select",
+        "id": "dbtfy_product_tabs_position",
+        "label": "Position",
+        "default": "under_addtocart",
+        "options": [
+    		  {
+            "value": "under_addtocart",
+            "label": "Under add-to-cart button"
+          },
+          {
+            "value": "separate_section",
+            "label": "In a separate section"
+          },
+          {
+            "value": "above_description",
+            "label": "Above product description"
+          },
+          {
+            "value": "under_description",
+            "label": "Under product description"
+          }
+        ]
+      },
+      {
+        "type": "header",
+        "content": "Product page"
+      },
+  	  {
+        "type": "checkbox",
+        "id": "show_product_vendor",
+        "label": "Show vendor",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_product_type",
+        "label": "Show product type",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_product_sku",
+        "label": "Show SKU",
+        "default": false
+      },
+  	  {
+        "type": "checkbox",
+        "id": "product_title_large",
+        "label": "Enable large product title",
+        "default": false
+      },
+      {
+        "type": "checkbox",
+        "id": "show_product_tags",
+        "label": "Show product tags",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_product_collections",
+        "label": "Show product collections",
+        "default": true
+      },
+  	  {
+        "type": "header",
+        "content": "Media",
+    		"info": "Learn more about [media types](https://help.shopify.com/manual/products/product-media)"
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_image_zoom",
+        "label": "Enable image zoom",
+    		"default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "enable_video_looping",
+        "label": "Enable video looping",
+        "default": true
+      },
+  	  {
+        "type": "select",
+        "id": "media_layout",
+        "label": "Gallery layout",
+        "default": "thumbnails",
+        "options": [
+    		  {
+            "value": "stacked",
+            "label": "Stacked"
+          },
+     		  {
+            "value": "thumbnails",
+            "label": "Thumbnails"
+          }
+        ]
+      },
+  	  {
+        "type": "header",
+        "content": "Product form"
+      },
+  	  {
+        "type": "checkbox",
+        "id": "quantity_enabled",
+        "label": "Show quantity picker",
+        "default": true
+      },
+      {
+        "type": "select",
+        "id": "product_selector",
+        "label": "Picker type",
+    		"default": "select",
+        "options": [
+          {
+            "value": "radio",
+            "label": "Button"
+          },
+          {
+            "value": "select",
+            "label": "Dropdown"
+          }
+        ]
+      },
+  	  {
+        "type": "header",
+        "content": "Product description"
+      },
+      {
+        "type": "checkbox",
+        "id": "show_product_description",
+        "label": "Show product description",
+        "default": true
+      },
+  	  {
+        "type": "checkbox",
+        "id": "description_full",
+        "label": "Full width",
+        "default": false
+      },
+      {
+        "type": "select",
+        "id": "dbtfy_product_description_position",
+        "label": "Position",
+        "default": "separate_section",
+        "options": [
+          {
+            "value": "under_addtocart",
+            "label": "Under add-to-cart button"
+          },
+          {
+            "value": "separate_section",
+            "label": "In a separate section"
+          }
+        ]
+      },
+	    {
+        "type": "select",
+        "id": "description_style",
+        "label": "Description style",
+        "default": "section-border",
+        "options": [
+          {
+            "value": "section-blank",
+            "label": "Blank background"
+          },
+    		  {
+            "value": "section-default",
+            "label": "Accent background"
+          },
+          {
+            "value": "section-border",
+            "label": "Border top"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "text_alignment",
+        "label": "Text alignment (desktop)",
+        "default": "text-center",
+        "options": [
+          {
+            "value": "",
+            "label": "Left"
+          },
+     		  {
+            "value": "text-center",
+            "label": "Center"
+          },
+          {
+            "value": "text-right",
+            "label": "Right"
+          }
+        ]
+      },
+      {
+        "type": "select",
+        "id": "text_alignment_mobile",
+        "label": "Text alignment (mobile)",
+        "default": "small--text-center",
+        "options": [
+          {
+            "value": "small--text-left",
+            "label": "Left"
+          },
+     		  {
+            "value": "small--text-center",
+            "label": "Center"
+          },
+          {
+            "value": "small--text-right",
+            "label": "Right"
+          }
+        ]
+      }
+    ],
+    "blocks" : [
+      {
+        "type": "description",
+        "name": "Product description",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "dbtfy_product_tabs_open",
+            "label": "Open tab by default",
+            "default": false
+          },
+          {
+            "type": "text",
+            "id": "dbtfy_product_tabs_icons",
+            "label": "Icon",
+            "info": "[View all available icons](https:\/\/material.io\/resources\/icons)"
+          },
+          {
+            "type": "text",
+            "id": "dbtfy_product_tabs_title",
+            "label": "Title",
+            "default": "Details"
+          }
+        ]
+      },
+      {
+        "type": "reviews",
+        "name": "Reviews",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "dbtfy_product_tabs_open",
+            "label": "Open tab by default",
+            "default": false
+          },
+          {
+            "type": "checkbox",
+            "id": "dbtfy_product_tabs_review",
+            "label": "Show star ratings",
+            "default": true
+          },
+          {
+            "type": "text",
+            "id": "dbtfy_product_tabs_icons",
+            "label": "Icon",
+            "info": "[View all available icons](https:\/\/material.io\/resources\/icons)"
+          },
+          {
+            "type": "text",
+            "id": "dbtfy_product_tabs_title",
+            "label": "Title",
+            "default": "Reviews",
+            "info": "To show your review widget in product tabs, go in \"Review app\" > \"Review widget\" and tick the \"Show in Product tabs\" checkbox"
+          }
+        ]
+      },
+      {
+        "type": "text",
+        "name": "Text/Image/HTML",
+        "settings": [
+          {
+            "type": "checkbox",
+            "id": "dbtfy_product_tabs_open",
+            "label": "Open tab by default",
+            "default": false
+          },
+          {
+            "type": "select",
+            "id": "text_alignment",
+            "label": "Text alignment",
+            "default": "text-center",
+            "options": [
+              {
+                "value": "",
+                "label": "Left"
+              },
+              {
+                "value": "text-center",
+                "label": "Center"
+              },
+              {
+                "value": "text-right",
+                "label": "Right"
+              }
+            ]
+          },
+          {
+            "type": "text",
+            "id": "dbtfy_product_tabs_icons",
+            "label": "Icon",
+            "info": "[View all available icons](https:\/\/material.io\/resources\/icons)"
+          },
+          {
+            "type": "text",
+            "id": "dbtfy_product_tabs_title",
+            "label": "Title",
+            "default": "Rich text"
+          },
+          {
+            "type": "richtext",
+            "id": "dbtfy_product_tabs_text",
+            "label": "Text"
+          },
+          {
+            "type": "image_picker",
+            "id": "dbtfy_product_tabs_image",
+            "label": "Image"
+          },
+          {
+            "type": "html",
+            "id": "dbtfy_product_tabs_html",
+            "label": "HTML"
+          },
+          {
+            "type": "header",
+            "content": "Visibility settings"
+          },
+          {
+            "type": "text",
+            "id": "dbtfy_product_tabs_type",
+            "label": "Product type",
+			      "info": "Comma-separated"
+          },
+          {
+            "type": "text",
+            "id": "dbtfy_product_tabs_tag",
+            "label": "Product tag",
+            "info": "Comma-separated"
+          },
+          {
+            "type": "product",
+            "id": "dbtfy_product_tabs_product",
+            "label": "Product"
+          },
+          {
+            "type": "collection",
+            "id": "dbtfy_product_tabs_collection",
+            "label": "Collection"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+<div class="zrx-product-bottom"></div>

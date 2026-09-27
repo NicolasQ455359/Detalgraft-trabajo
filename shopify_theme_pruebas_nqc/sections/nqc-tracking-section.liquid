@@ -1,0 +1,27 @@
+<!-- /sections/nqc-tracking-section.liquid — Módulo de Rastreo Embebido en Portada (Mes 2) -->
+<section class="nqc-embedded-tracking-section" id="nqcTrackingSection">
+  <div class="wrapper">
+    {%- render 'nqc-order-tracking' -%}
+  </div>
+</section>
+
+<style>
+.nqc-embedded-tracking-section {
+  padding: 40px 0;
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  border-bottom: 1px solid #e2e8f0;
+}
+</style>
+
+{% schema %}
+{
+  "name": "Rastreo de Despachos B2B",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Rastreo de Despachos B2B",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,93 @@
+<!-- /sections/nqc-b2b-plans.liquid — Modalidades de Compra Corporativa B2B (Mes 2) -->
+<section class="nqc-plans-section">
+  <div class="wrapper">
+    <div class="nqc-section-header text-center">
+      <h2 class="nqc-section-title">{{ section.settings.title | default: "MODALIDADES DE ATENCIÓN Y COMPRA CORPORATIVA" }}</h2>
+      <p class="nqc-section-subtitle">{{ section.settings.subtitle | default: "Soluciones comerciales adaptadas al volumen y necesidades de tu empresa" }}</p>
+    </div>
+
+    <div class="nqc-plans-grid">
+      <!-- Plan 1 -->
+      <div class="nqc-plan-card">
+        <div class="nqc-plan-name">Pyme &amp; Comercio Local</div>
+        <div class="nqc-plan-desc">Ideal para oficinas individuales, restaurantes y locales con compras periódicas.</div>
+        <ul class="nqc-plan-features-list">
+          <li>✓ Pedido mínimo accesible ($100k Bogotá)</li>
+          <li>✓ Factura electrónica DIAN automática</li>
+          <li>✓ Despacho en 24-48h con flota propia</li>
+          <li>✓ Pagos por PSE, Wompi y Tarjeta</li>
+        </ul>
+        <a href="#nqcCatalogSection" class="btn btn--secondary nqc-btn-plan-cta">Comprar en Línea</a>
+      </div>
+
+      <!-- Plan 2 -->
+      <div class="nqc-plan-card featured">
+        <div class="nqc-plan-badge-top">Más Recomendado</div>
+        <div class="nqc-plan-name" style="color: #1a4b8c;">Corporativo &amp; Sedes Múltiples</div>
+        <div class="nqc-plan-desc">Para colegios, clínicas, cadenas de restaurantes y empresas con varias sedes.</div>
+        <ul class="nqc-plan-features-list">
+          <li><strong>✓ Línea de crédito comercial a 30 días</strong></li>
+          <li>✓ Despachos programados quincenales / mensuales</li>
+          <li>✓ Ejecutivo de cuenta B2B dedicado</li>
+          <li>✓ Precios y stock garantizados por contrato</li>
+        </ul>
+        <a href="https://wa.me/573001234567?text=Hola%20DetalShop,%20deseo%20apertura%20de%20cuenta%20Corporativa%20con%20credito" target="_blank" rel="noopener" class="btn btn--primary nqc-btn-plan-cta">Solicitar Cuenta Corporativa</a>
+      </div>
+
+      <!-- Plan 3 -->
+      <div class="nqc-plan-card">
+        <div class="nqc-plan-name">Distribuidor &amp; Gran Mayorista</div>
+        <div class="nqc-plan-desc">Precios por estiba completa y tractomula directa de fábrica química.</div>
+        <ul class="nqc-plan-features-list">
+          <li>✓ Descuento máximo de fabricante (-15% a -25%)</li>
+          <li>✓ Despacho a nivel nacional en estiba paletizada</li>
+          <li>✓ Certificados de calidad INVIMA lote a lote</li>
+          <li>✓ Opción de maquila y marca propia</li>
+        </ul>
+        <a href="https://wa.me/573001234567?text=Hola%20DetalShop,%20deseo%20cotizar%20por%20estiba%20mayorista" target="_blank" rel="noopener" class="btn btn--secondary nqc-btn-plan-cta">Cotizar por Estiba</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+.nqc-plans-section { padding: 48px 0; background: #f8fafc; border-bottom: 1px solid #e2e8f0; }
+.nqc-plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
+.nqc-plan-card { background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 14px; padding: 28px 24px; display: flex; flex-direction: column; transition: all 0.2s; }
+.nqc-plan-card.featured { border: 2px solid #1a4b8c; box-shadow: 0 10px 30px rgba(26,75,140,0.12); position: relative; }
+.nqc-plan-badge-top { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: #1a4b8c; color: #ffffff; font-size: 11px; font-weight: 800; padding: 4px 12px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.06em; }
+.nqc-plan-name { font-size: 20px; font-weight: 900; color: #0f172a; margin-bottom: 6px; }
+.nqc-plan-desc { font-size: 13px; color: #64748b; margin-bottom: 18px; min-height: 38px; }
+.nqc-plan-features-list { list-style: none; margin-bottom: 24px; flex: 1; padding: 0; }
+.nqc-plan-features-list li { font-size: 13px; color: #334155; padding: 6px 0; }
+.nqc-btn-plan-cta { width: 100%; text-align: center; display: block; border-radius: 8px; font-weight: 700; padding: 10px 16px; text-decoration: none; }
+@media (max-width: 850px) {
+  .nqc-plans-grid { grid-template-columns: 1fr; }
+}
+</style>
+
+{% schema %}
+{
+  "name": "Planes B2B",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Título",
+      "default": "MODALIDADES DE ATENCIÓN Y COMPRA CORPORATIVA"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "Subtítulo",
+      "default": "Soluciones comerciales adaptadas al volumen y necesidades de tu empresa"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Planes B2B",
+      "category": "Text"
+    }
+  ]
+}
+{% endschema %}

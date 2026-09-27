@@ -1,0 +1,612 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Iconografía SVG Oficial — Detalgraf B2B (Importador Figma)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1A4B8C;
+      --primary-hover: #123666;
+      --success: #00A86B;
+      --slate-50: #F8FAFC;
+      --slate-100: #F1F5F9;
+      --slate-200: #E2E8F0;
+      --slate-400: #94A3B8;
+      --slate-700: #334155;
+      --slate-800: #1E293B;
+      --slate-900: #0F172A;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 32px 24px 60px 24px;
+    }
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .header-box {
+      background: #1e293b;
+      border: 1.5px solid #334155;
+      border-radius: 16px;
+      padding: 26px 30px;
+      margin-bottom: 28px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+    .header-title {
+      font-size: 22px;
+      font-weight: 900;
+      color: #38bdf8;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+    .header-desc {
+      font-size: 14px;
+      color: #94a3b8;
+      line-height: 1.6;
+      margin-bottom: 18px;
+    }
+    .instructions-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      background: #0f172a;
+      border-radius: 12px;
+      padding: 16px;
+      border: 1px solid #334155;
+    }
+    .instruction-card {
+      background: #1e293b;
+      border-radius: 8px;
+      padding: 12px 14px;
+    }
+    .instruction-step {
+      font-size: 11px;
+      font-weight: 800;
+      color: #38bdf8;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+    .instruction-text {
+      font-size: 12.5px;
+      color: #e2e8f0;
+      line-height: 1.4;
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 800;
+      color: #ffffff;
+      margin: 32px 0 14px 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-badge {
+      background: #0284c7;
+      color: #ffffff;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 3px 8px;
+      border-radius: 6px;
+    }
+
+    .icons-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 18px;
+    }
+
+    .icon-card {
+      background: #ffffff;
+      color: #0f172a;
+      border-radius: 12px;
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      border: 1.5px solid var(--slate-200);
+      box-shadow: 0 4px 14px rgba(0,0,0,0.1);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .icon-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+    }
+    .icon-stage {
+      width: 76px;
+      height: 76px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+    .icon-meta {
+      margin-bottom: 12px;
+      flex: 1;
+    }
+    .icon-name {
+      font-size: 13px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 3px;
+      word-break: break-word;
+    }
+    .icon-dim {
+      font-size: 11px;
+      font-weight: 700;
+      color: #1a4b8c;
+      background: #eff6ff;
+      padding: 2px 6px;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 4px;
+    }
+    .icon-sub {
+      font-size: 11.5px;
+      color: #64748b;
+      line-height: 1.35;
+    }
+
+    .btn-copy {
+      background: #1a4b8c;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.15s;
+    }
+    .btn-copy:hover {
+      background: #123666;
+    }
+    .btn-copy.copied {
+      background: #00a86b !important;
+    }
+
+    .btn-open-folder {
+      background: #00a86b;
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      padding: 10px 18px;
+      font-size: 13.5px;
+      font-weight: 800;
+      cursor: pointer;
+      margin-top: 14px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.15s;
+    }
+    .btn-open-folder:hover {
+      background: #008f5b;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: #00a86b;
+      color: #ffffff;
+      padding: 12px 20px;
+      border-radius: 10px;
+      font-size: 13.5px;
+      font-weight: 700;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+      display: none;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <div class="header-box">
+      <div class="header-title">
+        <span>⚡</span> Sistema Oficial de Iconos Vectoriales SVG — Detalgraf B2B
+      </div>
+      <p class="header-desc">
+        Diseñados específicamente para reemplazar los emojis 3D genéricos por iconografía corporativa de grado industrial, química y bioseguridad. 
+        <strong>Los 16 archivos SVG ya están creados localmente en tu disco duro</strong>, listos para importarse en Figma en 5 segundos sin consumir tokens de Codex.
+      </p>
+
+      <div class="instructions-grid">
+        <div class="instruction-card">
+          <div class="instruction-step">Método 1 (Más Rápido): Arrastrar a Figma</div>
+          <div class="instruction-text">
+            Selecciona los 16 archivos de la carpeta <code>iconos_svg_figma</code> en Windows y <strong>arrástralos directamente al lienzo de Figma</strong>. Figma creará todas las capas vectoriales automáticamente.
+          </div>
+        </div>
+        <div class="instruction-card">
+          <div class="instruction-step">Método 2: Copiar y Pegar SVG</div>
+          <div class="instruction-text">
+            Haz clic en <strong>"Copiar SVG para Figma"</strong> en cualquier tarjeta de abajo, ve a Figma y presiona <strong>Ctrl + V</strong>. Se pegará como vector editable.
+          </div>
+        </div>
+        <div class="instruction-card">
+          <div class="instruction-step">Método 3: Convertir en Componentes</div>
+          <div class="instruction-text">
+            En Figma, selecciónalos todos y haz clic en el menú superior de componentes -> <strong>"Create Multiple Components"</strong> para que queden vinculados a tu sistema de diseño.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 1: LÍNEAS INSTITUCIONALES (48x48) -->
+    <div class="section-title">
+      <span>1. Líneas Institucionales (Reemplazo Emojis 3D)</span>
+      <span class="section-badge">48x48 px</span>
+    </div>
+    <div class="icons-grid">
+      <!-- Item 1 -->
+      <div class="icon-card">
+        <div class="icon-stage" id="preview-cat-aseo-profesional"></div>
+        <div class="icon-meta">
+          <div class="icon-name">Aseo Profesional</div>
+          <span class="icon-dim">48×48 · cat-aseo-profesional.svg</span>
+          <div class="icon-sub">Garrafa 20L industrial con escala graduada y gota química</div>
+        </div>
+        <button class="btn-copy" onclick="copyIcon('cat-aseo-profesional.svg', this)">📋 Copiar SVG para Figma</button>
+      </div>
+
+      <!-- Item 2 -->
+      <div class="icon-card">
+        <div class="icon-stage" id="preview-cat-bioseguridad"></div>
+        <div class="icon-meta">
+          <div class="icon-name">Bioseguridad</div>
+          <span class="icon-dim">48×48 · cat-bioseguridad.svg</span>
+          <div class="icon-sub">Escudo de protección perimetral con guante de nitrilo clínico</div>
+        </div>
+        <button class="btn-copy" onclick="copyIcon('cat-bioseguridad.svg', this)">📋 Copiar SVG para Figma</button>
+      </div>
+
+      <!-- Item 3 -->
+      <div class="icon-card">
+        <div class="icon-stage" id="preview-cat-cafeteria"></div>
+        <div class="icon-meta">
+          <div class="icon-name">Cafetería Empresarial</div>
+          <span class="icon-dim">48×48 · cat-cafeteria.svg</span>
+          <div class="icon-sub">Jarra térmica institucional con palanca y nivel indicador</div>
+        </div>
+        <button class="btn-copy" onclick="copyIcon('cat-cafeteria.svg', this)">📋 Copiar SVG para Figma</button>
+      </div>
+
+      <!-- Item 4 -->
+      <div class="icon-card">
+        <div class="icon-stage" id="preview-cat-papeleria"></div>
+        <div class="icon-meta">
+          <div class="icon-name">Papelería y Descartables</div>
+          <span class="icon-dim">48×48 · cat-papeleria.svg</span>
+          <div class="icon-sub">Bobina jumbo 300m desplegándose con corte limpio técnico</div>
+        </div>
+        <button class="btn-copy" onclick="copyIcon('cat-papeleria.svg', this)">📋 Copiar SVG para Figma</button>
+      </div>
+
+      <!-- Item 5 -->
+      <div class="icon-card">
+        <div class="icon-stage" id="preview-cat-seguridad-industrial"></div>
+        <div class="icon-meta">
+          <div class="icon-name">Seguridad Industrial</div>
+          <span class="icon-dim">48×48 · cat-seguridad-industrial.svg</span>
+          <div class="icon-sub">Casco de protección técnica con lentes de seguridad química</div>
+        </div>
+        <button class="btn-copy" onclick="copyIcon('cat-seguridad-industrial.svg', this)">📋 Copiar SVG para Figma</button>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 2: GARANTÍAS Y PROPUESTAS DE VALOR (24x24) -->
+    <div class="section-title">
+      <span>2. Garantías y Propuestas de Valor</span>
+      <span class="section-badge">24x24 px</span>
+    </div>
+    <div class="icons-grid">
+      <!-- Item 6 -->
+      <div class="icon-card">
+        <div class="icon-stage" id="preview-icon-shipping-truck"></div>
+        <div class="icon-meta">
+          <div class="icon-name">Envío Gratis B2B</div>
+          <span class="icon-dim">24×24 · icon-shipping-truck.svg</span>
+          <div class="icon-sub">Furgón de carga institucional con líneas de velocidad</div>
+        </div>
+        <button class="btn-copy" onclick="copyIcon('icon-shipping-truck.svg', this)">📋 Copiar SVG para Figma</button>
+      </div>
+
+      <!-- Item 7 -->
+      <div class="icon-card">
+        <div class="icon-stage" id="preview-icon-express-clock"></div>
+        <div class="icon-meta">
+          <div class="icon-name">Entregas 24 a 48h</div>
+          <span class="icon-dim">24×24 · icon-express-clock.svg</span>
+          <div class="icon-sub">Cronómetro de precisión con rayo de despacho express</div>
+        </div>
+        <button class="btn-copy" onclick="copyIcon('icon-express-clock.svg', this)">📋 Copiar SVG para Figma</button>
+      </div>
+
+      <!-- Item 8 -->
+      <div class="icon-card">
+        <div class="icon-stage" id="preview-icon-dian-shield"></div>
+        <div class="icon-meta">
+          <div class="icon-name">Facturación DIAN Legal</div>
+          <span class="icon-dim">24×24 · icon-dian-shield.svg</span>
+          <div class="icon-sub">Escudo de seguridad con check de legalidad tributaria</div>
+        </div>
+        <button class="btn-copy" onclick="copyIcon('icon-dian-shield.svg', this)">📋 Copiar SVG para Figma</button>
+      </div>
+
+      <!-- Item 9 -->
+      <div class="icon-card">
+        <div class="icon-stage" id="preview-icon-b2b-support"></div>
+        <div class="icon-meta">
+          <div class="icon-name">Soporte Corporativo</div>
+          <span class="icon-dim">24×24 · icon-b2b-support.svg</span>
+          <div class="icon-sub">Atención B2B con canal prioritario por WhatsApp</div>
+        </div>
+        <button class="btn-copy" onclick="copyIcon('icon-b2b-support.svg', this)">📋 Copiar SVG para Figma</button>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 3: STEPPER DE RASTREO (24x24) -->
+    <div class="section-title">
+      <span>3. Stepper de Rastreo Logístico</span>
+      <span class="section-badge">24x24 px</span>
+    </div>
+    <div class="icons-grid">
+      <!-- Item 10 -->
+      <div class="icon-card">
+        <div class="icon-stage" id="preview-step-order-confirmed"></div>
+        <div class="icon-meta">
+          <div class="icon-name">1. Pedido Confirmado</div>
+          <span class="icon-dim">24×24 · step-order-confirmed.svg</span>
+          <div class="icon-sub">Factura electrónica emitida y pago verificado</div>
+        </div>
+        <button class="btn-copy" onclick="copyIcon('step-order-confirmed.svg', this)">📋 Copiar SVG para Figma</button>
+      </div>
+
+      <!-- Item 11 -->
+      <div class="icon-card">
+        <div class="icon-stage" id="preview-step-warehouse-prep"></div>
+        <div class="icon-meta">
+          <div class="icon-name">2. Alistamiento Bodega</div>
+          <span class="icon-dim">24×24 · step-warehouse-prep.svg</span>
+          <div class="icon-sub">Control de calidad y embalaje de mercancía</div>
+        </div>
+        <button class="btn-copy" onclick="copyIcon('step-warehouse-prep.svg', this)">📋 Copiar SVG para Figma</button>
+      </div>
+
+      <!-- Item 12 -->
+      <div class="icon-card">
+        <div class="icon-stage" id="preview-step-in-transit"></div>
+        <div class="icon-meta">
+          <div class="icon-name">3. En Tránsito / Ruta</div>
+          <span class="icon-dim">24×24 · step-in-transit.svg</span>
+          <div class="icon-sub">Vehículo en ruta con geolocalización activa</div>
+        </div>
+        <button class="btn-copy" onclick="copyIcon('step-in-transit.svg', this)">📋 Copiar SVG para Figma</button>
+      </div>
+
+      <!-- Item 13 -->
+      <div class="icon-card">
+        <div class="icon-stage" id="preview-step-delivered"></div>
+        <div class="icon-meta">
+          <div class="icon-name">4. Entregado Conforme</div>
+          <span class="icon-dim">24×24 · step-delivered.svg</span>
+          <div class="icon-sub">Recepción firmada y entrega finalizada</div>
+        </div>
+        <button class="btn-copy" onclick="copyIcon('step-delivered.svg', this)">📋 Copiar SVG para Figma</button>
+      </div>
+    </div>
+
+    <!-- SECCIÓN 4: UI CARRITO & PEDIDO MÍNIMO (24x24) -->
+    <div class="section-title">
+      <span>4. UI Carrito & Pedido Mínimo</span>
+      <span class="section-badge">24x24 px</span>
+    </div>
+    <div class="icons-grid">
+      <!-- Item 14 -->
+      <div class="icon-card">
+        <div class="icon-stage" id="preview-ui-cart-b2b"></div>
+        <div class="icon-meta">
+          <div class="icon-name">Carrito B2B</div>
+          <span class="icon-dim">24×24 · ui-cart-b2b.svg</span>
+          <div class="icon-sub">Carrito corporativo con cálculo de flete</div>
+        </div>
+        <button class="btn-copy" onclick="copyIcon('ui-cart-b2b.svg', this)">📋 Copiar SVG para Figma</button>
+      </div>
+
+      <!-- Item 15 -->
+      <div class="icon-card">
+        <div class="icon-stage" id="preview-ui-target-progress"></div>
+        <div class="icon-meta">
+          <div class="icon-name">Meta de Despacho</div>
+          <span class="icon-dim">24×24 · ui-target-progress.svg</span>
+          <div class="icon-sub">Diana de cumplimiento de pedido mínimo</div>
+        </div>
+        <button class="btn-copy" onclick="copyIcon('ui-target-progress.svg', this)">📋 Copiar SVG para Figma</button>
+      </div>
+
+      <!-- Item 16 -->
+      <div class="icon-card">
+        <div class="icon-stage" id="preview-ui-trash-clean"></div>
+        <div class="icon-meta">
+          <div class="icon-name">Eliminar Item</div>
+          <span class="icon-dim">24×24 · ui-trash-clean.svg</span>
+          <div class="icon-sub">Papelera lineal minimalista</div>
+        </div>
+        <button class="btn-copy" onclick="copyIcon('ui-trash-clean.svg', this)">📋 Copiar SVG para Figma</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toastMsg">✅ ¡SVG copiado al portapapeles! Ve a Figma y presiona Ctrl + V.</div>
+
+  <script>
+    const SVG_DATA = {
+      'cat-aseo-profesional.svg': `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <path d="M14 12V8a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v4" stroke="#1A4B8C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M10 14a4 4 0 0 1 4-4h20a4 4 0 0 1 4 4v26a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V14z" stroke="#1A4B8C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect x="18" y="6" width="12" height="6" rx="2" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="rgba(26,75,140,0.08)"/>
+  <path d="M30 6h6v4h-6z" stroke="#1A4B8C" stroke-width="2" stroke-linejoin="round" fill="#1A4B8C"/>
+  <line x1="16" y1="20" x2="22" y2="20" stroke="#00A86B" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="16" y1="26" x2="20" y2="26" stroke="#00A86B" stroke-width="2" stroke-linecap="round"/>
+  <line x1="16" y1="32" x2="22" y2="32" stroke="#00A86B" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M31 23c0 3.314-2.686 6-6 6s-6-2.686-6-6c0-2.5 6-7 6-7s6 4.5 6 7z" stroke="#00A86B" stroke-width="2" stroke-linejoin="round" fill="rgba(0,168,107,0.12)"/>
+</svg>`,
+
+      'cat-bioseguridad.svg': `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <path d="M24 4L8 10v14c0 12 16 18 16 18s16-6 16-18V10L24 4z" stroke="#1A4B8C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="rgba(26,75,140,0.04)"/>
+  <path d="M35 11v6m-3-3h6" stroke="#00A86B" stroke-width="2" stroke-linecap="round"/>
+  <path d="M19 32v-6a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v-4a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v-3a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v6a2 2 0 0 0 2 2h1a3 3 0 0 1 3 3v3c0 3-4 6-9 6h-3c-3 0-4-2-4-4z" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="rgba(0,168,107,0.1)"/>
+  <path d="M17 32h14v3H17z" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>`,
+
+      'cat-cafeteria.svg': `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <path d="M12 12h20l-2 26a3 3 0 0 1-3 3H17a3 3 0 0 1-3-3l-2-26z" stroke="#1A4B8C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="rgba(26,75,140,0.04)"/>
+  <path d="M10 12h24V8a2 2 0 0 0-2-2H12a2 2 0 0 0-2 2v4z" stroke="#1A4B8C" stroke-width="2.5" stroke-linejoin="round"/>
+  <path d="M22 6V3h4v3" stroke="#00A86B" stroke-width="2" stroke-linecap="round"/>
+  <path d="M10 12l-4 4h4" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M32 14h5a4 4 0 0 1 4 4v10a4 4 0 0 1-4 4h-6" stroke="#1A4B8C" stroke-width="2.5" stroke-linecap="round"/>
+  <line x1="22" y1="18" x2="22" y2="34" stroke="#00A86B" stroke-width="2" stroke-linecap="round" stroke-dasharray="1 3"/>
+  <circle cx="22" cy="35" r="2" fill="#00A86B"/>
+</svg>`,
+
+      'cat-papeleria.svg': `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <ellipse cx="24" cy="14" rx="14" ry="6" stroke="#1A4B8C" stroke-width="2.5" fill="rgba(26,75,140,0.06)"/>
+  <ellipse cx="24" cy="14" rx="4" ry="2" stroke="#00A86B" stroke-width="2" fill="#00A86B"/>
+  <path d="M10 14v16c0 3.3 6.3 6 14 6s14-2.7 14-6V14" stroke="#1A4B8C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M24 36v6c0 1.5 2 2.5 5 2.5h8c3 0 5-1 5-2.5V28" stroke="#00A86B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <line x1="24" y1="39" x2="42" y2="39" stroke="#00A86B" stroke-width="1.5" stroke-dasharray="3 3"/>
+</svg>`,
+
+      'cat-seguridad-industrial.svg': `<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 48 48" fill="none">
+  <path d="M8 24c0-8.837 7.163-16 16-16s16 7.163 16 16v3H8v-3z" stroke="#1A4B8C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="rgba(26,75,140,0.05)"/>
+  <path d="M24 8v16" stroke="#00A86B" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M4 27h40v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-4z" stroke="#1A4B8C" stroke-width="2.5" stroke-linejoin="round" fill="#1A4B8C"/>
+  <path d="M12 36h8a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2z" stroke="#00A86B" stroke-width="2" stroke-linejoin="round" fill="rgba(0,168,107,0.1)"/>
+  <path d="M26 36h8a2 2 0 0 1 2 2v2a2 2 0 0 1-2 2h-8a2 2 0 0 1-2-2v-2a2 2 0 0 1 2-2z" stroke="#00A86B" stroke-width="2" stroke-linejoin="round" fill="rgba(0,168,107,0.1)"/>
+  <line x1="22" y1="38" x2="26" y2="38" stroke="#00A86B" stroke-width="2"/>
+</svg>`,
+
+      'icon-shipping-truck.svg': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M1 3h14v13H1z"/>
+  <path d="M15 8h4l3 3v5h-7V8z"/>
+  <circle cx="5.5" cy="18.5" r="2.5" stroke="#00A86B" fill="#ffffff"/>
+  <circle cx="17.5" cy="18.5" r="2.5" stroke="#00A86B" fill="#ffffff"/>
+  <line x1="1" y1="19" x2="3" y2="19"/>
+  <line x1="8" y1="19" x2="15" y2="19"/>
+</svg>`,
+
+      'icon-express-clock.svg': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="12" cy="13" r="9"/>
+  <polyline points="12 8 12 13 15 15"/>
+  <path d="M12 4V1"/>
+  <path d="M9 1h6"/>
+  <polygon points="19 6 15 11 18 11 16 16 21 10 18 10 19 6" stroke="#00A86B" fill="#00A86B" stroke-width="1"/>
+</svg>`,
+
+      'icon-dian-shield.svg': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+  <polyline points="9 12 11 14 15 10" stroke="#00A86B" stroke-width="2.2"/>
+</svg>`,
+
+      'icon-b2b-support.svg': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+  <path d="M9.5 12h.01m2.5 0h.01m2.5 0h.01" stroke="#00A86B" stroke-width="2.5" stroke-linecap="round"/>
+</svg>`,
+
+      'step-order-confirmed.svg': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+  <polyline points="14 2 14 8 20 8"/>
+  <polyline points="8 13 11 16 16 10" stroke="#00A86B" stroke-width="2"/>
+</svg>`,
+
+      'step-warehouse-prep.svg': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+  <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
+  <line x1="12" y1="22.08" x2="12" y2="12"/>
+  <path d="M7 11l3 3 6-6" stroke="#00A86B" stroke-width="2"/>
+</svg>`,
+
+      'step-in-transit.svg': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <rect x="1" y="5" width="13" height="10" rx="1"/>
+  <path d="M14 8h4l3 3v4h-7V8z"/>
+  <circle cx="5" cy="18" r="2" stroke="#00A86B"/>
+  <circle cx="16" cy="18" r="2" stroke="#00A86B"/>
+  <path d="M19 4a3 3 0 0 1 3 3c0 2-3 5-3 5s-3-3-3-5a3 3 0 0 1 3-3z" stroke="#00A86B" fill="#00A86B" transform="scale(0.6) translate(16, -2)"/>
+</svg>`,
+
+      'step-delivered.svg': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#00A86B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+  <polyline points="22 4 12 14.01 9 11.01" stroke-width="2.5"/>
+</svg>`,
+
+      'ui-cart-b2b.svg': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="9" cy="21" r="1"/>
+  <circle cx="20" cy="21" r="1"/>
+  <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+</svg>`,
+
+      'ui-target-progress.svg': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <circle cx="12" cy="12" r="10"/>
+  <circle cx="12" cy="12" r="6" stroke="#00A86B"/>
+  <circle cx="12" cy="12" r="2" fill="#00A86B"/>
+</svg>`,
+
+      'ui-trash-clean.svg': `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#DC2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <polyline points="3 6 5 6 21 6"/>
+  <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+</svg>`
+    };
+
+    // Renderizar vistas previas
+    Object.keys(SVG_DATA).forEach(filename => {
+      const key = filename.replace('.svg', '');
+      const stage = document.getElementById(`preview-${key}`);
+      if (stage) {
+        stage.innerHTML = SVG_DATA[filename];
+      }
+    });
+
+    function copyIcon(filename, btn) {
+      const svg = SVG_DATA[filename];
+      navigator.clipboard.writeText(svg).then(() => {
+        const originalText = btn.innerHTML;
+        btn.innerHTML = '✓ ¡Copiado!';
+        btn.classList.add('copied');
+        showToast(`✅ SVG de ${filename} copiado. Presiona Ctrl + V en Figma.`);
+        setTimeout(() => {
+          btn.innerHTML = originalText;
+          btn.classList.remove('copied');
+        }, 2200);
+      });
+    }
+
+    function showToast(msg) {
+      const t = document.getElementById('toastMsg');
+      t.textContent = msg;
+      t.style.display = 'block';
+      setTimeout(() => { t.style.display = 'none'; }, 3000);
+    }
+  </script>
+</body>
+</html>

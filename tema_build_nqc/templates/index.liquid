@@ -1,0 +1,13 @@
+<!-- /templates/index.liquid — DetalShop Tienda B2B Completa (Mes 2 NQC) -->
+
+{%- comment -%}
+  Diseños nuevos NQC implementados sobre la página original.
+  Las secciones NQC se cargan ANTES del content_for_index para que aparezcan
+  arriba en la página. Las secciones originales configuradas en el customizer
+  (hero, featured-collections, featured-products, quotes, pricing) siguen
+  funcionando normalmente a través de content_for_index.
+{%- endcomment -%}
+
+<div class="index-sections">
+  {{ content_for_index }}
+</div>
