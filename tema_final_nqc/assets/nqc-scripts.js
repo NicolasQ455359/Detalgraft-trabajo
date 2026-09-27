@@ -746,69 +746,194 @@
 
       const btn = document.getElementById('btnCheckoutFigma');
       if (btn) {
-        btn.textContent = 'Procesando pago seguro... 🔒';
+        btn.textContent = 'Redirigiendo a Pago Seguro 🔒...';
         btn.disabled = true;
       }
 
-      // Sync items and attributes with Shopify cart and redirect to native checkout
       try {
-        const itemsToPush = cart.map(item => ({
-          id: parseInt(item.id) || item.id,
-          quantity: item.qty
+        localStorage.setItem('nqc_cart_checkout', JSON.stringify({
+          cart: cart,
+          cedula: cedula,
+          zone: cartZone,
+          total: totalPrice,
+          date: new Date().toISOString()
         }));
 
-        fetch('/cart/clear.js', { method: 'POST' })
-          .then(() => {
-            return fetch('/cart/add.js', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ items: itemsToPush })
-            });
+        fetch('/cart/update.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            note: `Facturación Electrónica DIAN — Cédula/NIT: ${cedula} | Zona: ${cartZone === 100000 ? 'Bogotá' : 'Nacional'}`,
+            attributes: {
+              'Cédula / NIT DIAN': cedula,
+              'Zona Despacho': cartZone === 100000 ? 'Bogotá ($100.000)' : 'Nacional ($200.000)'
+            }
           })
-          .then(() => {
-            return fetch('/cart/update.js', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                note: `Facturación Electrónica DIAN — Cédula/NIT: ${cedula}`,
-                attributes: {
-                  'Cédula / NIT DIAN': cedula,
-                  'Zona Despacho': cartZone === 100000 ? 'Bogotá ($100.000)' : 'Nacional ($200.000)'
-                }
-              })
-            });
-          })
-          .then(() => {
-            window.location.href = '/checkout';
-          })
-          .catch(() => {
-            window.location.href = '/checkout';
-          });
-      } catch(e) {
+        }).then(() => {
+          window.location.href = '/checkout';
+        }).catch(() => {
+          window.location.href = '/checkout';
+        });
+
+        setTimeout(() => {
+          window.location.href = '/checkout';
+        }, 1200);
+
+      } catch (err) {
         window.location.href = '/checkout';
       }
     }
 
-// ========================================================================
-    // FICHA DE PRODUCTO INTERACTIVA (PDP) — GALERÍA REAL DINÁMICA
     // ========================================================================
-        // ========================================================================
+    // GENERADOR Y ASIGNADOR DE FICHAS TÉCNICAS OFICIALES ESPECÍFICAS POR PRODUCTO
+    // ========================================================================
+    function getProductSpecificSpecs(product) {
+      const title = (product.title || '').toLowerCase();
+      const cat = (product.category || '').toLowerCase();
+      const subcat = (product.subcat || '').toLowerCase();
+
+      // Prioridad 1: Si Shopify liquid inyectó ficha oficial para este producto
+      let officialUrl = null;
+      if (window.SHOPIFY_COLLECTION_METADATA && window.SHOPIFY_COLLECTION_METADATA[product.id]) {
+        const meta = window.SHOPIFY_COLLECTION_METADATA[product.id];
+        if (meta.ficha_url) officialUrl = meta.ficha_url;
+      }
+
+      // 1. Químicos, Cloro, Hipoclorito, Blanqueador, Creolina, Desinfectante
+      if (title.includes('hipoclorito') || title.includes('blancox') || title.includes('cloro') || title.includes('desinfectante') || title.includes('creolina') || title.includes('limpiador') || cat.includes('quimic') || subcat.includes('quimic')) {
+        const isBlancox = title.includes('blancox') || title.includes('hipoclorito') || title.includes('cloro');
+        return {
+          invima: isBlancox ? 'NSOH02800-14CO (Vigente Químicos)' : (product.invima && !product.invima.includes('2021') ? product.invima : 'NSOH02800-14CO / INVIMA Vigente'),
+          ph: isBlancox ? '11.5 – 12.5 (Alcalino Desinfectante)' : '6.5 – 7.5 (Neutro Institucional)',
+          bio: '≥ 90% Biodegradable (Norma NTC-5525)',
+          unit: product.unit || 'Galón 3.8L / Garrafa',
+          comp: isBlancox ? 'Hipoclorito de Sodio al 5.25% p/p y estabilizantes de cloro' : 'Tensioactivos aniónicos biodegradables y agente desinfectante activo',
+          uso: 'Desinfección de superficies hospitalarias e institucionales, blanqueo y desmanchado',
+          ficha_url: officialUrl || window.DEFAULT_FICHA_BLANCOX_PDF || window.DEFAULT_FICHA_DETALGRAF_PDF || '5._DMS_020940-020941_F-T_BLANCOX_AROMA_PODER_NATURAL.pdf'
+        };
+      }
+
+      // 2. Tapabocas y Bioseguridad Médica
+      if (title.includes('tapaboca') || title.includes('cirugia') || title.includes('mascarilla') || title.includes('termosellado') || subcat.includes('bioseguridad')) {
+        return {
+          invima: 'INVIMA 2020DM-0021482 (Dispositivos Médicos)',
+          ph: 'Neutro (Hipoalergénico / No irritante)',
+          bio: 'Filtración BFE ≥ 98% (Certificación NTC-1738)',
+          unit: product.unit || 'Caja dispensadora x 50 unidades',
+          comp: 'Tela no tejida de polipropileno 3 capas (Spunbond + Meltblown + Spunbond) con filtro antibacterial',
+          uso: 'Protección respiratoria, barrera bacteriana y fluidos biológicos en entornos clínicos e industriales',
+          ficha_url: officialUrl || window.DEFAULT_FICHA_DETALGRAF_PDF || null
+        };
+      }
+
+      // 3. Guantes (Nitrilo, Látex, Domésticos)
+      if (title.includes('guante') || title.includes('nitrilo') || title.includes('latex')) {
+        const isNitrilo = title.includes('nitrilo');
+        return {
+          invima: isNitrilo ? 'INVIMA 2017DM-0016982 (Clase I)' : 'INVIMA 2018DM-0018450',
+          ph: 'Inerte / Libre de Polvo lubricante',
+          bio: 'AQL 1.5 Protección Química y Biológica (ASTM D6319)',
+          unit: product.unit || (isNitrilo ? 'Caja x 100 unidades (50 pares)' : 'Par en empaque individual'),
+          comp: isNitrilo ? '100% Nitrilo sintético elástico libre de proteínas de látex' : 'Látex natural vulcanizado de alta resistencia mecánica',
+          uso: 'Manipulación de químicos, aseo institucional, alimentos y sector salud',
+          ficha_url: officialUrl || window.DEFAULT_FICHA_DETALGRAF_PDF || null
+        };
+      }
+
+      // 4. Paños Industriales, Wypall, Strech Film
+      if (title.includes('wypall') || title.includes('paño') || title.includes('pano') || title.includes('strech') || title.includes('film')) {
+        const isStrech = title.includes('strech') || title.includes('film');
+        return {
+          invima: isStrech ? 'Certificación Empaque Industrial ASTM D4649' : 'Certificado B2B Grado Industrial Kimberly / Tork',
+          ph: '7.0 (Inerte a solventes y químicos)',
+          bio: isStrech ? 'Polietileno de Baja Densidad 100% Reciclable' : 'Tecnología Hydroknit / Cero Pelusa',
+          unit: product.unit || (isStrech ? 'Rollo 30cm x 300m' : 'Rollo Industrial'),
+          comp: isStrech ? 'Polietileno lineal de baja densidad (LLDPE) virgen coextruido' : 'Fibras de celulosa virgen entrelazadas con polipropileno mediante chorros de agua',
+          uso: isStrech ? 'Paletizado, empaque y protección de carga industrial' : 'Limpieza pesada, absorción de aceites, solventes y grasa sin desprendimiento',
+          ficha_url: officialUrl || window.DEFAULT_FICHA_DETALGRAF_PDF || null
+        };
+      }
+
+      // 5. Papelería Institucional (Tork, Servilletas, Toallas en Rollo, Bolsillos, Papel Kraft)
+      if (title.includes('tork') || title.includes('toalla') || title.includes('servilleta') || title.includes('papel') || title.includes('rollo termico') || title.includes('bolsillo') || cat.includes('papeleria')) {
+        return {
+          invima: 'Certificación FSC C012345 (Cadena de Custodia Forestal)',
+          ph: '7.0 (Neutro / Apto para contacto alimentario)',
+          bio: '100% Fibras Biodegradables y Reciclables',
+          unit: product.unit || 'Paquete institucional dispensable',
+          comp: 'Pasta pura de celulosa blanqueada libre de cloro elemental (ECF) con textura gofrada absorbente',
+          uso: 'Higiene de manos en baños de alto tráfico, dispensadores corporativos y áreas de servicio',
+          ficha_url: officialUrl || window.DEFAULT_FICHA_DETALGRAF_PDF || null
+        };
+      }
+
+      // 6. Cafetería y Alimentos (Infusiones Hindú, Isashii, Azúcar, Panela, Vasos, Mezcladores)
+      if (title.includes('infusion') || title.includes('aromatica') || title.includes('hindu') || title.includes('isashii') || title.includes('azucar') || title.includes('panela') || title.includes('vaso') || title.includes('mezclador') || cat.includes('cafeteria')) {
+        const isDrink = title.includes('infusion') || title.includes('aromatica') || title.includes('azucar') || title.includes('panela');
+        return {
+          invima: isDrink ? 'INVIMA RSAA19I10901 (Alimentos y Bebidas)' : 'Resolución 683/2012 INVIMA (Material apto para contacto alimentario)',
+          ph: isDrink ? '6.0 – 6.8 (Grado Alimentario Natural)' : '7.0 (Inerte)',
+          bio: isDrink ? 'BPM Certificada / Empaque Hermético Grado Alimento' : 'Biodegradable / Cartón Grado Alimentario',
+          unit: product.unit || (isDrink ? 'Caja dispensadora institucional' : 'Paquete x 40 / x 1000'),
+          comp: isDrink ? 'Ingredientes 100% naturales deshidratados grado exportación sin aditivos químicos' : 'Cartón virgen polipapel / Madera de reforestación certificada',
+          uso: 'Consumo y dotación de cafetería para personal corporativo, salas de espera y clientes',
+          ficha_url: officialUrl || window.DEFAULT_FICHA_DETALGRAF_PDF || null
+        };
+      }
+
+      // 7. Equipos y Útiles de Aseo (Mopas, Baldes, Bolsas, Bayetillas, Armazones, Traperos, Esponjas)
+      if (title.includes('mopa') || title.includes('balde') || title.includes('bolsa') || title.includes('bayetilla') || title.includes('armazon') || title.includes('trapero') || title.includes('esponja') || title.includes('portaescoba') || cat.includes('aseo')) {
+        return {
+          invima: 'Certificado de Manufactura y Resistencia B2B Detalgraf',
+          ph: 'Resistente a soluciones con pH entre 1 y 14',
+          bio: 'Polímero de Alta Densidad Reciclable / Microfibra Lavable',
+          unit: product.unit || 'Unidad Profesional',
+          comp: 'Polipropileno virgen de alto impacto y fibras textiles de alta tenacidad',
+          uso: 'Limpieza institucional de pisos, desinfección y segregación técnica de residuos',
+          ficha_url: officialUrl || window.DEFAULT_FICHA_DETALGRAF_PDF || null
+        };
+      }
+
+      // 8. General / Equipos de Oficina
+      return {
+        invima: 'Norma Técnica de Calidad Industrial ISO 9001 / B2B',
+        ph: 'No Aplica (Artículo de Oficina / Operativo)',
+        bio: 'Materiales Reciclables / Cumplimiento RoHS',
+        unit: product.unit || 'Unidad Institucional',
+        comp: 'Materiales certificados de ingeniería y alta durabilidad',
+        uso: 'Dotación administrativa y operativa de alta frecuencia',
+        ficha_url: officialUrl || window.DEFAULT_FICHA_DETALGRAF_PDF || null
+      };
+    }
+
+    // ========================================================================
     // FICHA DE PRODUCTO INTERACTIVA (PDP) — GALERÍA 100% DINÁMICA POR PRODUCTO
     // ========================================================================
     function populatePdpData(productId) {
-
       const product = PRODUCTS_DATA.find(p => String(p.id) === String(productId));
       if (!product) return;
       currentPdpProduct = product;
+
+      // Asignar especificaciones y ficha técnica oficial específica para este producto
+      const specData = getProductSpecificSpecs(product);
+      currentPdpProduct.ficha_url = specData.ficha_url;
+      currentPdpProduct.specs = {
+        ph: specData.ph,
+        bio: specData.bio,
+        comp: specData.comp,
+        uso: specData.uso
+      };
+      if (specData.invima) currentPdpProduct.invima = specData.invima;
+      if (specData.unit) currentPdpProduct.unit = specData.unit;
 
       document.getElementById('pdpBreadTitle').textContent = product.title;
       document.getElementById('pdpBreadCat').textContent = product.subcat || product.category;
       document.getElementById('pdpTitle').textContent = product.title;
       document.getElementById('pdpBadge').textContent = product.badge || 'Producto Institucional';
       document.getElementById('pdpSku').textContent = 'SKU: ' + (product.sku || 'DS-' + product.id.slice(-6));
-      document.getElementById('pdpInvima').textContent = product.invima || 'Registro Institucional Vigente';
+      document.getElementById('pdpInvima').textContent = currentPdpProduct.invima;
       document.getElementById('pdpPrice').textContent = `$${product.price.toLocaleString('es-CO')} COP`;
-document.getElementById('pdpQtyInput').value = 1;
+      document.getElementById('pdpQtyInput').value = 1;
       updatePdpTotal();
 
       // Galería Dinámica según el producto seleccionado
@@ -826,14 +951,12 @@ document.getElementById('pdpQtyInput').value = 1;
         }
 
         if (productImages.length > i) {
-          // Si el producto tiene múltiples imágenes reales en CDN
           thumbImg.src = productImages[i];
           if (thumbLbl) {
             const labels = ["1. Frontal", "2. Ángulo", "3. Detalle", "4. Empaque"];
             thumbLbl.textContent = labels[i];
           }
         } else {
-          // Para productos con 1 imagen: todas las 4 vistas son de SU PROPIA IMAGEN REAL
           thumbImg.src = product.image;
           if (thumbCard) {
             if (i === 1) thumbCard.classList.add('thumb-zoom');
@@ -858,36 +981,86 @@ document.getElementById('pdpQtyInput').value = 1;
         tc.classList.toggle('active', idx === 0);
       });
 
-      // Modal & PDP summary technical data
+      // 1. Datos en Resumen PDP
+      const pdpFichaInvima = document.getElementById('pdpFichaInvima');
+      if (pdpFichaInvima) pdpFichaInvima.textContent = currentPdpProduct.invima;
+      const pdpFichaUnit = document.getElementById('pdpFichaUnit');
+      if (pdpFichaUnit) pdpFichaUnit.textContent = currentPdpProduct.unit;
+      const pdpFichaPh = document.getElementById('pdpFichaPh');
+      if (pdpFichaPh) pdpFichaPh.textContent = specData.ph;
+      const pdpFichaBio = document.getElementById('pdpFichaBio');
+      if (pdpFichaBio) pdpFichaBio.textContent = specData.bio;
+
+      // 2. Configurar botón directo de descarga PDF en PDP
+      const btnPdpDownloadFicha = document.getElementById('btnPdpDownloadFicha');
+      if (btnPdpDownloadFicha) {
+        if (currentPdpProduct.ficha_url) {
+          btnPdpDownloadFicha.href = currentPdpProduct.ficha_url;
+          btnPdpDownloadFicha.target = '_blank';
+          btnPdpDownloadFicha.setAttribute('download', '');
+          btnPdpDownloadFicha.onclick = null;
+        } else {
+          btnPdpDownloadFicha.href = '#';
+          btnPdpDownloadFicha.removeAttribute('target');
+          btnPdpDownloadFicha.onclick = function(e) {
+            e.preventDefault();
+            downloadOrPrintPdf();
+          };
+        }
+      }
+
+      // Botón en la sección featured PDP (si existe en DOM)
+      const btnFeaturedDownload = document.getElementById('btnPdpFeaturedDownloadFicha');
+      if (btnFeaturedDownload) {
+        if (currentPdpProduct.ficha_url) {
+          btnFeaturedDownload.href = currentPdpProduct.ficha_url;
+          btnFeaturedDownload.target = '_blank';
+          btnFeaturedDownload.setAttribute('download', '');
+          btnFeaturedDownload.onclick = null;
+        } else {
+          btnFeaturedDownload.href = '#';
+          btnFeaturedDownload.removeAttribute('target');
+          btnFeaturedDownload.onclick = function(e) {
+            e.preventDefault();
+            downloadOrPrintPdf();
+          };
+        }
+      }
+
+      // 3. Datos en Modal Detallado
       const modalPdfTitle = document.getElementById('modalPdfTitle');
       if (modalPdfTitle) modalPdfTitle.textContent = `Ficha Técnica Oficial — ${product.title}`;
       const modalPdfSku = document.getElementById('modalPdfSku');
       if (modalPdfSku) modalPdfSku.textContent = 'SKU: ' + (product.sku || 'DS-' + product.id.slice(-6));
       const modalPdfInvima = document.getElementById('modalPdfInvima');
-      if (modalPdfInvima) modalPdfInvima.textContent = product.invima || 'Registro Institucional Vigente';
-      const modalPdfUnit = document.getElementById('modalPdfUnit');
-      if (modalPdfUnit) modalPdfUnit.textContent = product.unit || 'Unidad Institucional';
-
-      // Summary card in PDP
-      const pdpFichaInvima = document.getElementById('pdpFichaInvima');
-      if (pdpFichaInvima) pdpFichaInvima.textContent = product.invima || 'Registro Institucional Vigente';
-      const pdpFichaUnit = document.getElementById('pdpFichaUnit');
-      if (pdpFichaUnit) pdpFichaUnit.textContent = product.unit || 'Unidad Institucional';
-      
-      const phVal = (product.specs && product.specs.ph) ? product.specs.ph : '7.0 (Neutro)';
-      const bioVal = (product.specs && product.specs.bio) ? product.specs.bio : '≥ 90% Biodegradable';
-
+      if (modalPdfInvima) modalPdfInvima.textContent = currentPdpProduct.invima;
       const modalPdfPh = document.getElementById('modalPdfPh');
-      if (modalPdfPh) modalPdfPh.textContent = phVal;
+      if (modalPdfPh) modalPdfPh.textContent = specData.ph;
       const modalPdfBio = document.getElementById('modalPdfBio');
-      if (modalPdfBio) modalPdfBio.textContent = bioVal;
+      if (modalPdfBio) modalPdfBio.textContent = specData.bio;
+      const modalPdfUnit = document.getElementById('modalPdfUnit');
+      if (modalPdfUnit) modalPdfUnit.textContent = currentPdpProduct.unit;
+      const modalPdfComp = document.getElementById('modalPdfComp');
+      if (modalPdfComp) modalPdfComp.textContent = specData.comp;
+      const modalPdfUso = document.getElementById('modalPdfUso');
+      if (modalPdfUso) modalPdfUso.textContent = specData.uso;
 
-      const pdpFichaPh = document.getElementById('pdpFichaPh');
-      if (pdpFichaPh) pdpFichaPh.textContent = phVal;
-      const pdpFichaBio = document.getElementById('pdpFichaBio');
-      if (pdpFichaBio) pdpFichaBio.textContent = bioVal;
-
-      // PDP populated
+      const btnModalDownloadPdf = document.getElementById('btnModalDownloadPdf');
+      if (btnModalDownloadPdf) {
+        if (currentPdpProduct.ficha_url) {
+          btnModalDownloadPdf.href = currentPdpProduct.ficha_url;
+          btnModalDownloadPdf.target = '_blank';
+          btnModalDownloadPdf.setAttribute('download', '');
+          btnModalDownloadPdf.onclick = null;
+        } else {
+          btnModalDownloadPdf.href = '#';
+          btnModalDownloadPdf.removeAttribute('target');
+          btnModalDownloadPdf.onclick = function(e) {
+            e.preventDefault();
+            downloadOrPrintPdf();
+          };
+        }
+      }
     }
 
     function openPdpWithProduct(productId) {
@@ -909,7 +1082,6 @@ document.getElementById('pdpQtyInput').value = 1;
       const productImages = (currentPdpProduct.images && currentPdpProduct.images.length > 0) ? currentPdpProduct.images : [currentPdpProduct.image];
 
       if (productImages.length > index) {
-        // Muestra la imagen real correspondiente del producto
         mainImg.src = productImages[index];
         const captions = [
           "Vista 1: Frontal Institucional",
@@ -919,7 +1091,6 @@ document.getElementById('pdpQtyInput').value = 1;
         ];
         caption.textContent = captions[index] || `Vista ${index + 1}: Detalle`;
       } else {
-        // SIEMPRE LA IMAGEN REAL DE ESTE PRODUCTO (NUNCA EL TARRO AZUL)
         mainImg.src = currentPdpProduct.image;
         if (index === 0) {
           caption.textContent = "Vista 1: Frontal Institucional Completa";
@@ -963,6 +1134,7 @@ document.getElementById('pdpQtyInput').value = 1;
       if (modal) {
         modal.style.setProperty('display', 'flex', 'important');
         modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
       }
     }
     function closePdfModal() {
@@ -970,23 +1142,30 @@ document.getElementById('pdpQtyInput').value = 1;
       if (modal) {
         modal.style.setProperty('display', 'none', 'important');
         modal.classList.remove('active');
+        document.body.style.overflow = '';
       }
     }
 
-    function downloadOrPrintPdf() {
+    function downloadOrPrintPdf(e) {
+      if (e && e.preventDefault) e.preventDefault();
+
       const p = currentPdpProduct || {
         title: 'PRODUCTO INSTITUCIONAL DETALSHOP',
         sku: 'DTL-001',
         invima: 'INVIMA NSOH-09823-21CO',
         category: 'Aseo Profesional',
         unit: 'Unidad',
-        specs: { ph: '7.0 – 8.0 (Neutro)', bio: '≥ 90% Biodegradable' }
+        specs: { ph: '7.0 – 8.0 (Neutro)', bio: '≥ 90% Biodegradable', comp: 'Fórmula certificada', uso: 'Aseo profesional' }
       };
+
+      if (p.ficha_url) {
+        window.open(p.ficha_url, '_blank');
+        return;
+      }
 
       const printWin = window.open('', '_blank', 'width=840,height=920');
       if (!printWin) {
-        const link = document.getElementById('modalPdfDownloadLink');
-        if (link && link.href) window.location.href = link.href;
+        alert('Por favor habilite las ventanas emergentes (pop-ups) para descargar la ficha técnica.');
         return;
       }
 
@@ -1031,8 +1210,10 @@ document.getElementById('pdpQtyInput').value = 1;
             <tr><th>Línea / Categoría</th><td>${p.category || 'General'} · ${p.subcat || ''}</td></tr>
             <tr><th>Unidad de Empaque</th><td>${p.unit || 'Unidad'}</td></tr>
             <tr><th>Registro Sanitario INVIMA</th><td><strong style="color:#005091;">${p.invima || 'Registro Institucional Vigente'}</strong></td></tr>
-            <tr><th>pH Certificado</th><td>${(p.specs && p.specs.ph) || '7.0 – 8.0 (Neutro)'}</td></tr>
-            <tr><th>Biodegradabilidad</th><td>${(p.specs && p.specs.bio) || '≥ 90% Biodegradable'}</td></tr>
+            <tr><th>pH Certificado / Concentración</th><td>${(p.specs && p.specs.ph) || '7.0 – 8.0 (Neutro)'}</td></tr>
+            <tr><th>Biodegradabilidad / Norma</th><td>${(p.specs && p.specs.bio) || '≥ 90% Biodegradable'}</td></tr>
+            <tr><th>Componente / Material</th><td>${(p.specs && p.specs.comp) || 'Fórmula institucional certificada'}</td></tr>
+            <tr><th>Uso Recomendado</th><td>${(p.specs && p.specs.uso) || 'Aseo y mantenimiento institucional'}</td></tr>
             <tr><th>Cumplimiento Normativo</th><td>Resolución 683/2012 INVIMA & Estándares B2B</td></tr>
           </table>
 

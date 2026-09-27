@@ -2944,7 +2944,7 @@ input.drawer-step-val {
   background: rgba(15, 23, 42, 0.75) !important;
   backdrop-filter: blur(6px) !important;
   -webkit-backdrop-filter: blur(6px) !important;
-  z-index: 1000000 !important;
+  z-index: 2000000 !important;
   display: none;
   align-items: center !important;
   justify-content: center !important;
@@ -2954,6 +2954,7 @@ input.drawer-step-val {
 
 .pdf-modal-overlay.active {
   display: flex !important;
+  pointer-events: auto !important;
 }
 
 .pdf-modal-card {

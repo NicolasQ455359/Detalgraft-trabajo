@@ -341,6 +341,25 @@
     {%- render 'nqc-icons-modal' -%}
     {%- render 'nqc-quienes-somos-modal' -%}
 
+    <!-- Inyección dinámica de metadatos y fichas técnicas oficiales desde Shopify Liquid -->
+    <script>
+      window.DEFAULT_FICHA_BLANCOX_PDF = "{{ '5._DMS_020940-020941_F-T_BLANCOX_AROMA_PODER_NATURAL.pdf' | asset_url }}";
+      window.DEFAULT_FICHA_DETALGRAF_PDF = "{{ 'ficha-tecnica-detalgraf.pdf' | asset_url }}";
+      window.SHOPIFY_COLLECTION_METADATA = {
+        {% for prod in collections['all'].products %}
+          "{{ prod.id }}": {
+            "id": "{{ prod.id }}",
+            "title": {{ prod.title | json }},
+            "handle": {{ prod.handle | json }},
+            "ficha_url": {% if prod.metafields.custom.ficha_tecnica != blank %}{{ prod.metafields.custom.ficha_tecnica | file_url | json }}{% else %}null{% endif %},
+            "registro_sanitario": {% if prod.metafields.custom.registro_sanitario != blank %}{{ prod.metafields.custom.registro_sanitario | json }}{% else %}null{% endif %},
+            "ph": {% if prod.metafields.custom.ph != blank %}{{ prod.metafields.custom.ph | json }}{% else %}null{% endif %},
+            "biodegradabilidad": {% if prod.metafields.custom.biodegradabilidad != blank %}{{ prod.metafields.custom.biodegradabilidad | json }}{% else %}null{% endif %}
+          }{% unless forloop.last %},{% endunless %}
+        {% endfor %}
+      };
+    </script>
+
     <!-- NQC Interactive Application Logic & Product Catalog -->
     <script src="{{ 'nqc-scripts.js' | asset_url }}"></script>
   </body>

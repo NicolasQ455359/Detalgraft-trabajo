@@ -111,7 +111,7 @@
         <div class="grid__item {% if nav_type == 'center' %}large--six-twelfths{% else %}large--flex-fill{% endif %} medium--hide small--hide nav-containers nav-container-menu ">
           <ul class="inner-nav-containers">
             {%- render "dbtfy-mega-menu" -%}
-            
+            {%- assign has_quienes_somos = false -%}
             {%- for link in linklists[section.settings.main_menu_link_list].links -%}
             {%- if link.links != blank -%}
             {%- assign parent_index = forloop.index -%}
@@ -165,9 +165,11 @@
                 {%- endfor -%}
               </ul>
             </li>
+            {%- else -%}
             {%- assign link_title_lower = link.title | downcase -%}
             {%- assign link_url_lower = link.url | downcase -%}
             {%- if link_title_lower contains 'quienes' or link_title_lower contains 'somos' or link_url_lower contains 'quienes' -%}
+            {%- assign has_quienes_somos = true -%}
             <li class="site-nav__item">
               <a href="#quienes-somos"
                 class="site-nav__link"
@@ -196,6 +198,16 @@
             {%- endif -%}
             {%- endif -%}
             {%- endfor -%}
+            {%- unless has_quienes_somos -%}
+            <li class="site-nav__item">
+              <a href="#quienes-somos"
+                class="site-nav__link"
+                id="btnHeaderQuienesSomosDefault"
+                onclick="if(window.openQuienesSomosModal){window.openQuienesSomosModal();} return false;">
+                ¿Quiénes Somos?
+              </a>
+            </li>
+            {%- endunless -%}
           </ul>
         </div>
 

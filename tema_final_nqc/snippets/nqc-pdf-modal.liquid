@@ -9,17 +9,17 @@
       <button onclick="closePdfModal()" style="background:#f1f5f9; border:none; width:32px; height:32px; border-radius:50%; font-size:16px; font-weight:bold; cursor:pointer; color:#475569; display:flex; align-items:center; justify-content:center;">✕</button>
     </div>
 
-    <div style="font-size: 12.5px; color: #475569; line-height: 1.5; margin-bottom: 16px;">
+    <div style="font-size: 12.5px; color: #475569; line-height: 1.5; margin-bottom: 16px;" id="modalPdfSubtitle">
       Resumen técnico y especificaciones de calidad certificada para abastecimiento institucional e industrial.
     </div>
 
-    <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 18px; font-size: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+    <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 14px; font-size: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
       <div style="background:#ffffff; padding:8px 10px; border-radius:6px; border:1px solid #e2e8f0;">
         <strong style="color:#004b87; display:block; font-size:10.5px; text-transform:uppercase;">Registro Sanitario:</strong>
-        <span id="modalPdfInvima" style="font-weight:700; color:#0f172a;">INVIMA NSOH-09823-21CO</span>
+        <span id="modalPdfInvima" style="font-weight:700; color:#0f172a;">INVIMA Vigente</span>
       </div>
       <div style="background:#ffffff; padding:8px 10px; border-radius:6px; border:1px solid #e2e8f0;">
-        <strong style="color:#004b87; display:block; font-size:10.5px; text-transform:uppercase;">pH Certificado:</strong>
+        <strong style="color:#004b87; display:block; font-size:10.5px; text-transform:uppercase;">pH / Concentración:</strong>
         <span id="modalPdfPh" style="font-weight:700; color:#0f172a;">7.0 – 8.0 (Neutro)</span>
       </div>
       <div style="background:#ffffff; padding:8px 10px; border-radius:6px; border:1px solid #e2e8f0;">
@@ -32,14 +32,20 @@
       </div>
     </div>
 
+    <!-- ESPECIFICACIÓN DETALLADA ADICIONAL -->
+    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:8px; padding:10px 12px; margin-bottom:14px; font-size:11.5px; color:#334155;">
+      <div style="margin-bottom:6px;"><strong style="color:#004b87;">Componente Principal / Material:</strong> <span id="modalPdfComp">Fórmula institucional certificada</span></div>
+      <div><strong style="color:#004b87;">Uso Recomendado:</strong> <span id="modalPdfUso">Aseo, desinfección y mantenimiento profesional e industrial</span></div>
+    </div>
+
     <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:10px 12px; margin-bottom:18px; font-size:11.5px; color:#1e40af; line-height:1.4;">
       🔒 <strong>Garantía de Conformidad:</strong> Lote evaluado bajo normas de Buenas Prácticas de Manufactura (BPM) y control de calidad Detalgraf S.A.
     </div>
 
     <div style="display: flex; gap: 10px;">
-      <button type="button" id="btnModalDownloadPdf" onclick="downloadOrPrintPdf()" style="flex:1; text-align:center; background:#005091; color:#fff; border:none; padding:12px; border-radius:8px; font-size:13px; font-weight:800; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:8px;">
-        ⬇️ Descargar / Imprimir Ficha Oficial
-      </button>
+      <a href="#" target="_blank" rel="noopener" download id="btnModalDownloadPdf" onclick="downloadOrPrintPdf(event)" style="flex:1; text-align:center; background:#005091; color:#fff; border:none; padding:12px; border-radius:8px; font-size:13px; font-weight:800; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:8px; text-decoration:none; box-sizing:border-box;">
+        ⬇️ Descargar / Ver Ficha Oficial PDF
+      </a>
       <button type="button" onclick="closePdfModal()" style="background:#f1f5f9; border:1px solid #cbd5e1; padding:12px 18px; border-radius:8px; font-size:13px; font-weight:700; cursor:pointer; color:#334155;">
         Cerrar
       </button>
