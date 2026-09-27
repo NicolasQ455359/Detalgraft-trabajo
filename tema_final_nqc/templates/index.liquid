@@ -1910,10 +1910,16 @@
          ==================================================================== -->
     <main id="viewPdp" class="page-view-block">
       <div class="pdp-page-wrapper">
-        <div class="pdp-breadcrumb">
-          <a href="#" onclick="switchView('home'); return false;">Inicio</a> <span>/</span>
-          <a href="#" id="pdpBreadCat" onclick="switchView('home'); return false;">Aseo Profesional</a> <span>/</span>
-          <span id="pdpBreadTitle" style="color: var(--slate-900); font-weight: 700;">DETERGENTE LÍQUIDO CONCENTRADO 20L</span>
+        <!-- BARRA SUPERIOR DE RETORNO Y BREADCRUMB -->
+        <div class="pdp-top-bar" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px; flex-wrap:wrap; gap:12px;">
+          <button type="button" class="btn-pdp-back" onclick="switchView('home')">
+            <span>←</span> Volver al Catálogo
+          </button>
+          <div class="pdp-breadcrumb" style="margin:0;">
+            <a href="#" onclick="switchView('home'); return false;">Inicio</a> <span>/</span>
+            <a href="#" id="pdpBreadCat" onclick="switchView('home'); return false;">Aseo Profesional</a> <span>/</span>
+            <span id="pdpBreadTitle" style="color: var(--slate-900); font-weight: 700;">DETERGENTE LÍQUIDO CONCENTRADO 20L</span>
+          </div>
         </div>
 
         <div class="pdp-grid-figma">
@@ -1969,10 +1975,8 @@
               </div>
             </div>
 
-            
-
             <!-- CONTROL DE CANTIDAD -->
-            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
+            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
               <div style="font-size: 13px; font-weight: 800; color: #0f172a;">Cantidad a pedir:</div>
               <div class="card-stepper" style="border-width: 1.5px;">
                 <button type="button" class="btn-card-step" style="width:36px; height:40px; font-size:18px;" onclick="changePdpQty(-1)">-</button>
@@ -1994,19 +1998,49 @@
               </a>
             </div>
 
+            <!-- RESUMEN DE FICHA TÉCNICA OFICIAL ESPECÍFICO DEL PRODUCTO -->
+            <div class="pdp-ficha-summary-card">
+              <div class="pdp-ficha-summary-title">
+                <span>📋</span>
+                <span>Resumen de Ficha Técnica Institucional</span>
+              </div>
+              <div class="pdp-ficha-summary-grid">
+                <div class="pdp-ficha-summary-item">
+                  <label>Registro Sanitario</label>
+                  <span id="pdpFichaInvima">INVIMA Vigente</span>
+                </div>
+                <div class="pdp-ficha-summary-item">
+                  <label>pH Certificado</label>
+                  <span id="pdpFichaPh">7.0 (Neutro)</span>
+                </div>
+                <div class="pdp-ficha-summary-item">
+                  <label>Biodegradabilidad / Norma</label>
+                  <span id="pdpFichaBio">≥ 90% Biodegradable</span>
+                </div>
+                <div class="pdp-ficha-summary-item">
+                  <label>Presentación</label>
+                  <span id="pdpFichaUnit">Unidad Institucional</span>
+                </div>
+              </div>
+            </div>
+
             <!-- DESCARGA FICHA TÉCNICA -->
-            <button onclick="openPdfModal()" style="background:#eff6ff; border:1.5px dashed #004b87; color:#004b87; width:100%; padding:12px; border-radius:8px; font-size:13px; font-weight:800; cursor:pointer;">
+            <button type="button" onclick="openPdfModal()" style="background:#eff6ff; border:1.5px dashed #004b87; color:#004b87; width:100%; padding:14px; border-radius:8px; font-size:13.5px; font-weight:800; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; transition:all 0.15s ease;">
               ⬇️ Ver / Descargar Ficha Técnica Oficial (PDF)
             </button>
           </div>
+        </div>
+
+        <!-- BARRA INFERIOR DE RETORNO AL CATÁLOGO -->
+        <div style="margin-top: 36px; padding-top: 20px; border-top: 1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
+          <button type="button" class="btn-pdp-back" onclick="switchView('home')">
+            <span>←</span> Seguir Comprando en el Catálogo
+          </button>
         </div>
       </div>
     </main>
 
     <!-- ====================================================================
-         VISTA 3: PORTAL DE RASTREO (/TRACKING)
-         ==================================================================== -->
-        <!-- ====================================================================
          VISTA 3: PORTAL DE RASTREO (/TRACKING) — DISEÑO OFICIAL FIGMA
          CON PANEL DE ACTUALIZACIÓN GERENCIAL EN VIVO (WIX CMS)
          ==================================================================== -->
@@ -2025,7 +2059,7 @@
                    id="nqcTrackingInput" 
                    class="nqc-tracking-input" 
                    placeholder="Ingrese número de guía o factura (Ej: DTL-2026-8941)" 
-                   value="DTL-2026-8941" 
+                   value="" 
                    autocomplete="off">
             <button type="button" id="nqcBtnTrack" class="nqc-btn-track" onclick="doTrackingLookup()">
               Rastrear Envío
@@ -2039,8 +2073,24 @@
           </div>
         </div>
 
+        {%- if customer and customer.orders.size > 0 -%}
+        <div class="nqc-user-orders-banner" style="background:#f0fdf4; border:1.5px solid #86efac; border-radius:10px; padding:14px 18px; margin-bottom:20px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px;">
+          <div>
+            <span style="font-size:11px; font-weight:800; color:#15803d; text-transform:uppercase;">Usuario Conectado: {{ customer.first_name }} {{ customer.last_name }}</span>
+            <h4 style="font-size:14px; font-weight:900; color:#0f172a; margin:2px 0 0 0;">Tus Pedidos Recientes Listos para Rastreo:</h4>
+          </div>
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
+            {%- for order in customer.orders limit: 3 -%}
+              <button type="button" class="nqc-pill-btn" onclick="setAndTrackGuia('{{ order.name }}')" style="background:#ffffff; border-color:#86efac; color:#166534; font-weight:800;">
+                📦 {{ order.name }}
+              </button>
+            {%- endfor -%}
+          </div>
+        </div>
+        {%- endif -%}
+
         <!-- Tarjeta de Resultados (Timeline Hi-Fi Figma) -->
-        <div id="nqcTrackingResult" class="nqc-result-card">
+        <div id="nqcTrackingResult" class="nqc-result-card" style="display: none;">
           <div class="nqc-result-header">
             <div>
               <div class="nqc-status-badge nqc-badge-transit" id="nqcStatusBadge">

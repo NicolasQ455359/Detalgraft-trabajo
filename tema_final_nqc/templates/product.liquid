@@ -1,31 +1,11 @@
-<!-- /templates/product.liquid -->
-{%- section 'product-template' -%}
-
-{%- section "dbtfy-upsell-bundles" -%}
-
-{%- section 'product-row' -%}
-
-{%- section 'dbtfy-pricing-table' -%}
-
-{%- section 'product-recommendations' -%}
-
-{%- unless settings.review_widget_tabs -%}
-  {%- render 'review-widget' -%}
-{%- endunless -%}
-
-{%- section "dbtfy-faq-section" -%}
-
-{%- section 'related-products' -%}
-
-{%- if collection and settings.show_back_to_collection -%}
-<div class="back-box">
-  <a href="{{ collection.url }}" class="btn btn--banner">
-    <span class="{{settings.icon}}" aria-hidden="true">arrow_back</span>
-    {{ 'products.general.collection_return' | t: collection: collection.title }}
-  </a>
-</div>
-{%- endif -%}
-
-{%- section 'quotes' -%}
-
-
+<!-- /templates/product.liquid — Integración con la nueva experiencia SPA DetalShop -->
+<script>
+  window.location.replace('/?pdp={{ product.id }}#pdp-{{ product.id }}');
+</script>
+<noscript>
+  <meta http-equiv="refresh" content="0;url=/?pdp={{ product.id }}#pdp-{{ product.id }}">
+  <div style="text-align: center; padding: 50px;">
+    <h2>Cargando {{ product.title }} en DetalShop...</h2>
+    <p><a href="/?pdp={{ product.id }}#pdp-{{ product.id }}">Haz clic aquí para ver el producto en el catálogo</a></p>
+  </div>
+</noscript>

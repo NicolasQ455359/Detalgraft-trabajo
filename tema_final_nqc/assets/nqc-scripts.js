@@ -237,14 +237,29 @@
         var vh = document.getElementById('viewHome'); if (vh) vh.classList.add('active');
         var th = document.getElementById('tabBtnHome'); if (th) th.classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        try {
+          if (window.history && window.history.pushState) {
+            window.history.pushState({ view: 'home' }, '', window.location.pathname);
+          }
+        } catch(e) {}
       } else if (viewName === 'pdp') {
         var vp = document.getElementById('viewPdp'); if (vp) vp.classList.add('active');
         var tp = document.getElementById('tabBtnPdp'); if (tp) tp.classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        try {
+          if (window.history && window.history.pushState && currentPdpProduct) {
+            window.history.pushState({ view: 'pdp', productId: currentPdpProduct.id }, '', '#pdp-' + currentPdpProduct.id);
+          }
+        } catch(e) {}
       } else if (viewName === 'track' || viewName === 'tracking') {
         var vt = document.getElementById('viewTrack'); if (vt) vt.classList.add('active');
         var tt = document.getElementById('tabBtnTrack'); if (tt) tt.classList.add('active');
         window.scrollTo({ top: 0, behavior: 'smooth' });
+        try {
+          if (window.history && window.history.pushState) {
+            window.history.pushState({ view: 'track' }, '', '#tracking');
+          }
+        } catch(e) {}
       }
     }
 
@@ -695,9 +710,10 @@
       if (overlay) {
         overlay.style.setProperty('display', 'flex', 'important');
         overlay.classList.add('active');
+        document.body.classList.add('cart-open');
         document.body.style.overflow = 'hidden';
       } else {
-        window.location.href = '/cart';
+        window.location.href = '/?openCart=1';
       }
     }
 
@@ -707,6 +723,7 @@
         if (overlay) {
           overlay.style.setProperty('display', 'none', 'important');
           overlay.classList.remove('active');
+          document.body.classList.remove('cart-open');
           document.body.style.overflow = '';
         }
       }
@@ -727,22 +744,46 @@
         return;
       }
 
-      // Sync attributes with Shopify cart and redirect to native checkout
+      const btn = document.getElementById('btnCheckoutFigma');
+      if (btn) {
+        btn.textContent = 'Procesando pago seguro... 🔒';
+        btn.disabled = true;
+      }
+
+      // Sync items and attributes with Shopify cart and redirect to native checkout
       try {
-        fetch('/cart/update.js', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            attributes: {
-              'Cédula / NIT DIAN': cedula,
-              'Zona Despacho': cartZone === 100000 ? 'Bogotá ($100.000)' : 'Nacional ($200.000)'
-            }
+        const itemsToPush = cart.map(item => ({
+          id: parseInt(item.id) || item.id,
+          quantity: item.qty
+        }));
+
+        fetch('/cart/clear.js', { method: 'POST' })
+          .then(() => {
+            return fetch('/cart/add.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ items: itemsToPush })
+            });
           })
-        }).then(function() {
-          window.location.href = '/checkout';
-        }).catch(function() {
-          window.location.href = '/checkout';
-        });
+          .then(() => {
+            return fetch('/cart/update.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                note: `Facturación Electrónica DIAN — Cédula/NIT: ${cedula}`,
+                attributes: {
+                  'Cédula / NIT DIAN': cedula,
+                  'Zona Despacho': cartZone === 100000 ? 'Bogotá ($100.000)' : 'Nacional ($200.000)'
+                }
+              })
+            });
+          })
+          .then(() => {
+            window.location.href = '/checkout';
+          })
+          .catch(() => {
+            window.location.href = '/checkout';
+          });
       } catch(e) {
         window.location.href = '/checkout';
       }
@@ -817,13 +858,34 @@ document.getElementById('pdpQtyInput').value = 1;
         tc.classList.toggle('active', idx === 0);
       });
 
-      // Modal ficha técnica data
-      document.getElementById('modalPdfTitle').textContent = `Ficha Técnica Oficial — ${product.title}`;
-      document.getElementById('modalPdfInvima').textContent = product.invima || 'Registro Institucional Vigente';
-      if (product.specs) {
-        document.getElementById('modalPdfPh').textContent = product.specs.ph || '7.0 (Neutro)';
-        document.getElementById('modalPdfBio').textContent = product.specs.bio || '≥ 90%';
-      }
+      // Modal & PDP summary technical data
+      const modalPdfTitle = document.getElementById('modalPdfTitle');
+      if (modalPdfTitle) modalPdfTitle.textContent = `Ficha Técnica Oficial — ${product.title}`;
+      const modalPdfSku = document.getElementById('modalPdfSku');
+      if (modalPdfSku) modalPdfSku.textContent = 'SKU: ' + (product.sku || 'DS-' + product.id.slice(-6));
+      const modalPdfInvima = document.getElementById('modalPdfInvima');
+      if (modalPdfInvima) modalPdfInvima.textContent = product.invima || 'Registro Institucional Vigente';
+      const modalPdfUnit = document.getElementById('modalPdfUnit');
+      if (modalPdfUnit) modalPdfUnit.textContent = product.unit || 'Unidad Institucional';
+
+      // Summary card in PDP
+      const pdpFichaInvima = document.getElementById('pdpFichaInvima');
+      if (pdpFichaInvima) pdpFichaInvima.textContent = product.invima || 'Registro Institucional Vigente';
+      const pdpFichaUnit = document.getElementById('pdpFichaUnit');
+      if (pdpFichaUnit) pdpFichaUnit.textContent = product.unit || 'Unidad Institucional';
+      
+      const phVal = (product.specs && product.specs.ph) ? product.specs.ph : '7.0 (Neutro)';
+      const bioVal = (product.specs && product.specs.bio) ? product.specs.bio : '≥ 90% Biodegradable';
+
+      const modalPdfPh = document.getElementById('modalPdfPh');
+      if (modalPdfPh) modalPdfPh.textContent = phVal;
+      const modalPdfBio = document.getElementById('modalPdfBio');
+      if (modalPdfBio) modalPdfBio.textContent = bioVal;
+
+      const pdpFichaPh = document.getElementById('pdpFichaPh');
+      if (pdpFichaPh) pdpFichaPh.textContent = phVal;
+      const pdpFichaBio = document.getElementById('pdpFichaBio');
+      if (pdpFichaBio) pdpFichaBio.textContent = bioVal;
 
       // PDP populated
     }
@@ -898,11 +960,17 @@ document.getElementById('pdpQtyInput').value = 1;
     // MODAL PDF & FICHA TÉCNICA OFICIAL
     function openPdfModal() {
       const modal = document.getElementById('pdfModalOverlay');
-      if (modal) modal.classList.add('active');
+      if (modal) {
+        modal.style.setProperty('display', 'flex', 'important');
+        modal.classList.add('active');
+      }
     }
     function closePdfModal() {
       const modal = document.getElementById('pdfModalOverlay');
-      if (modal) modal.classList.remove('active');
+      if (modal) {
+        modal.style.setProperty('display', 'none', 'important');
+        modal.classList.remove('active');
+      }
     }
 
     function downloadOrPrintPdf() {
@@ -1212,6 +1280,12 @@ document.getElementById('pdpQtyInput').value = 1;
         renderTrackingOrder(customOrder);
         saveTrackingOverrides();
       }
+
+      const resCard = document.getElementById("nqcTrackingResult");
+      if (resCard) {
+        resCard.style.display = "block";
+        resCard.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
     }
 
     function setAndTrackGuia(guia) {
@@ -1424,14 +1498,20 @@ document.getElementById('pdpQtyInput').value = 1;
     // MODAL ¿QUIÉNES SOMOS?
     function openQuienesSomosModal() {
       const modal = document.getElementById('quienesSomosModal');
-      if (modal) modal.classList.add('active');
+      if (modal) {
+        modal.style.setProperty('display', 'flex', 'important');
+        modal.classList.add('active');
+      }
     }
     window.openQuienesSomosModal = openQuienesSomosModal;
 
     function closeQuienesSomosModal(e) {
       if (!e || e.target === document.getElementById('quienesSomosModal') || (e.target.closest && e.target.closest('.btn-close-quienes')) || (e.target.tagName === 'BUTTON' && e.target.textContent.includes('Entendido'))) {
         const modal = document.getElementById('quienesSomosModal');
-        if (modal) modal.classList.remove('active');
+        if (modal) {
+          modal.style.setProperty('display', 'none', 'important');
+          modal.classList.remove('active');
+        }
       }
     }
     window.closeQuienesSomosModal = closeQuienesSomosModal;
@@ -1590,7 +1670,25 @@ document.getElementById('pdpQtyInput').value = 1;
       }
     });
 
-    // INICIALIZAR CATÁLOGO CUANDO EL DOM ESTÉ LISTO
+    // SOPORTE DEL BOTÓN DE RETORNO NATIVO DEL NAVEGADOR (POPSTATE)
+    window.addEventListener('popstate', function(e) {
+      if (e.state && e.state.view === 'pdp' && e.state.productId) {
+        populatePdpData(e.state.productId);
+        document.querySelectorAll('.page-view-block').forEach(el => el.classList.remove('active'));
+        var vp = document.getElementById('viewPdp'); if (vp) vp.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else if (e.state && (e.state.view === 'track' || e.state.view === 'tracking')) {
+        document.querySelectorAll('.page-view-block').forEach(el => el.classList.remove('active'));
+        var vt = document.getElementById('viewTrack'); if (vt) vt.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      } else {
+        document.querySelectorAll('.page-view-block').forEach(el => el.classList.remove('active'));
+        var vh = document.getElementById('viewHome'); if (vh) vh.classList.add('active');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      }
+    });
+
+    // INICIALIZAR CATÁLOGO Y PROCESAR PARÁMETROS URL CUANDO EL DOM ESTÉ LISTO
     document.addEventListener('DOMContentLoaded', function() {
       if (typeof renderCatalog === 'function') {
         renderCatalog(true);
@@ -1598,4 +1696,25 @@ document.getElementById('pdpQtyInput').value = 1;
       if (typeof updateCartUI === 'function') {
         updateCartUI();
       }
+
+      // Parámetros de URL para navegación integrada
+      try {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('openCart') === '1' || window.location.hash === '#cart') {
+          setTimeout(openCartDrawer, 350);
+        }
+        const pdpParam = urlParams.get('pdp') || urlParams.get('product');
+        if (pdpParam) {
+          setTimeout(function() {
+            openPdpWithProduct(pdpParam);
+          }, 300);
+        }
+        const colParam = urlParams.get('collection');
+        if (colParam && typeof filterHomeCatalog === 'function') {
+          setTimeout(function() {
+            filterHomeCatalog(colParam);
+            scrollToCatalog();
+          }, 300);
+        }
+      } catch(e) {}
     });

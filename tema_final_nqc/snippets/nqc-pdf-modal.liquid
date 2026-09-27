@@ -1,30 +1,48 @@
 <div class="pdf-modal-overlay" id="pdfModalOverlay" onclick="closePdfModal()">
-    <div class="pdf-modal-card" onclick="event.stopPropagation()">
-      <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px;">
-        <div>
-          <span style="font-size: 10px; font-weight: 800; color: #004b87; background: #e0f2fe; padding: 2px 6px; border-radius: 4px;">DOCUMENTO TÉCNICO OFICIAL</span>
-          <h3 style="font-size: 16px; font-weight: 900; margin-top: 4px;" id="modalPdfTitle">Ficha Técnica Oficial — Detalgraf</h3>
-        </div>
-        <button onclick="closePdfModal()" style="background:none; border:none; font-size:18px; cursor:pointer;">✕</button>
+  <div class="pdf-modal-card" onclick="event.stopPropagation()">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 16px; border-bottom: 1px solid #e2e8f0; padding-bottom: 14px;">
+      <div>
+        <span style="font-size: 10px; font-weight: 800; color: #004b87; background: #e0f2fe; padding: 3px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em;">Ficha Técnica Oficial B2B</span>
+        <h3 style="font-size: 16px; font-weight: 900; color: #0f172a; margin-top: 6px; margin-bottom: 2px;" id="modalPdfTitle">Ficha Técnica Oficial — DetalShop</h3>
+        <span style="font-size: 11.5px; color: #64748b; font-weight: 600;" id="modalPdfSku">SKU: DTL-001</span>
       </div>
+      <button onclick="closePdfModal()" style="background:#f1f5f9; border:none; width:32px; height:32px; border-radius:50%; font-size:16px; font-weight:bold; cursor:pointer; color:#475569; display:flex; align-items:center; justify-content:center;">✕</button>
+    </div>
 
-      <div style="font-size: 12.5px; color: #475569; line-height: 1.5; margin-bottom: 18px;">
-        Este producto cuenta con registro sanitario INVIMA y cumple con los estándares de biodegradabilidad y control de calidad institucional.
+    <div style="font-size: 12.5px; color: #475569; line-height: 1.5; margin-bottom: 16px;">
+      Resumen técnico y especificaciones de calidad certificada para abastecimiento institucional e industrial.
+    </div>
+
+    <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 10px; padding: 14px; margin-bottom: 18px; font-size: 12px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+      <div style="background:#ffffff; padding:8px 10px; border-radius:6px; border:1px solid #e2e8f0;">
+        <strong style="color:#004b87; display:block; font-size:10.5px; text-transform:uppercase;">Registro Sanitario:</strong>
+        <span id="modalPdfInvima" style="font-weight:700; color:#0f172a;">INVIMA NSOH-09823-21CO</span>
       </div>
-
-      <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 12px; margin-bottom: 18px; font-size: 12px;">
-        <div><strong>Registro:</strong> <span id="modalPdfInvima">INVIMA NSOH-09823-21CO</span></div>
-        <div style="margin-top:4px;"><strong>pH Certificado:</strong> <span id="modalPdfPh">7.0 – 8.0 (Neutro)</span></div>
-        <div style="margin-top:4px;"><strong>Biodegradabilidad:</strong> <span id="modalPdfBio">≥ 90%</span></div>
+      <div style="background:#ffffff; padding:8px 10px; border-radius:6px; border:1px solid #e2e8f0;">
+        <strong style="color:#004b87; display:block; font-size:10.5px; text-transform:uppercase;">pH Certificado:</strong>
+        <span id="modalPdfPh" style="font-weight:700; color:#0f172a;">7.0 – 8.0 (Neutro)</span>
       </div>
-
-      <div style="display: flex; gap: 10px;">
-        <a id="modalPdfDownloadLink" href="{{ 'ficha-tecnica-detalgraf.pdf' | asset_url }}" target="_blank" download="Ficha_Tecnica_Detalgraf.pdf" onclick="if(window.downloadOrPrintPdf){window.downloadOrPrintPdf();}" style="flex:1; text-align:center; background:#1a4b8c; color:#fff; text-decoration:none; padding:10px; border-radius:6px; font-size:13px; font-weight:800; display:inline-flex; align-items:center; justify-content:center; gap:6px;">
-          ⬇️ Descargar PDF Oficial
-        </a>
-        <button onclick="closePdfModal()" style="background:#f1f5f9; border:none; padding:10px 16px; border-radius:6px; font-size:13px; font-weight:700; cursor:pointer;">
-          Cerrar
-        </button>
+      <div style="background:#ffffff; padding:8px 10px; border-radius:6px; border:1px solid #e2e8f0;">
+        <strong style="color:#004b87; display:block; font-size:10.5px; text-transform:uppercase;">Biodegradabilidad / Norma:</strong>
+        <span id="modalPdfBio" style="font-weight:700; color:#0f172a;">≥ 90% Biodegradable</span>
+      </div>
+      <div style="background:#ffffff; padding:8px 10px; border-radius:6px; border:1px solid #e2e8f0;">
+        <strong style="color:#004b87; display:block; font-size:10.5px; text-transform:uppercase;">Presentación:</strong>
+        <span id="modalPdfUnit" style="font-weight:700; color:#0f172a;">Unidad Institucional</span>
       </div>
     </div>
+
+    <div style="background:#eff6ff; border:1px solid #bfdbfe; border-radius:8px; padding:10px 12px; margin-bottom:18px; font-size:11.5px; color:#1e40af; line-height:1.4;">
+      🔒 <strong>Garantía de Conformidad:</strong> Lote evaluado bajo normas de Buenas Prácticas de Manufactura (BPM) y control de calidad Detalgraf S.A.
+    </div>
+
+    <div style="display: flex; gap: 10px;">
+      <button type="button" id="btnModalDownloadPdf" onclick="downloadOrPrintPdf()" style="flex:1; text-align:center; background:#005091; color:#fff; border:none; padding:12px; border-radius:8px; font-size:13px; font-weight:800; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:8px;">
+        ⬇️ Descargar / Imprimir Ficha Oficial
+      </button>
+      <button type="button" onclick="closePdfModal()" style="background:#f1f5f9; border:1px solid #cbd5e1; padding:12px 18px; border-radius:8px; font-size:13px; font-weight:700; cursor:pointer; color:#334155;">
+        Cerrar
+      </button>
+    </div>
   </div>
+</div>

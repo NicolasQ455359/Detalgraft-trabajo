@@ -1,96 +1,133 @@
 <main id="viewPdp" class="page-view-block">
-      <div class="pdp-page-wrapper">
-        <div class="pdp-breadcrumb">
-          <a href="#" onclick="switchView('home'); return false;">Inicio</a> <span>/</span>
-          <a href="#" id="pdpBreadCat" onclick="switchView('home'); return false;">Aseo Profesional</a> <span>/</span>
-          <span id="pdpBreadTitle" style="color: var(--slate-900); font-weight: 700;">DETERGENTE LÍQUIDO CONCENTRADO 20L</span>
+  <div class="pdp-page-wrapper">
+    <!-- BARRA SUPERIOR DE RETORNO Y BREADCRUMB -->
+    <div class="pdp-top-bar" style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px; flex-wrap:wrap; gap:12px;">
+      <button type="button" class="btn-pdp-back" onclick="switchView('home')">
+        <span>←</span> Volver al Catálogo
+      </button>
+      <div class="pdp-breadcrumb" style="margin:0;">
+        <a href="#" onclick="switchView('home'); return false;">Inicio</a> <span>/</span>
+        <a href="#" id="pdpBreadCat" onclick="switchView('home'); return false;">Aseo Profesional</a> <span>/</span>
+        <span id="pdpBreadTitle" style="color: var(--slate-900); font-weight: 700;">DETERGENTE LÍQUIDO CONCENTRADO 20L</span>
+      </div>
+    </div>
+
+    <div class="pdp-grid-figma">
+      <!-- COLUMNA IZQUIERDA: GALERÍA 4 VISTAS -->
+      <div>
+        <div class="pdp-gallery-main">
+          <img id="pdpMainImg" src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/IMG-0621.jpg?v=1789132618" alt="Producto DetalShop">
+          <div class="gallery-view-caption" id="galleryViewCaption">Vista 1: Frontal Institucional</div>
         </div>
 
-        <div class="pdp-grid-figma">
-          <!-- COLUMNA IZQUIERDA: GALERÍA 4 VISTAS -->
-          <div>
-            <div class="pdp-gallery-main">
-              <img id="pdpMainImg" src="https://cdn.shopify.com/s/files/1/0285/4309/0820/files/IMG-0621.jpg?v=1789132618" alt="Producto DetalShop">
-              <div class="gallery-view-caption" id="galleryViewCaption">Vista 1: Frontal Institucional</div>
-            </div>
-
-            <!-- MINIATURAS INTERACTIVAS (DINÁMICAS POR PRODUCTO) -->
-            <div class="pdp-thumbs-row">
-              <div class="pdp-thumb-card active" onclick="switchPdpImage(0)">
-                <img id="thumb0" src="logo_detalshop_oficial.png" alt="Vista 1" loading="lazy">
-                <div class="pdp-thumb-label" id="thumbLabel0">1. Frontal</div>
-              </div>
-              <div class="pdp-thumb-card" onclick="switchPdpImage(1)">
-                <img id="thumb1" src="logo_detalshop_oficial.png" alt="Vista 2" loading="lazy">
-                <div class="pdp-thumb-label" id="thumbLabel1">2. Zoom (1.6x)</div>
-              </div>
-              <div class="pdp-thumb-card" onclick="switchPdpImage(2)">
-                <img id="thumb2" src="logo_detalshop_oficial.png" alt="Vista 3" loading="lazy">
-                <div class="pdp-thumb-label" id="thumbLabel2">3. Detalle (2x)</div>
-              </div>
-              <div class="pdp-thumb-card" onclick="switchPdpImage(3)">
-                <img id="thumb3" src="logo_detalshop_oficial.png" alt="Vista 4" loading="lazy">
-                <div class="pdp-thumb-label" id="thumbLabel3">4. Empaque (1.3x)</div>
-              </div>
-            </div>
+        <!-- MINIATURAS INTERACTIVAS (DINÁMICAS POR PRODUCTO) -->
+        <div class="pdp-thumbs-row">
+          <div class="pdp-thumb-card active" onclick="switchPdpImage(0)">
+            <img id="thumb0" src="{{ 'logo_DETALSHOP-01.png' | asset_url }}" alt="Vista 1" loading="lazy">
+            <div class="pdp-thumb-label" id="thumbLabel0">1. Frontal</div>
           </div>
-
-          <!-- COLUMNA DERECHA: DATOS CORPORATIVOS & COMPRA -->
-          <div>
-            <div class="badge-bestseller">
-              <span>⭐</span> <span id="pdpBadge">Bestseller Institucional</span>
-            </div>
-
-            <h1 class="pdp-title-h1" id="pdpTitle">DETERGENTE LÍQUIDO CONCENTRADO 20L</h1>
-            
-            <div class="pdp-meta-row">
-              <span id="pdpRating">4.9 ★★★★★ (24 clientes B2B)</span>
-              <span>•</span>
-              <span id="pdpSku">SKU: DL-20L-IND</span>
-              <span>•</span>
-              <span id="pdpInvima" style="color: #16a34a; font-weight: 700;">INVIMA NSOH-09823-21CO</span>
-            </div>
-
-            <div class="pdp-price-box">
-              <div style="font-size: 12px; color: var(--slate-500); margin-bottom: 2px;">Precio Unitario Institucional:</div>
-              <div class="pdp-price-hero" id="pdpPrice">$48.500 COP</div>
-              <div style="font-size: 12px; color: #16a34a; font-weight: 700; margin-top: 4px;">
-                ✓ IVA incluido · Facturación electrónica DIAN inmediata
-              </div>
-            </div>
-
-            
-
-            <!-- CONTROL DE CANTIDAD -->
-            <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 24px;">
-              <div style="font-size: 13px; font-weight: 800; color: #0f172a;">Cantidad a pedir:</div>
-              <div class="card-stepper" style="border-width: 1.5px;">
-                <button type="button" class="btn-card-step" style="width:36px; height:40px; font-size:18px;" onclick="changePdpQty(-1)">-</button>
-                <input type="number" id="pdpQtyInput" class="input-card-qty" style="width:48px; height:40px; font-size:15px;" value="1" min="1" max="999" onchange="updatePdpTotal()">
-                <button type="button" class="btn-card-step" style="width:36px; height:40px; font-size:18px;" onclick="changePdpQty(1)">+</button>
-              </div>
-              <div style="font-size: 14px; font-weight: 900; color: #004b87;" id="pdpSubtotalDisplay">
-                Subtotal: $48.500 COP
-              </div>
-            </div>
-
-            <!-- BOTONES DE ACCIÓN -->
-            <div class="pdp-actions-row">
-              <button class="btn-add-cart-figma" onclick="addPdpToCart()">
-                🛒 Agregar al Carrito
-              </button>
-              <a href="https://wa.me/573100000000?text=Hola,%20solicito%20cotizaci%C3%B3n%20empresarial%20de%20suministros" target="_blank" class="btn-quote-whatsapp">
-                💬 Cotizar WhatsApp
-              </a>
-            </div>
-
-            <!-- DESCARGA FICHA TÉCNICA -->
-            <button onclick="openPdfModal()" style="background:#eff6ff; border:1.5px dashed #004b87; color:#004b87; width:100%; padding:12px; border-radius:8px; font-size:13px; font-weight:800; cursor:pointer;">
-              ⬇️ Ver / Descargar Ficha Técnica Oficial (PDF)
-            </button>
+          <div class="pdp-thumb-card" onclick="switchPdpImage(1)">
+            <img id="thumb1" src="{{ 'logo_DETALSHOP-01.png' | asset_url }}" alt="Vista 2" loading="lazy">
+            <div class="pdp-thumb-label" id="thumbLabel1">2. Zoom (1.6x)</div>
+          </div>
+          <div class="pdp-thumb-card" onclick="switchPdpImage(2)">
+            <img id="thumb2" src="{{ 'logo_DETALSHOP-01.png' | asset_url }}" alt="Vista 3" loading="lazy">
+            <div class="pdp-thumb-label" id="thumbLabel2">3. Detalle (2x)</div>
+          </div>
+          <div class="pdp-thumb-card" onclick="switchPdpImage(3)">
+            <img id="thumb3" src="{{ 'logo_DETALSHOP-01.png' | asset_url }}" alt="Vista 4" loading="lazy">
+            <div class="pdp-thumb-label" id="thumbLabel3">4. Empaque (1.3x)</div>
           </div>
         </div>
       </div>
+
+      <!-- COLUMNA DERECHA: DATOS CORPORATIVOS & COMPRA -->
+      <div>
+        <div class="badge-bestseller">
+          <span>⭐</span> <span id="pdpBadge">Bestseller Institucional</span>
+        </div>
+
+        <h1 class="pdp-title-h1" id="pdpTitle">DETERGENTE LÍQUIDO CONCENTRADO 20L</h1>
+        
+        <div class="pdp-meta-row">
+          <span id="pdpRating">4.9 ★★★★★ (24 clientes B2B)</span>
+          <span>•</span>
+          <span id="pdpSku">SKU: DL-20L-IND</span>
+          <span>•</span>
+          <span id="pdpInvima" style="color: #16a34a; font-weight: 700;">INVIMA NSOH-09823-21CO</span>
+        </div>
+
+        <div class="pdp-price-box">
+          <div style="font-size: 12px; color: var(--slate-500); margin-bottom: 2px;">Precio Unitario Institucional:</div>
+          <div class="pdp-price-hero" id="pdpPrice">$48.500 COP</div>
+          <div style="font-size: 12px; color: #16a34a; font-weight: 700; margin-top: 4px;">
+            ✓ IVA incluido · Facturación electrónica DIAN inmediata
+          </div>
+        </div>
+
+        <!-- CONTROL DE CANTIDAD -->
+        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
+          <div style="font-size: 13px; font-weight: 800; color: #0f172a;">Cantidad a pedir:</div>
+          <div class="card-stepper" style="border-width: 1.5px;">
+            <button type="button" class="btn-card-step" style="width:36px; height:40px; font-size:18px;" onclick="changePdpQty(-1)">-</button>
+            <input type="number" id="pdpQtyInput" class="input-card-qty" style="width:48px; height:40px; font-size:15px;" value="1" min="1" max="999" onchange="updatePdpTotal()">
+            <button type="button" class="btn-card-step" style="width:36px; height:40px; font-size:18px;" onclick="changePdpQty(1)">+</button>
+          </div>
+          <div style="font-size: 14px; font-weight: 900; color: #004b87;" id="pdpSubtotalDisplay">
+            Subtotal: $48.500 COP
+          </div>
+        </div>
+
+        <!-- BOTONES DE ACCIÓN -->
+        <div class="pdp-actions-row">
+          <button class="btn-add-cart-figma" onclick="addPdpToCart()">
+            🛒 Agregar al Carrito
+          </button>
+          <a href="https://wa.me/573100000000?text=Hola,%20solicito%20cotizaci%C3%B3n%20empresarial%20de%20suministros" target="_blank" class="btn-quote-whatsapp">
+            💬 Cotizar WhatsApp
+          </a>
+        </div>
+
+        <!-- RESUMEN DE FICHA TÉCNICA OFICIAL ESPECÍFICO DEL PRODUCTO -->
+        <div class="pdp-ficha-summary-card">
+          <div class="pdp-ficha-summary-title">
+            <span>📋</span>
+            <span>Resumen de Ficha Técnica Institucional</span>
+          </div>
+          <div class="pdp-ficha-summary-grid">
+            <div class="pdp-ficha-summary-item">
+              <label>Registro Sanitario</label>
+              <span id="pdpFichaInvima">INVIMA Vigente</span>
+            </div>
+            <div class="pdp-ficha-summary-item">
+              <label>pH Certificado</label>
+              <span id="pdpFichaPh">7.0 (Neutro)</span>
+            </div>
+            <div class="pdp-ficha-summary-item">
+              <label>Biodegradabilidad / Norma</label>
+              <span id="pdpFichaBio">≥ 90% Biodegradable</span>
+            </div>
+            <div class="pdp-ficha-summary-item">
+              <label>Presentación</label>
+              <span id="pdpFichaUnit">Unidad Institucional</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- DESCARGA FICHA TÉCNICA -->
+        <button type="button" onclick="openPdfModal()" style="background:#eff6ff; border:1.5px dashed #004b87; color:#004b87; width:100%; padding:14px; border-radius:8px; font-size:13.5px; font-weight:800; cursor:pointer; display:flex; align-items:center; justify-content:center; gap:8px; transition:all 0.15s ease;">
+          ⬇️ Ver / Descargar Ficha Técnica Oficial (PDF)
+        </button>
+      </div>
+    </div>
+
+    <!-- BARRA INFERIOR DE RETORNO AL CATÁLOGO -->
+    <div style="margin-top: 36px; padding-top: 20px; border-top: 1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
+      <button type="button" class="btn-pdp-back" onclick="switchView('home')">
+        <span>←</span> Seguir Comprando en el Catálogo
+      </button>
+    </div>
+  </div>
 </main>
 
 {% schema %}

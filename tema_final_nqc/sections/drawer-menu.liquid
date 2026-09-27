@@ -91,6 +91,17 @@
           </ul>
         </li>
         {%- else -%}
+        {%- assign link_title_lower = link.title | downcase -%}
+        {%- assign link_url_lower = link.url | downcase -%}
+        {%- if link_title_lower contains 'quienes' or link_title_lower contains 'somos' or link_url_lower contains 'quienes' -%}
+        <li class="mobile-nav__item">
+          <a href="#quienes-somos"
+             class="mobile-nav__link"
+             onclick="if(window.timber && window.timber.LeftDrawer){window.timber.LeftDrawer.close();} if(window.openQuienesSomosModal){window.openQuienesSomosModal();} return false;">
+            {{ link.title | escape }}
+          </a>
+        </li>
+        {%- else -%}
         <li class="mobile-nav__item">
           <a href="{{ link.url }}"
              class="mobile-nav__link"
@@ -98,6 +109,7 @@
             {{ link.title | escape }}
           </a>
         </li>
+        {%- endif -%}
         {%- endif -%}
         {%- endfor -%}
         <li class="mobile-nav__item">

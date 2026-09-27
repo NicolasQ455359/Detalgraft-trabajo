@@ -2877,3 +2877,244 @@ input.drawer-step-val {
   color: #ffffff !important;
 }
 
+/* ==========================================================================
+   MODAL OFICIAL ¿QUIÉNES SOMOS? & ESTILOS DE NAVEGACIÓN
+   ========================================================================== */
+.quienes-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(15, 23, 42, 0.75) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+  z-index: 1000000 !important;
+  display: none;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px !important;
+  box-sizing: border-box !important;
+}
+
+.quienes-modal-overlay.active {
+  display: flex !important;
+}
+
+.quienes-modal-card {
+  background: #ffffff !important;
+  border-radius: 16px !important;
+  max-width: 680px !important;
+  width: 100% !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  padding: 32px !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35) !important;
+  position: relative !important;
+  animation: modalScaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-sizing: border-box !important;
+}
+
+.btn-close-quienes {
+  position: absolute !important;
+  top: 16px !important;
+  right: 16px !important;
+  background: #f1f5f9 !important;
+  border: none !important;
+  font-size: 18px !important;
+  width: 34px !important;
+  height: 34px !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  cursor: pointer !important;
+  color: #475569 !important;
+  transition: all 0.15s ease !important;
+}
+
+.btn-close-quienes:hover {
+  background: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+/* ==========================================================================
+   MODAL FICHA TÉCNICA OFICIAL (PDF) — ULTRA ALTA PRIORIDAD Z-INDEX
+   ========================================================================== */
+.pdf-modal-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(15, 23, 42, 0.75) !important;
+  backdrop-filter: blur(6px) !important;
+  -webkit-backdrop-filter: blur(6px) !important;
+  z-index: 1000000 !important;
+  display: none;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 20px !important;
+  box-sizing: border-box !important;
+}
+
+.pdf-modal-overlay.active {
+  display: flex !important;
+}
+
+.pdf-modal-card {
+  background: #ffffff !important;
+  border-radius: 16px !important;
+  width: 100% !important;
+  max-width: 520px !important;
+  max-height: 90vh !important;
+  overflow-y: auto !important;
+  padding: 28px !important;
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.35) !important;
+  position: relative !important;
+  animation: modalScaleIn 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  box-sizing: border-box !important;
+}
+
+@keyframes modalScaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ==========================================================================
+   CART DRAWER & STICKY BAR — ZERO CUT-OFF & ACCESIBILIDAD TOTAL
+   ========================================================================== */
+.cart-drawer-overlay {
+  position: fixed !important;
+  inset: 0 !important;
+  background: rgba(15, 23, 42, 0.65) !important;
+  backdrop-filter: blur(4px) !important;
+  -webkit-backdrop-filter: blur(4px) !important;
+  z-index: 99999 !important;
+  display: none;
+  justify-content: flex-end !important;
+}
+
+.cart-drawer-overlay.active {
+  display: flex !important;
+}
+
+.cart-drawer-panel {
+  width: 440px !important;
+  max-width: 95vw !important;
+  height: 100vh !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
+  background: #ffffff !important;
+  display: flex !important;
+  flex-direction: column !important;
+  box-shadow: -8px 0 35px rgba(0,0,0,0.3) !important;
+  animation: slideInRight 0.3s ease !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
+}
+
+.drawer-header {
+  flex: 0 0 auto !important;
+  padding: 16px 20px !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  background: #f8fafc !important;
+}
+
+.drawer-body {
+  flex: 1 1 auto !important;
+  overflow-y: auto !important;
+  min-height: 0 !important;
+  padding: 16px 20px !important;
+  -webkit-overflow-scrolling: touch;
+}
+
+.drawer-footer {
+  flex: 0 0 auto !important;
+  padding: 14px 20px 24px 20px !important;
+  border-top: 1.5px solid #e2e8f0 !important;
+  background: #f8fafc !important;
+  box-shadow: 0 -4px 16px rgba(0,0,0,0.06) !important;
+}
+
+/* Ocultar barra flotante de fondo si el carrito está abierto para evitar recortes */
+body.cart-open .sticky-bottom-bar,
+.cart-drawer-overlay.active ~ .sticky-bottom-bar {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Espacio inferior de seguridad para que la barra flotante no tape elementos */
+.page-view-block,
+.nqc-store-wrapper {
+  padding-bottom: 85px !important;
+}
+
+/* Botón Volver al Catálogo en PDP */
+.btn-pdp-back {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
+  padding: 9px 18px !important;
+  border-radius: 8px !important;
+  font-size: 13.5px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  cursor: pointer !important;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.06) !important;
+  transition: all 0.15s ease !important;
+}
+
+.btn-pdp-back:hover {
+  background: #f1f5f9 !important;
+  border-color: #005091 !important;
+  color: #005091 !important;
+  transform: translateX(-2px) !important;
+}
+
+/* Tarjeta Resumen Ficha Técnica en PDP */
+.pdp-ficha-summary-card {
+  background: #f0fdf4 !important;
+  border: 1.5px solid #86efac !important;
+  border-radius: 12px !important;
+  padding: 16px !important;
+  margin: 18px 0 !important;
+}
+
+.pdp-ficha-summary-title {
+  display: flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  font-size: 13px !important;
+  font-weight: 900 !important;
+  color: #166534 !important;
+  margin-bottom: 10px !important;
+}
+
+.pdp-ficha-summary-grid {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 10px !important;
+  font-size: 12px !important;
+  color: #1e293b !important;
+}
+
+.pdp-ficha-summary-item {
+  background: #ffffff !important;
+  border: 1px solid #dcfce7 !important;
+  border-radius: 6px !important;
+  padding: 8px 10px !important;
+}
+
+.pdp-ficha-summary-item label {
+  display: block !important;
+  font-size: 10.5px !important;
+  font-weight: 800 !important;
+  color: #15803d !important;
+  text-transform: uppercase !important;
+  margin-bottom: 2px !important;
+}
+
+.pdp-ficha-summary-item span {
+  font-weight: 700 !important;
+  color: #0f172a !important;
+}
+
+

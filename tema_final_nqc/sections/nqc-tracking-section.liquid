@@ -13,7 +13,7 @@
                    id="nqcTrackingInput" 
                    class="nqc-tracking-input" 
                    placeholder="Ingrese número de guía o factura (Ej: DTL-2026-8941)" 
-                   value="DTL-2026-8941" 
+                   value="" 
                    autocomplete="off">
             <button type="button" id="nqcBtnTrack" class="nqc-btn-track" onclick="doTrackingLookup()">
               Rastrear Envío
@@ -28,7 +28,7 @@
         </div>
 
         <!-- Tarjeta de Resultados (Timeline Hi-Fi Figma) -->
-        <div id="nqcTrackingResult" class="nqc-result-card">
+        <div id="nqcTrackingResult" class="nqc-result-card" style="display: none;">
           <div class="nqc-result-header">
             <div>
               <div class="nqc-status-badge nqc-badge-transit" id="nqcStatusBadge">

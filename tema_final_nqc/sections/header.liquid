@@ -165,8 +165,27 @@
                 {%- endfor -%}
               </ul>
             </li>
+            {%- assign link_title_lower = link.title | downcase -%}
+            {%- assign link_url_lower = link.url | downcase -%}
+            {%- if link_title_lower contains 'quienes' or link_title_lower contains 'somos' or link_url_lower contains 'quienes' -%}
+            <li class="site-nav__item">
+              <a href="#quienes-somos"
+                class="site-nav__link"
+                id="btnHeaderQuienesSomos"
+                onclick="if(window.openQuienesSomosModal){window.openQuienesSomosModal();} return false;">
+                {{ link.title | escape }}
+              </a>
+            </li>
+            {%- elsif link_title_lower contains 'tracking' or link_title_lower contains 'rastreo' or link_url_lower contains 'tracking' -%}
+            <li class="site-nav__item">
+              <a href="#tracking"
+                class="site-nav__link site-nav__link--tracking"
+                onclick="if(window.switchView){window.switchView('track');} return false;">
+                <span class="{{settings.icon}} icon-width">local_shipping</span>
+                {{ link.title | escape }}
+              </a>
+            </li>
             {%- else -%}
-            <!-- only 1 link, no dropdown -->
             <li class="site-nav__item {% if link.active %} site-nav--active{% endif %}">
               <a href="{{ link.url }}"
                 class="site-nav__link"
@@ -174,6 +193,7 @@
                 {{ link.title | escape }}
               </a>
             </li>
+            {%- endif -%}
             {%- endif -%}
             {%- endfor -%}
           </ul>
