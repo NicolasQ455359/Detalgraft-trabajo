@@ -45,23 +45,19 @@
 
 <div style="text-align: center; margin-top: 1rem;">
   {%- assign ft_url = product.metafields.custom.ficha_tecnica | file_url -%}
-  {%- if ft_url == blank and product.title contains 'BLANCOX' or product.title contains 'HIPOCLORITO' or product.title contains 'CLORO' or product.type contains 'Quimic' -%}
-    {%- assign ft_url = '5._DMS_020940-020941_F-T_BLANCOX_AROMA_PODER_NATURAL.pdf' | asset_url -%}
+  {%- if ft_url != blank -%}
+    <a href="{{ ft_url }}"
+       target="_blank"
+       rel="noopener"
+       download
+       class="btn-ficha-tecnica">
+      <!-- Ícono PDF -->
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
+        <path d="M181.9 256.4c-5.5-14.1-11.4-27.5-17.6-39.8-9.2-17.4-19.3-33.1-30.4-46.7-11.2-13.6-23.6-24.9-36.9-33.3C82.3 121.2 66.1 112 48 112c-17.7 0-32 14.3-32 32v96c0 17.7 14.3 32 32 32h20.1c3.7 0 7.1-1.2 10.1-3.4 8.2-6.1 20.2-9.4 35.8-9.4 12.3 0 22.2 2.1 29.7 6.3s12.5 10.7 15.2 19.4l.4 1.3 13.4 37.2-24.1 66.9-1.5 4.2c-3.5 9.6-7.4 17.2-11.7 22.8-4.3 5.6-8.6 9.5-12.7 11.6s-7.8 3.2-11.5 3.2H48c-17.7 0-32 14.3-32 32v16c0 17.7 14.3 32 32 32h88c24.7 0 44.5-10.7 59.1-31.9 14.7-21.3 27.6-51.3 38.4-89.3 10.9-38 19.5-81.7 25.7-129.8H352c17.7 0 32-14.3 32-32v-16c0-17.7-14.3-32-32-32H224V32c0-17.7-14.3-32-32-32H112c-17.7 0-32 14.3-32 32v80h72v64H64v-64h16v-80h160v80h-40v64h48c17.7 0 32 14.3 32 32v16c0 17.7-14.3 32-32 32h-66.1z"/>
+      </svg>
+      Descargar Ficha Técnica
+    </a>
   {%- endif -%}
-  {%- if ft_url == blank -%}
-    {%- assign ft_url = 'ficha-tecnica-detalgraf.pdf' | asset_url -%}
-  {%- endif -%}
-  <a href="{{ ft_url }}"
-     target="_blank"
-     rel="noopener"
-     download
-     class="btn-ficha-tecnica">
-    <!-- Ícono PDF -->
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512">
-      <path d="M181.9 256.4c-5.5-14.1-11.4-27.5-17.6-39.8-9.2-17.4-19.3-33.1-30.4-46.7-11.2-13.6-23.6-24.9-36.9-33.3C82.3 121.2 66.1 112 48 112c-17.7 0-32 14.3-32 32v96c0 17.7 14.3 32 32 32h20.1c3.7 0 7.1-1.2 10.1-3.4 8.2-6.1 20.2-9.4 35.8-9.4 12.3 0 22.2 2.1 29.7 6.3s12.5 10.7 15.2 19.4l.4 1.3 13.4 37.2-24.1 66.9-1.5 4.2c-3.5 9.6-7.4 17.2-11.7 22.8-4.3 5.6-8.6 9.5-12.7 11.6s-7.8 3.2-11.5 3.2H48c-17.7 0-32 14.3-32 32v16c0 17.7 14.3 32 32 32h88c24.7 0 44.5-10.7 59.1-31.9 14.7-21.3 27.6-51.3 38.4-89.3 10.9-38 19.5-81.7 25.7-129.8H352c17.7 0 32-14.3 32-32v-16c0-17.7-14.3-32-32-32H224V32c0-17.7-14.3-32-32-32H112c-17.7 0-32 14.3-32 32v80h72v64H64v-64h16v-80h160v80h-40v64h48c17.7 0 32 14.3 32 32v16c0 17.7-14.3 32-32 32h-66.1z"/>
-    </svg>
-    Descargar Ficha Técnica Oficial (PDF)
-  </a>
 </div>
 
 {% schema %}

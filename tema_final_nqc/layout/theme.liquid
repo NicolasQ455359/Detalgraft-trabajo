@@ -343,12 +343,12 @@
 
     <!-- Inyección dinámica de metadatos y fichas técnicas oficiales desde Shopify Liquid -->
     <script>
-      window.DEFAULT_FICHA_BLANCOX_PDF = "{{ '5._DMS_020940-020941_F-T_BLANCOX_AROMA_PODER_NATURAL.pdf' | asset_url }}";
-      window.DEFAULT_FICHA_DETALGRAF_PDF = "{{ 'ficha-tecnica-detalgraf.pdf' | asset_url }}";
       window.SHOPIFY_COLLECTION_METADATA = {
         {% for prod in collections['all'].products %}
           "{{ prod.id }}": {
             "id": "{{ prod.id }}",
+            "variant_id": {{ prod.selected_or_first_available_variant.id | json }},
+            "sku": {{ prod.selected_or_first_available_variant.sku | json }},
             "title": {{ prod.title | json }},
             "handle": {{ prod.handle | json }},
             "ficha_url": {% if prod.metafields.custom.ficha_tecnica != blank %}{{ prod.metafields.custom.ficha_tecnica | file_url | json }}{% else %}null{% endif %},
