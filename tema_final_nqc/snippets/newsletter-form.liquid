@@ -18,7 +18,7 @@
         placeholder="{{ 'customer.register.first_name' | t }}"
         aria-label="{{ 'customer.register.first_name' | t }}"
         autocapitalize="words"
-        value="{%- if form.first_name -%}{{ form.first_name }}{%- elsif customer -%}{{ customer.first_name }}{%- endif -%}">
+        value="">
   {%- endif -%}
   <input type="email"
         class="input--small newsletter__input {% if form.errors contains 'email' %}input-error{% endif %}"
@@ -29,7 +29,7 @@
         autocapitalize="off"
         required="required"
         aria-required="true"
-        value="{%- if form.email -%}{{ form.email }}{%- elsif customer -%}{{ customer.email }}{%- endif -%}"
+        value=""
         {%- if form.errors contains 'email' -%}
         aria-invalid="true"
         {%- endif -%}>

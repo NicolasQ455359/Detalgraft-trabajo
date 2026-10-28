@@ -44,7 +44,20 @@
 </style>
 
 <div style="text-align: center; margin-top: 1rem;">
-  {%- assign ft_url = product.metafields.custom.ficha_tecnica | file_url -%}
+  {%- assign ft_val = product.metafields.custom.ficha_tecnica -%}
+  {%- assign ft_url = '' -%}
+  {%- if ft_val.value.url != blank -%}
+    {%- assign ft_url = ft_val.value.url -%}
+  {%- elsif ft_val.url != blank -%}
+    {%- assign ft_url = ft_val.url -%}
+  {%- elsif ft_val != blank -%}
+    {%- assign ft_url = ft_val | file_url -%}
+  {%- endif -%}
+  {%- if ft_url == blank and product.title contains 'Blancox' and product.title contains 'Aroma' -%}
+    {%- assign ft_url = '5._DMS_020940-020941_F-T_BLANCOX_AROMA_PODER_NATURAL.pdf' | asset_url -%}
+  {%- elsif ft_url == blank and product.title contains 'Detergente' and product.title contains 'Detalgraf' -%}
+    {%- assign ft_url = 'ficha-tecnica-detalgraf.pdf' | asset_url -%}
+  {%- endif -%}
   {%- if ft_url != blank -%}
     <a href="{{ ft_url }}"
        target="_blank"

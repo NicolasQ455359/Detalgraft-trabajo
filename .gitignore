@@ -8,3 +8,5 @@ __pycache__/
 .DS_Store
 Thumbs.db
 desktop.ini
+*.exe
+10_Scripts_y_Herramientas/

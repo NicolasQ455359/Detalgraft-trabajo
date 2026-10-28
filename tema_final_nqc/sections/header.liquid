@@ -7,18 +7,12 @@
       <div class="grid grid-small flex-nowrap align-center header-grid">
 
         <!-- left icons -->
-        <div class="grid__item large--hide flex-fill whitespace-nowrap nav-containers nav-container-left-icons">
+        <div class="grid__item large--hide medium--flex-fill small--flex-fill whitespace-nowrap nav-containers nav-container-left-icons">
           <ul class="inner-nav-containers">
-            <li class="site-nav__item site-nav--open">
-              <a href="" class="site-nav__link site-nav__link--icon js-drawer-open-button-left" aria-controls="NavDrawer" aria-label="{{ 'general.drawers.navigation' | t }}" title="{{ 'general.drawers.navigation' | t }}">
-                <span class="{{settings.icon}}" aria-hidden="true">menu</span>
-              </a>
-            </li>
-
             {%- render 'dbtfy-wish-list', type: 'menu' -%}
 
             {%- if settings.search_enabled -%}
-            <li class="site-nav__item">
+            <li class="site-nav__item large--hide">
               <a href="/search" class="site-nav__link site-nav__link--icon js-drawer-open-button-top" aria-controls="SearchDrawer" aria-label="{{ 'general.search.title' | t }}" title="{{ 'general.search.title' | t }}">
                 <span class="{{settings.icon}}" aria-hidden="true">search</span>
               </a>
@@ -296,7 +290,7 @@
             </li>
 
             <li class="site-nav__item">
-              <a href="/cart" class="site-nav__link site-nav__link--icon cart-link js-drawer-open-button-right" aria-controls="CartDrawer" aria-label="{{ 'layout.cart.title' | t }}" title="{{ 'layout.cart.title' | t }}">
+              <a href="/cart" class="site-nav__link site-nav__link--icon cart-link js-drawer-open-button-right" onclick="if(window.openCartDrawer){openCartDrawer();return false;}" aria-controls="CartDrawer" aria-label="{{ 'layout.cart.title' | t }}" title="{{ 'layout.cart.title' | t }}">
                 <span class="{{settings.icon}}" aria-hidden="true">{{ settings.icon_cart }}</span>
                 <span class="cart-link__bubble{% if cart.item_count > 0 %} cart-link__bubble--visible{% endif %}"></span>
                 <span class="cart-count" id="headerCartCount" style="{% if cart.item_count > 0 %}display:inline-block;{% else %}display:none;{% endif %}">{{cart.item_count}}</span>

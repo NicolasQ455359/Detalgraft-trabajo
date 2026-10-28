@@ -1,6 +1,98 @@
-<div id="NavDrawer" class="drawer drawer--left overlay-content" data-section-id="{{ section.id }}" data-section-type="drawer-menu-section" aria-hidden="true" tabindex="-1">
+<style>
+  /* ==========================================================
+     MENÚ DRAWER OFICIAL - ALTO CONTRASTE Y ENLACES 100% ACTIVOS
+     ========================================================== */
+  #NavDrawer,
+  #NavDrawer.drawer,
+  #NavDrawer.drawer--left {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    width: 360px !important;
+    max-width: 90vw !important;
+    z-index: 1000000 !important;
+    box-shadow: 10px 0 40px rgba(0, 0, 0, 0.25) !important;
+  }
+
+  #NavDrawer .drawer__header,
+  #NavDrawer .drawer__inner,
+  #NavDrawer .drawer__inner-section {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* TODOS LOS ENLACES: Color negro/azul oscuro contrastante (#0f172a), negrita y cursor pointer */
+  #NavDrawer .mobile-nav__link,
+  #NavDrawer .mobile-nav__item a,
+  #NavDrawer .drawer__inner-section a:not(.btn) {
+    color: #0f172a !important;
+    opacity: 1 !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 10px 8px !important;
+    border-radius: 6px !important;
+    transition: all 0.2s ease !important;
+  }
+
+  #NavDrawer .mobile-nav__link:hover,
+  #NavDrawer .mobile-nav__item a:hover,
+  #NavDrawer .drawer__inner-section a:not(.btn):hover {
+    color: #005091 !important;
+    background-color: #f1f5f9 !important;
+    padding-left: 12px !important;
+  }
+
+  /* Submenús de categorías */
+  #NavDrawer .mobile-nav__sublist {
+    background: #f8fafc !important;
+    border-left: 3px solid #005091 !important;
+    border-radius: 0 8px 8px 0 !important;
+    margin: 6px 0 10px 10px !important;
+    padding: 6px 12px !important;
+    list-style: none !important;
+  }
+
+  #NavDrawer .mobile-nav__sublist .mobile-nav__link,
+  #NavDrawer .mobile-nav__sublist a {
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    color: #334155 !important;
+    padding: 6px 8px !important;
+  }
+
+  #NavDrawer .mobile-nav__sublist .mobile-nav__link:hover,
+  #NavDrawer .mobile-nav__sublist a:hover {
+    color: #005091 !important;
+    background-color: #e2e8f0 !important;
+  }
+
+  /* Botón + de categorías */
+  #NavDrawer .mobile-nav__toggle-btn {
+    background: #f1f5f9 !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-radius: 6px !important;
+    color: #0f172a !important;
+    cursor: pointer !important;
+    font-weight: 800 !important;
+    width: 32px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  #NavDrawer .mobile-nav__toggle-btn:hover {
+    background: #e2e8f0 !important;
+    color: #005091 !important;
+  }
+</style>
+
+<div id="NavDrawer" class="drawer drawer--left" data-section-id="{{ section.id }}" data-section-type="drawer-menu-section" aria-hidden="true" tabindex="-1">
   <div class="drawer__header">
-    <div class="drawer__title">
+    <div class="drawer__title" style="color: #0f172a !important; font-weight: 800 !important;">
       <span class="{{ settings.icon }}" aria-hidden="true">menu</span>
       <span class="spacer-left-xs">
         {%- if section.settings.title != blank -%}
@@ -11,7 +103,7 @@
       </span>
     </div>
     <div class="drawer__close">
-      <button type="button" class="btn btn-square-small drawer__close-button js-drawer-close"  aria-label="{{ 'general.drawers.close_menu' | t }}" title="{{ 'general.drawers.close_menu' | t }}">
+      <button type="button" class="btn btn-square-small drawer__close-button js-drawer-close" aria-label="{{ 'general.drawers.close_menu' | t }}" title="{{ 'general.drawers.close_menu' | t }}" onclick="if(window.timber && window.timber.LeftDrawer){window.timber.LeftDrawer.close();} if(window.closeNavDrawer){window.closeNavDrawer();}">
         <span class="{{settings.icon}}" aria-hidden="true">close</span>
       </button>
     </div>
@@ -28,9 +120,10 @@
             <a href="{{ link.url }}"
                class="mobile-nav__link {% if section.settings.drawer_link_toggle %}mobile-nav__toggle-link{% endif %}"
                id="Label-{{ forloop.index }}"
+               onclick="var s=document.getElementById('Linklist-{{ forloop.index }}'); if(s){ var isH=(s.style.display==='none'||getComputedStyle(s).display==='none'); s.style.display=isH?'block':'none'; var b=this.parentElement.querySelector('.mobile-nav__toggle-btn'); if(b){b.classList.toggle('is-active', isH); b.setAttribute('aria-expanded', isH?'true':'false');} } return false;"
                {% unless request.page_type == 'index' %}{% if link.active %}aria-current="page"{% endif %}{% endunless %}>{{ link.title | escape }}</a>
             <div class="mobile-nav__toggle">
-              <button type="button" class="btn btn-square-small mobile-nav__toggle-btn" aria-controls="Linklist-{{ forloop.index }}" aria-expanded="false">
+              <button type="button" class="btn btn-square-small mobile-nav__toggle-btn" aria-controls="Linklist-{{ forloop.index }}" aria-expanded="false" onclick="var s=document.getElementById('Linklist-{{ forloop.index }}'); if(s){ var isH=(s.style.display==='none'||getComputedStyle(s).display==='none'); s.style.display=isH?'block':'none'; this.classList.toggle('is-active', isH); this.setAttribute('aria-expanded', isH?'true':'false'); }">
                 <span class="mobile-nav__toggle-open" aria-label="{{ 'general.drawers.expand_submenu' | t }} {{ link.title | escape }}" title="{{ 'general.drawers.expand_submenu' | t }} {{ link.title | escape }}">
                   <span class="{{settings.icon}}" aria-hidden="true">add</span>
                 </span>
@@ -50,11 +143,12 @@
                    href="{{ childlink.url }}"
                    class="mobile-nav__link {% if section.settings.drawer_link_toggle %}mobile-nav__toggle-link{% endif %}"
                    id="Label-{{ parent_index }}-{{ forloop.index }}"
+                   onclick="var s=document.getElementById('Linklist-{{ parent_index }}-{{ forloop.index }}'); if(s){ var isH=(s.style.display==='none'||getComputedStyle(s).display==='none'); s.style.display=isH?'block':'none'; var b=this.parentElement.querySelector('.mobile-nav__toggle-btn'); if(b){b.classList.toggle('is-active', isH); b.setAttribute('aria-expanded', isH?'true':'false');} } return false;"
                    {% unless request.page_type == 'index' %}{% if link.active %}aria-current="page"{% endif %}{% endunless %}>
                   {{ childlink.title }}
                 </a>
                 <div class="mobile-nav__toggle">
-                  <button type="button" class="btn btn-square-small mobile-nav__toggle-btn" aria-controls="Linklist-{{ parent_index }}-{{ forloop.index }}" aria-expanded="false">
+                  <button type="button" class="btn btn-square-small mobile-nav__toggle-btn" aria-controls="Linklist-{{ parent_index }}-{{ forloop.index }}" aria-expanded="false" onclick="var s=document.getElementById('Linklist-{{ parent_index }}-{{ forloop.index }}'); if(s){ var isH=(s.style.display==='none'||getComputedStyle(s).display==='none'); s.style.display=isH?'block':'none'; this.classList.toggle('is-active', isH); this.setAttribute('aria-expanded', isH?'true':'false'); }">
                     <span class="mobile-nav__toggle-open" aria-label="{{ 'general.drawers.expand_submenu' | t }} {{ childlink.title | escape }}" title="{{ 'general.drawers.expand_submenu' | t }} {{ childlink.title | escape }}">
                       <span class="{{settings.icon}}" aria-hidden="true">add</span>
                     </span>
@@ -82,6 +176,7 @@
               <a
                  href="{{ childlink.url }}"
                  class="mobile-nav__link"
+                 onclick="if(window.timber && window.timber.LeftDrawer){window.timber.LeftDrawer.close();} if(window.closeNavDrawer){window.closeNavDrawer();} if(window.switchView){window.switchView('home');} if(window.filterHomeCatalog){window.filterHomeCatalog('{{ childlink.title | escape }}');} if(window.scrollToCatalog){window.scrollToCatalog();} return false;"
                  {% unless request.page_type == 'index' %}{%- if childlink.active -%}aria-current="page"{% endif %}{% endunless %}>
                 {{ childlink.title | escape }}
               </a>
@@ -97,7 +192,15 @@
         <li class="mobile-nav__item">
           <a href="#quienes-somos"
              class="mobile-nav__link"
-             onclick="if(window.timber && window.timber.LeftDrawer){window.timber.LeftDrawer.close();} if(window.openQuienesSomosModal){window.openQuienesSomosModal();} return false;">
+             onclick="if(window.timber && window.timber.LeftDrawer){window.timber.LeftDrawer.close();} if(window.closeNavDrawer){window.closeNavDrawer();} if(window.openQuienesSomosModal){window.openQuienesSomosModal();} return false;">
+            {{ link.title | escape }}
+          </a>
+        </li>
+        {%- elsif link_title_lower contains 'inicio' or link_url_lower == '/' or link_url_lower contains 'detalshop.com/' -%}
+        <li class="mobile-nav__item">
+          <a href="/"
+             class="mobile-nav__link"
+             onclick="if(window.timber && window.timber.LeftDrawer){window.timber.LeftDrawer.close();} if(window.closeNavDrawer){window.closeNavDrawer();} if(window.switchView){window.switchView('home');} window.scrollTo({top:0,behavior:'smooth'}); return false;">
             {{ link.title | escape }}
           </a>
         </li>
@@ -113,7 +216,7 @@
         {%- endif -%}
         {%- endfor -%}
         <li class="mobile-nav__item">
-          <a href="#tracking" class="mobile-nav__link" onclick="if(window.switchView){window.switchView('track');}">
+          <a href="#tracking" class="mobile-nav__link" onclick="if(window.timber && window.timber.LeftDrawer){window.timber.LeftDrawer.close();} if(window.closeNavDrawer){window.closeNavDrawer();} if(window.switchView){window.switchView('track');} window.scrollTo({top:0,behavior:'smooth'}); return false;">
             <span class="{{settings.icon}}" aria-hidden="true" style="margin-right:6px;">local_shipping</span>
             Rastrear Pedido / Envíos
           </a>
@@ -134,11 +237,11 @@
           <span class="customer-name">{{ customer.first_name | capitalize }}</span>
         </a>
       {%- else -%}
-        <a href="{{ routes.account_login_url }}" class="btn btn--small btn--full spacer-bottom">
+        <a href="{{ routes.account_login_url }}" class="btn btn--small btn--full spacer-bottom" style="color: #0f172a !important; font-weight: 700 !important; background: #ffffff !important; border: 1.5px solid #cbd5e1 !important; border-radius: 8px !important;">
           <span class="{{settings.icon}} icon-width">exit_to_app</span>
           {{ 'layout.customer.log_in' | t }}
         </a>
-        <a href="{{ routes.account_register_url }}" class="btn btn--primary btn--small btn--full">
+        <a href="{{ routes.account_register_url }}" class="btn btn--primary btn--small btn--full" style="background: #2e9d58 !important; color: #ffffff !important; font-weight: 700 !important; border: none !important; border-radius: 8px !important;">
           <span class="{{settings.icon}} icon-width">person_add</span>
           {{ 'layout.customer.create_account' | t }}
         </a>
@@ -151,17 +254,17 @@
       <ul class="mobile-nav">
         {%- if section.settings.email -%}
         <li class="mobile-nav__item mobile-nav__item--secondary">
-          <a href="mailto:{{ shop.email | escape }}">
-            <span class="{{settings.icon}} icon-width" aria-hidden="true">email</span>
-            {{ shop.email }}
+          <a href="mailto:info@detalgraf.com" onclick="if(window.openContactMail){window.openContactMail(event);}" class="mobile-nav__link" style="color: #334155 !important; font-weight: 600 !important; font-size: 14px !important; opacity: 1 !important; cursor: pointer;">
+            <span class="{{settings.icon}} icon-width" aria-hidden="true" style="margin-right: 8px;">email</span>
+            info@detalgraf.com
           </a>
         </li>
         {%- endif -%}
         {%- if section.settings.phone -%}
         <li class="mobile-nav__item mobile-nav__item--secondary">
-          <a href="tel:{{ shop.phone | remove: '-' | replace: ' ', '' }}">
-            <span class="{{settings.icon}} icon-width" aria-hidden="true">phone</span>
-            {{ shop.phone }}
+          <a href="tel:6012772800" class="mobile-nav__link" style="color: #334155 !important; font-weight: 600 !important; font-size: 14px !important; opacity: 1 !important;">
+            <span class="{{settings.icon}} icon-width" aria-hidden="true" style="margin-right: 8px;">phone</span>
+            (601) 277 2800
           </a>
         </li>
         {%- endif -%}
@@ -173,7 +276,9 @@
     <div class="drawer__inner-section">
       <ul class="mobile-nav">
         {%- for link in linklists[section.settings.drawer_bottom_link_list].links -%}
-        <li class="mobile-nav__item mobile-nav__item--secondary"><a href="{{ link.url }}">{{ link.title }}</a></li>
+        <li class="mobile-nav__item mobile-nav__item--secondary">
+          <a href="{{ link.url }}" class="mobile-nav__link" style="color: #334155 !important; font-weight: 600 !important; font-size: 14px !important; opacity: 1 !important;">{{ link.title }}</a>
+        </li>
         {%- endfor -%}
       </ul>
     </div>

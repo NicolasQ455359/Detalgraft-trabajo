@@ -37,18 +37,40 @@ Trabajo/
 ├── 📁 05_Insumos_y_Documentos/
 │   └── 📄 5._DMS_020940-020941_F-T_BLANCOX_AROMA_PODER_NATURAL.pdf
 │
-└── 📁 06_Documentos_Oficiales_UPB/
-    ├── 📄 README_DOCUMENTOS_UPB.md
-    ├── 📁 01_Plan_de_Practica/
-    │   ├── 📄 Plan_de_Practica_Empresarial_UPB.docx
-    │   ├── 📄 PLAN_DE_PRACTICA_UPB_OFICIAL.md
-    │   └── 📄 PlanDePracticaVersion1_0.docx
-    └── 📁 02_Bitacoras_de_Seguimiento/
-        ├── 📄 Bitacora_Seguimiento_Practica_Empresarial_Mes_1_y_2.docx
-        ├── 📄 Bitacora_Seguimiento_Practica_Mes_1.docx
-        ├── 📄 Bitacora_Seguimiento_Practica_Mes_2.docx
-        ├── 📄 BITACORA_SEGUIMIENTO_PRACTICA_MES_1_Y_2.md
-        └── 📄 ModeloBitacora_SeguimientoPracticaEmpresarialVersion2_0.docx
+├── 📁 06_Documentos_Oficiales_UPB/
+│   ├── 📄 README_DOCUMENTOS_UPB.md
+│   ├── 📁 01_Plan_de_Practica/
+│   └── 📁 02_Bitacoras_de_Seguimiento/
+│
+├── 📁 07_Implementacion_Mes_2_Wix_y_Shopify/
+│   ├── 📁 iconos_svg_figma/
+│   ├── 📁 product_images/
+│   ├── 📁 wix_tracking/
+│   └── 📄 PREVISUALIZACION_INTERACTIVA_MES_2.html
+│
+├── 📁 08_Extension_Tracking_Chrome/
+│   ├── 📁 Detalgraf_Logistics_Sync/
+│   ├── 📁 sincronizador_shopify_30min/
+│   └── 📦 Detalgraf_Logistics_Sync_Oficial.zip
+│
+├── 📁 09_Backups_y_Versiones_Tema/
+│   ├── 📁 shopify_theme_pruebas_nqc/
+│   ├── 📁 tema_build_nqc/
+│   ├── 📁 tema_original_backup/
+│   └── 📦 theme_export_historicos.zip
+│
+├── 📁 10_Scripts_y_Herramientas/
+│   ├── 📄 generate_orders_db_js.py
+│   ├── 📄 sync_orders_from_shopify.py
+│   ├── 📄 shopify-orders-db.json
+│   └── 📁 scratch/
+│
+├── 📁 11_Cuentas_de_Cobro/
+│   ├── 📄 Cuenta de Cobro - Nicolás Quintero Cardona.pdf
+│   └── 📄 cuenta_de_cobro_nicolas_quintero.html
+│
+├── 📁 tema_final_nqc/ (Código fuente activo del tema Shopify)
+└── 📦 nqc.zip (Tema empaquetado para subida a Shopify)
 ```
 
 ---

@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Cuenta de Cobro - Nicolás Quintero Cardona</title>
+  <style>
+    @page {
+      size: letter;
+      margin: 18mm 20mm;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+      color: #1e293b;
+      background-color: #f8fafc;
+      padding: 30px 15px;
+      line-height: 1.5;
+    }
+    .invoice-card {
+      max-width: 780px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 45px 50px;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e2e8f0;
+    }
+    .header-bar {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      border-bottom: 2px solid #0f172a;
+      padding-bottom: 22px;
+      margin-bottom: 28px;
+    }
+    .title-area h1 {
+      font-size: 26px;
+      font-weight: 800;
+      color: #0f172a;
+      letter-spacing: -0.5px;
+      text-transform: uppercase;
+    }
+    .title-area p {
+      font-size: 13px;
+      color: #64748b;
+      margin-top: 4px;
+    }
+    .badge-area {
+      text-align: right;
+    }
+    .badge {
+      display: inline-block;
+      background: #f1f5f9;
+      color: #0f172a;
+      padding: 6px 14px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 14px;
+      border: 1px solid #cbd5e1;
+    }
+    .meta-date {
+      font-size: 13px;
+      color: #475569;
+      margin-top: 8px;
+    }
+    .parties-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+      margin-bottom: 30px;
+    }
+    .party-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 18px 20px;
+    }
+    .party-box.highlight {
+      background: #f0fdf4;
+      border-color: #bbf7d0;
+    }
+    .party-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 800;
+      letter-spacing: 0.6px;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+    .party-name {
+      font-size: 16px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 6px;
+    }
+    .party-detail {
+      font-size: 13px;
+      color: #334155;
+      margin-bottom: 3px;
+    }
+    .amount-box {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 20px 24px;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 28px;
+    }
+    .amount-label {
+      font-size: 13px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #94a3b8;
+    }
+    .amount-in-words {
+      font-size: 13px;
+      color: #cbd5e1;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+    .amount-val {
+      font-size: 30px;
+      font-weight: 800;
+      color: #38bdf8;
+      letter-spacing: -0.5px;
+    }
+    .section-title {
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      color: #475569;
+      margin-bottom: 10px;
+      border-left: 3px solid #0f172a;
+      padding-left: 8px;
+    }
+    .content-box {
+      background: #ffffff;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 16px 20px;
+      font-size: 14px;
+      color: #1e293b;
+      margin-bottom: 24px;
+      line-height: 1.6;
+    }
+    .bank-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 16px 20px;
+      margin-bottom: 24px;
+      font-size: 13.5px;
+    }
+    .bank-item strong {
+      color: #0f172a;
+      display: block;
+      font-size: 11.5px;
+      text-transform: uppercase;
+      color: #64748b;
+      margin-bottom: 2px;
+    }
+    .legal-note {
+      font-size: 11px;
+      color: #64748b;
+      line-height: 1.5;
+      text-align: justify;
+      margin-bottom: 35px;
+      border-top: 1px dashed #cbd5e1;
+      padding-top: 14px;
+    }
+    .signature-area {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 20px;
+    }
+    .signature-block {
+      width: 320px;
+      border-top: 1.5px solid #0f172a;
+      padding-top: 10px;
+    }
+    .signature-name {
+      font-size: 14px;
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .signature-meta {
+      font-size: 12.5px;
+      color: #475569;
+      margin-top: 2px;
+    }
+    .action-bar {
+      max-width: 780px;
+      margin: 20px auto 0 auto;
+      text-align: right;
+    }
+    .btn-print {
+      background: #0284c7;
+      color: #ffffff;
+      padding: 10px 22px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    .btn-print:hover {
+      background: #0369a1;
+    }
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .action-bar {
+        display: none;
+      }
+      .invoice-card {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="action-bar">
+    <button class="btn-print" onclick="window.print()">
+      🖨️ Imprimir / Guardar como PDF
+    </button>
+  </div>
+
+  <div class="invoice-card">
+    <div class="header-bar">
+      <div class="title-area">
+        <h1>Cuenta de Cobro</h1>
+        <p>Documento soporte de cobro por prestación de servicios</p>
+      </div>
+      <div class="badge-area">
+        <div class="badge">N° 001 - 2026</div>
+        <div class="meta-date"><strong>Fecha de expedición:</strong> 22 de octubre de 2026</div>
+      </div>
+    </div>
+
+    <div class="parties-grid">
+      <!-- DEBE A -->
+      <div class="party-box highlight">
+        <div class="party-title">Debe a (Contratista / Beneficiario):</div>
+        <div class="party-name">Nicolás Quintero Cardona</div>
+        <div class="party-detail"><strong>C.C.:</strong> 1.091.202.050</div>
+        <div class="party-detail"><strong>Celular:</strong> 310 433 2219</div>
+        <div class="party-detail"><strong>Correo:</strong> nicoquinteroc1007@gmail.com</div>
+      </div>
+
+      <!-- A NOMBRE DE -->
+      <div class="party-box">
+        <div class="party-title">A Nombre de (Cliente / Pagador):</div>
+        <div class="party-name">DETALGRAF S.A.S.</div>
+        <div class="party-detail"><strong>NIT:</strong> 830.005.293-5</div>
+        <div class="party-detail"><strong>Razón Social:</strong> Detalgraf S.A.S.</div>
+        <div class="party-detail"><strong>País:</strong> Colombia</div>
+      </div>
+    </div>
+
+    <!-- VALOR -->
+    <div class="amount-box">
+      <div>
+        <div class="amount-label">Valor total a pagar</div>
+        <div class="amount-in-words">SON: QUINIENTOS MIL PESOS M/CTE</div>
+      </div>
+      <div class="amount-val">$ 500.000</div>
+    </div>
+
+    <!-- CONCEPTO -->
+    <div class="section-title">Por concepto de</div>
+    <div class="content-box">
+      Prestación de servicios profesionales de desarrollo web, soporte técnico, personalización de plantilla y sincronización de sistema de rastreo de pedidos para la tienda online Shopify de <strong>DETALGRAF S.A.S.</strong>
+    </div>
+
+    <!-- DATOS DE PAGO -->
+    <div class="section-title">Información para el pago</div>
+    <div class="bank-grid">
+      <div class="bank-item">
+        <strong>Entidad Bancaria</strong>
+        Nu Colombia Compañía de Financiamiento S.A.
+      </div>
+      <div class="bank-item">
+        <strong>Tipo de Cuenta</strong>
+        Cuenta de ahorros
+      </div>
+      <div class="bank-item">
+        <strong>Número de Cuenta</strong>
+        50551148
+      </div>
+      <div class="bank-item">
+        <strong>Titular</strong>
+        Nicolás Quintero Cardona (C.C. 1.091.202.050)
+      </div>
+    </div>
+
+    <!-- DECLARACION JURAMENTADA -->
+    <div class="legal-note">
+      <strong>Declaración para efectos tributarios:</strong> Manifiesto bajo la gravedad de juramento que pertenezco al régimen de no responsables del Impuesto sobre las Ventas (IVA), de conformidad con el artículo 437 del Estatuto Tributario Nacional. Asimismo, declaro que para el desarrollo de mis actividades no he contratado ni vinculado a dos (2) o más trabajadores o contratistas asociados a la actividad por al menos noventa (90) días continuos o discontinuos en el respectivo año gravable (Arts. 383 y 388 del E.T.).
+    </div>
+
+    <!-- FIRMA -->
+    <div class="signature-area">
+      <div class="signature-block">
+        <div class="signature-name">NICOLÁS QUINTERO CARDONA</div>
+        <div class="signature-meta">C.C. 1.091.202.050</div>
+        <div class="signature-meta">Teléfono: 310 433 2219</div>
+        <div class="signature-meta">nicoquinteroc1007@gmail.com</div>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

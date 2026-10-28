@@ -1,0 +1,38 @@
+{
+  "manifest_version": 3,
+  "name": "Detalgraf Logistics Sync | Sincronizador Oficial",
+  "version": "1.0.0",
+  "description": "Extensión corporativa oficial de Detalgraf S.A.S. para la sincronización automática y en tiempo real de pedidos de Shopify con la plataforma de rastreo de envíos.",
+  "author": "Detalgraf S.A.S.",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "permissions": [
+    "alarms",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://admin.shopify.com/*",
+    "https://*.myshopify.com/*",
+    "https://script.google.com/*",
+    "https://script.googleusercontent.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://admin.shopify.com/store/detalgraf*",
+        "https://detalgraf.myshopify.com/admin*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

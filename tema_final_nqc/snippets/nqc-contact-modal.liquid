@@ -1,0 +1,201 @@
+<!-- MODAL OFICIAL DE CONTACTO — DETALGRAF S.A.S -->
+<div class="contact-modal-overlay" id="nqcContactModal" onclick="closeContactModal(event)" style="display:none; position:fixed; inset:0; z-index:9999999; background:rgba(15,23,42,0.7); backdrop-filter:blur(5px); align-items:center; justify-content:center; padding:16px;">
+  <div class="contact-modal-card" onclick="event.stopPropagation()" style="background:#ffffff; border-radius:18px; width:100%; max-width:540px; max-height:92vh; overflow-y:auto; padding:28px 24px; position:relative; box-shadow:0 25px 50px -12px rgba(0,0,0,0.35); font-family:inherit; animation:fadeInModalContact 0.2s ease-out;">
+    
+    <!-- Botón Cerrar -->
+    <button type="button" class="btn-close-contact" onclick="closeContactModal()" aria-label="Cerrar modal" style="position:absolute; top:16px; right:16px; background:#f1f5f9; border:none; width:34px; height:34px; border-radius:50%; font-size:18px; font-weight:bold; cursor:pointer; color:#475569; display:flex; align-items:center; justify-content:center; transition:background 0.2s;" onmouseover="this.style.background='#e2e8f0'" onmouseout="this.style.background='#f1f5f9'">✕</button>
+
+    <!-- Encabezado -->
+    <div style="text-align:center; margin-bottom:22px; padding-right:20px;">
+      <div style="display:inline-flex; align-items:center; justify-content:center; width:52px; height:52px; background:#eff6ff; color:#005091; border-radius:50%; margin-bottom:12px; font-size:24px; box-shadow:0 4px 10px rgba(0,80,145,0.12);">
+        ✉️
+      </div>
+      <h2 style="font-size:24px; font-weight:800; color:#0f172a; margin:0 0 6px 0; letter-spacing:-0.5px;">Escríbenos a Nuestro Correo</h2>
+      <p style="font-size:13.5px; color:#64748b; margin:0; line-height:1.4;">
+        Atención oficial <strong>DETALGRAF S.A.S</strong> · NIT: <strong>830.005.293-5</strong>
+      </p>
+    </div>
+
+    <!-- Opciones de Contacto -->
+    <div style="display:flex; flex-direction:column; gap:12px; margin-bottom:22px;">
+      
+      <!-- Opción 1: Gmail Web -->
+      <a href="https://mail.google.com/mail/?view=cm&fs=1&to=info@detalgraf.com&su=Contacto%20DetalShop%20-%20Detalgraf" target="_blank" rel="noopener noreferrer" style="display:flex; align-items:center; gap:14px; padding:14px 16px; background:#fef2f2; border:1.5px solid #fecaca; border-radius:12px; text-decoration:none; color:#991b1b; transition:all 0.2s; box-shadow:0 2px 6px rgba(239,68,68,0.06);" onmouseover="this.style.background='#fee2e2'; this.style.borderColor='#f87171';" onmouseout="this.style.background='#fef2f2'; this.style.borderColor='#fecaca';">
+        <span style="font-size:24px; flex-shrink:0;">🔴</span>
+        <div style="flex:1;">
+          <div style="font-weight:800; font-size:15px; line-height:1.2; color:#991b1b;">Redactar en Gmail Web</div>
+          <div style="font-size:12px; color:#b91c1c; margin-top:2px;">Abre tu cuenta de Gmail en una nueva pestaña</div>
+        </div>
+        <span style="font-size:18px; font-weight:700; color:#dc2626;">→</span>
+      </a>
+
+      <!-- Opción 2: App de Correo Predeterminada (Outlook, Apple Mail, etc.) -->
+      <a href="mailto:info@detalgraf.com?subject=Contacto%20DetalShop%20-%20Detalgraf" style="display:flex; align-items:center; gap:14px; padding:14px 16px; background:#eff6ff; border:1.5px solid #bfdbfe; border-radius:12px; text-decoration:none; color:#1e40af; transition:all 0.2s; box-shadow:0 2px 6px rgba(59,130,246,0.06);" onmouseover="this.style.background='#dbeafe'; this.style.borderColor='#93c5fd';" onmouseout="this.style.background='#eff6ff'; this.style.borderColor='#bfdbfe';">
+        <span style="font-size:24px; flex-shrink:0;">💻</span>
+        <div style="flex:1;">
+          <div style="font-weight:800; font-size:15px; line-height:1.2; color:#1e40af;">Abrir con tu aplicación de correo</div>
+          <div style="font-size:12px; color:#2563eb; margin-top:2px;">Outlook, Mail, o aplicación predeterminada del sistema</div>
+        </div>
+        <span style="font-size:18px; font-weight:700; color:#2563eb;">→</span>
+      </a>
+
+      <!-- Opción 3: Copiar Correo al Portapapeles -->
+      <button type="button" id="btnCopyContactEmail" onclick="copyContactEmail()" style="display:flex; align-items:center; gap:14px; padding:14px 16px; background:#f8fafc; border:1.5px solid #cbd5e1; border-radius:12px; text-decoration:none; color:#334155; cursor:pointer; width:100%; text-align:left; transition:all 0.2s; font-family:inherit; box-shadow:0 2px 6px rgba(0,0,0,0.03);" onmouseover="this.style.background='#f1f5f9'; this.style.borderColor='#94a3b8';" onmouseout="this.style.background='#f8fafc'; this.style.borderColor='#cbd5e1';">
+        <span id="copyIconEmail" style="font-size:24px; flex-shrink:0;">📋</span>
+        <div style="flex:1;">
+          <div id="copyTitleEmail" style="font-weight:800; font-size:15px; line-height:1.2; color:#1e293b;">Copiar correo: info@detalgraf.com</div>
+          <div id="copyDescEmail" style="font-size:12px; color:#64748b; margin-top:2px;">Copiar dirección al portapapeles para pegarla en cualquier cliente</div>
+        </div>
+        <span id="copyArrowEmail" style="font-size:14px; font-weight:700; color:#64748b; background:#e2e8f0; padding:4px 8px; border-radius:6px;">Copiar</span>
+      </button>
+
+    </div>
+
+    <!-- Ficha de Datos Institucionales -->
+    <div style="background:#f8fafc; border:1px solid #e2e8f0; border-radius:12px; padding:14px 16px; font-size:12.5px; color:#475569; line-height:1.6;">
+      <div style="font-weight:800; color:#0f172a; margin-bottom:4px; font-size:13px; display:flex; align-items:center; gap:6px;">
+        <span>🏢</span> Datos Oficiales de Contacto
+      </div>
+      <div><strong>Razón Social:</strong> DETALGRAF S.A.S</div>
+      <div><strong>NIT:</strong> 830.005.293-5 (Régimen Común DIAN)</div>
+      <div><strong>Correo Electrónico:</strong> <a href="mailto:info@detalgraf.com" style="color:#005091; font-weight:700; text-decoration:none;">info@detalgraf.com</a></div>
+      <div><strong>Teléfono PBX:</strong> <a href="tel:+6012772800" style="color:#005091; font-weight:700; text-decoration:none;">+(601) 277 2800</a></div>
+      <div><strong>Horario de Atención:</strong> Lunes a Viernes 8:00 AM – 5:00 PM</div>
+    </div>
+
+    <!-- Botón Cerrar Inferior -->
+    <div style="text-align:center; margin-top:20px;">
+      <button type="button" onclick="closeContactModal()" style="background:#f1f5f9; color:#475569; border:none; padding:10px 28px; border-radius:8px; font-weight:700; font-size:13px; cursor:pointer; transition:all 0.2s;" onmouseover="this.style.background='#e2e8f0'; this.style.color='#0f172a';" onmouseout="this.style.background='#f1f5f9'; this.style.color='#475569';">
+        Cerrar Ventana
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<style>
+@keyframes fadeInModalContact {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+</style>
+
+<script>
+function openContactModal(e) {
+  if (e) {
+    try {
+      e.preventDefault();
+      e.stopPropagation();
+    } catch(err) {}
+  }
+  var modal = document.getElementById('nqcContactModal');
+  if (modal) {
+    modal.style.display = 'flex';
+    document.body.style.overflow = 'hidden';
+  }
+}
+
+function closeContactModal(e) {
+  if (e && e.target && e.target.id !== 'nqcContactModal' && !e.target.classList.contains('btn-close-contact') && e.type === 'click') {
+    return;
+  }
+  var modal = document.getElementById('nqcContactModal');
+  if (modal) {
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+}
+
+function copyContactEmail() {
+  var email = 'info@detalgraf.com';
+  var btn = document.getElementById('btnCopyContactEmail');
+  var icon = document.getElementById('copyIconEmail');
+  var title = document.getElementById('copyTitleEmail');
+  var desc = document.getElementById('copyDescEmail');
+  var arrow = document.getElementById('copyArrowEmail');
+
+  function updateUiSuccess() {
+    if (icon) icon.textContent = '✅';
+    if (title) {
+      title.textContent = '¡Correo Copiado!';
+      title.style.color = '#15803d';
+    }
+    if (desc) desc.textContent = 'info@detalgraf.com copiado al portapapeles listo para usar';
+    if (arrow) {
+      arrow.textContent = '¡Listo!';
+      arrow.style.background = '#dcfce7';
+      arrow.style.color = '#15803d';
+    }
+    if (btn) {
+      btn.style.borderColor = '#86efac';
+      btn.style.background = '#f0fdf4';
+    }
+
+    if (typeof showToastNotification === 'function') {
+      showToastNotification(0, '✓ Correo copiado: info@detalgraf.com', 0, false);
+    }
+
+    setTimeout(function() {
+      if (icon) icon.textContent = '📋';
+      if (title) {
+        title.textContent = 'Copiar correo: info@detalgraf.com';
+        title.style.color = '#1e293b';
+      }
+      if (desc) desc.textContent = 'Copiar dirección al portapapeles para pegarla en cualquier cliente';
+      if (arrow) {
+        arrow.textContent = 'Copiar';
+        arrow.style.background = '#e2e8f0';
+        arrow.style.color = '#64748b';
+      }
+      if (btn) {
+        btn.style.borderColor = '#cbd5e1';
+        btn.style.background = '#f8fafc';
+      }
+    }, 3000);
+  }
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(email).then(updateUiSuccess).catch(function() {
+      fallbackCopyText(email, updateUiSuccess);
+    });
+  } else {
+    fallbackCopyText(email, updateUiSuccess);
+  }
+}
+
+function fallbackCopyText(text, callback) {
+  var textArea = document.createElement("textarea");
+  textArea.value = text;
+  textArea.style.position = "fixed";
+  textArea.style.top = "0";
+  textArea.style.left = "0";
+  textArea.style.width = "2em";
+  textArea.style.height = "2em";
+  textArea.style.padding = "0";
+  textArea.style.border = "none";
+  textArea.style.outline = "none";
+  textArea.style.boxShadow = "none";
+  textArea.style.background = "transparent";
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    document.execCommand('copy');
+    if (callback) callback();
+  } catch (err) {}
+  document.body.removeChild(textArea);
+}
+
+// Alias para compatibilidad con código existente
+window.openContactModal = openContactModal;
+window.openContactMail = openContactModal;
+window.closeContactModal = closeContactModal;
+window.copyContactEmail = copyContactEmail;
+
+// Cerrar con Escape
+document.addEventListener('keydown', function(evt) {
+  if (evt.key === 'Escape' || evt.keyCode === 27) {
+    closeContactModal();
+  }
+});
+</script>

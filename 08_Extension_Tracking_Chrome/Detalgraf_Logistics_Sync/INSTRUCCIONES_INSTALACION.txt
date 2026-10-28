@@ -1,0 +1,37 @@
+========================================================================
+DETALGRAF LOGISTICS SYNC — EXTENSIÓN OFICIAL DE TRACKING
+Detalgraf S.A.S. | Transformación Digital y Experiencia de Usuario
+========================================================================
+
+Esta extensión corporativa sincroniza de manera automática y en tiempo 
+real los pedidos y cambios de estado desde Shopify Admin hacia la base de 
+datos de rastreo en vivo de Detalgraf / DetalShop.
+
+------------------------------------------------------------------------
+GUÍA DE INSTALACIÓN EN GOOGLE CHROME (1 MINUTO):
+------------------------------------------------------------------------
+1. Descomprima este archivo zip en una carpeta fija de su computador 
+   (por ejemplo en Documentos o Escritorio).
+2. Abra el navegador Google Chrome e ingrese a la siguiente dirección:
+   chrome://extensions
+3. En la esquina superior derecha, active el interruptor:
+   [Modo de desarrollador]
+4. En la barra superior izquierda que aparecerá, haga clic en:
+   [Cargar descomprimida] (Load unpacked)
+5. Seleccione la carpeta 'Detalgraf_Logistics_Sync'.
+
+¡Listo! La extensión quedará activa y visible con el logo oficial de Detalgraf.
+
+------------------------------------------------------------------------
+FUNCIONAMIENTO AUTOMÁTICO:
+------------------------------------------------------------------------
+• Cada vez que ingrese a Shopify Admin en la sección de Pedidos (Orders):
+  https://admin.shopify.com/store/detalgraf/orders
+  la extensión monitorea activamente la pantalla.
+• En la esquina inferior derecha de la pantalla verá un indicador discreto:
+  '🟢 Detalgraf Sync: En espera de cambios de status'.
+• Cuando cambie un pedido de 'No preparado' a 'Preparado' o 'Entregado',
+  la extensión detecta el cambio al instante y lo sincroniza en tiempo real 
+  con el buscador de tracking de los clientes.
+• Además, incluye sincronización periódica automática de respaldo en segundo 
+  plano cada 30 minutos y un botón manual de 'Sincronizar ahora'.

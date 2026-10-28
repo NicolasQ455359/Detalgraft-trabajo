@@ -1,0 +1,125 @@
+<!-- /sections/nqc-tracking-section.liquid — Portal Oficial de Rastreo y Logística B2B -->
+<div id="viewTrack" class="page-view-block">
+  <div class="tracking-view-wrapper">
+    <div class="nqc-tracking-header">
+      <h1 class="nqc-tracking-title" style="color: #004b87;">Centro de Seguimiento y Logística de Despachos</h1>
+      <p class="nqc-tracking-subtitle">Consulta el estado de tu despacho en tiempo real</p>
+    </div>
+
+    <!-- BUSCADOR PRINCIPAL POR NÚMERO DE ORDEN O GUÍA -->
+    <div id="trackingMainSearchWrapper" class="nqc-search-box-wrapper" style="display: block;">
+      <div class="nqc-search-box">
+        <span class="nqc-search-icon">📦</span>
+        <input type="text" 
+               id="nqcTrackingInput" 
+               class="nqc-tracking-input" 
+               placeholder="Ej: #2690 o 2690" 
+               value="" 
+               autocomplete="off"
+               onkeydown="if(event.key==='Enter') doTrackingLookup()">
+        <button type="button" id="nqcBtnTrack" class="nqc-btn-track" onclick="doTrackingLookup()">
+          Rastrear Envío
+        </button>
+      </div>
+
+      <!-- Sugerencias de órdenes activas / recientes -->
+      <div id="trackingRecentOrdersWrap" style="display: none; margin-top: 14px; text-align: center;">
+        <span style="font-size: 11.5px; font-weight: 700; color: #64748b; margin-right: 8px;">Tus órdenes recientes:</span>
+        <div id="trackingRecentOrdersPills" style="display: inline-flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 6px;"></div>
+      </div>
+    </div>
+
+    <!-- MENSAJE DE ERROR CUANDO NO SE ENCUENTRA LA ORDEN -->
+    <div id="trackingLookupError" class="tracking-not-found-card" style="display: none;">
+      <div style="font-size: 34px; margin-bottom: 8px;">🔍</div>
+      <h4 style="font-size: 16px; font-weight: 800; color: #dc2626; margin-bottom: 8px;">Número de Pedido No Encontrado</h4>
+      <p id="trackingLookupErrorMsg" style="font-size: 13.5px; color: #475569; line-height: 1.55; margin-bottom: 16px; max-width: 520px; margin-left: auto; margin-right: auto;">
+        El número ingresado no coincide con ningún despacho activo en el sistema. Verifique que coincida con el número de su confirmación de compra (Ej: <strong>#2690</strong>).
+      </p>
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <button type="button" onclick="clearTrackingSearch()" style="background:#f1f5f9; color:#1e293b; border:1px solid #cbd5e1; padding:9px 18px; border-radius:8px; font-size:12.5px; font-weight:700; cursor:pointer;">
+          Intentar con otro número
+        </button>
+        <a id="btnErrorWhatsapp" href="https://api.whatsapp.com/send?phone=573102388040&text=Hola%20Detalgraf,%20necesito%20ayuda%20para%20ubicar%20mi%20despacho" target="_blank" rel="noopener" style="background:#00A86B; color:#ffffff; text-decoration:none; padding:9px 18px; border-radius:8px; font-size:12.5px; font-weight:800; display:inline-flex; align-items:center; gap:8px;">
+          <span>💬</span> Consultar con Logística WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <!-- TARJETA DE RESULTADOS (Diseño Oficial Figma) -->
+    <div id="nqcTrackingResult" class="nqc-result-card" style="display: none;">
+      <div class="nqc-result-header">
+        <div>
+          <div class="nqc-status-badge nqc-badge-transit" id="nqcStatusBadge">
+            <span class="nqc-pulse-dot"></span>
+            <span id="nqcStatusText">Pedido en tránsito</span>
+          </div>
+          <div class="nqc-order-meta">
+            <span id="nqcFacturaText">Factura B2B #FE-8942</span>
+            <span class="nqc-meta-sep">|</span>
+            <span id="nqcTransportadoraText">Transportadora: Envía / Flota Detalgraf</span>
+          </div>
+          <div class="nqc-order-submeta">
+            <span>Guía: <strong id="nqcGuiaText">0293848123</strong></span>
+            <span class="nqc-meta-sep">|</span>
+            <span>Destino: <strong id="nqcDestinoText">Bogotá D.C.</strong></span>
+          </div>
+        </div>
+        <button type="button" onclick="clearTrackingSearch()" style="background:#f8fafc; color:#0f172a; border:1px solid #cbd5e1; padding:8px 16px; border-radius:8px; font-size:12px; font-weight:700; cursor:pointer; display:inline-flex; align-items:center; gap:6px;">
+          ← Nueva Búsqueda
+        </button>
+      </div>
+
+      <!-- Stepper Gráfico Oficial (3 Estados: En Preparación, En Tránsito, Entregado) -->
+      <div class="nqc-timeline-stepper">
+        <!-- Paso 1: En Preparación -->
+        <div class="nqc-step" id="nqcStep1">
+          <div class="nqc-step-circle" id="nqcStepCirc1">✓</div>
+          <div class="nqc-step-label">
+            <strong>En Preparación</strong>
+            <span id="nqcStep1Date">--</span>
+          </div>
+        </div>
+        <div class="nqc-step-line" id="nqcLine1"></div>
+
+        <!-- Paso 2: En Tránsito -->
+        <div class="nqc-step" id="nqcStep2">
+          <div class="nqc-step-circle" id="nqcStepCirc2"><div class="nqc-inner-active-dot"></div></div>
+          <div class="nqc-step-label">
+            <strong>En Tránsito</strong>
+            <span id="nqcStep2Date">--</span>
+          </div>
+        </div>
+        <div class="nqc-step-line" id="nqcLine2"></div>
+
+        <!-- Paso 3: Entregado -->
+        <div class="nqc-step" id="nqcStep3">
+          <div class="nqc-step-circle" id="nqcStepCirc3">✓</div>
+          <div class="nqc-step-label">
+            <strong>Entregado</strong>
+            <span id="nqcStep3Date">--</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Historial Cronológico Detallado -->
+      <div class="nqc-history-section">
+        <h3 class="nqc-history-title">Historial cronológico</h3>
+        <ul class="nqc-history-list" id="nqcHistoryList"></ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "NQC Portal de Rastreo",
+  "settings": [],
+  "presets": [
+    {
+      "name": "NQC Portal de Rastreo",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}

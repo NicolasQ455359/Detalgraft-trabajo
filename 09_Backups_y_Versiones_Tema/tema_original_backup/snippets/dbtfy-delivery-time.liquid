@@ -1,0 +1,135 @@
+{%- if settings.dbtfy_delivery_time -%}
+    {% assign time_prefix       = settings.dbtfy_delivery_time_prefix %}
+    {% assign time_suffix       = settings.dbtfy_delivery_time_suffix %}
+    {% assign time_separator    = settings.dbtfy_delivery_time_separator %}
+    {% assign time_icon         = settings.dbtfy_delivery_time_icons %}
+    {% assign time_format       = settings.dbtfy_delivery_time_format %}
+    {% assign time_date         = settings.dbtfy_delivery_time_date %}
+
+    {%- assign minDateFinal = settings.dbtfy_delivery_time_from -%}
+    {%- assign maxDateFinal = settings.dbtfy_delivery_time_to -%}
+
+    {%- if time_date -%}
+        {%- assign minDate = minDateFinal | times: 86400 -%}
+        {%- assign maxDate = minDateFinal | times: 86400 -%}
+
+        {%- assign minDateFinal = "now" | date: "%s" | plus: minDate | date: time_format -%}
+        {%- assign maxDateFinal = "now" | date: "%s" | plus: maxDate | date: time_format -%}
+    {%- endif -%}
+
+    {%- assign productHandleSettings    = '' -%}
+    {%- assign collectionHandleSettings = '' -%}
+
+    {%- for i in (1..5) -%}
+        {%- capture specificDelivery -%}dbtfy_specific_delivery{%- endcapture -%}
+        {%- capture fromDelivery -%}{{ specificDelivery }}_time_from_{{ i }}{%- endcapture -%}
+        {%- capture toDelivery -%}{{ specificDelivery }}_time_to_{{ i }}{%- endcapture -%}
+        {%- capture productDelivery -%}{{ specificDelivery }}_product_{{ i }}{%- endcapture -%}
+        {%- capture collectionDelivery -%}{{ specificDelivery }}_collection_{{ i }}{%- endcapture -%}
+
+        {%- assign productDelivery      = settings[productDelivery] -%}
+        {%- assign collectionDelivery   = settings[collectionDelivery] -%}
+
+        {%- if productDelivery == blank and collectionDelivery == blank -%}
+            {%- continue -%}
+        {%- endif -%}
+
+        {%- assign specifMinDate = settings[fromDelivery] | times: 86400 -%}
+        {%- assign specifMaxDate = settings[toDelivery] | times: 86400 -%}
+
+        {%- assign specifMinDateFinal = settings[fromDelivery] -%}
+        {%- assign specifMaxDateFinal = settings[toDelivery] -%}
+
+        {%- if time_date -%}
+            {%- assign specifMinDateFinal = "now" | date: "%s" | plus: specifMinDate | date: time_format -%}
+            {%- assign specifMaxDateFinal = "now" | date: "%s" | plus: specifMaxDate | date: time_format -%}
+        {%- endif -%}
+
+        {%- if productDelivery != blank -%}
+            {%- assign productHandleSettings = productHandleSettings | append: ',' | append: productDelivery | append: '/' | append: specifMinDateFinal | append: '/' | append: specifMaxDateFinal -%}
+        {%- endif -%}
+
+        {%- if collectionDelivery != blank -%}
+            {%- assign collectionHandleSettings = collectionHandleSettings | append: ',' | append: collectionDelivery | append: '/' | append: specifMinDateFinal | append: '/' | append: specifMaxDateFinal -%}
+        {%- endif -%}
+    {%- endfor -%}
+
+    {%- assign date_from    = '' -%}
+    {%- assign date_to      = '' -%}
+
+    {%- assign generalDelivery              = true -%}
+    {%- assign specificCollectionDelivery   = true -%}
+
+    {%- if productHandleSettings != '' -%}
+        {%- assign productArray = productHandleSettings | remove_first: ',' | split: ',' -%}
+
+        {%- for productDelivery in productArray -%}
+            {%- assign productWithDate = productDelivery | split: '/' -%}
+
+            {%- if product.handle == productWithDate[0] -%}
+                {%- assign date_from    = productWithDate[1] -%}
+                {%- assign date_to      = productWithDate[2] -%}
+
+                {%- assign generalDelivery              = false -%}
+                {%- assign specificCollectionDelivery   = false -%}
+
+                {%- break -%}
+            {%- endif -%}
+        {%- endfor -%}
+    {%- endif -%}
+
+    {%- if specificCollectionDelivery and collectionHandleSettings != blank -%}
+        {%- assign productCollections   = product.collections | map: 'handle' -%}
+        {%- assign collectionArray      = collectionHandleSettings | remove_first: ',' | split: ',' -%}
+
+        {%- for collectionDelivery in collectionArray -%}
+            {%- assign collectionWithDate = collectionDelivery | split: '/' -%}
+
+            {%- if productCollections contains collectionWithDate[0] -%}
+                {%- assign date_from    = collectionWithDate[1] -%}
+                {%- assign date_to      = collectionWithDate[2] -%}
+
+                {%- assign generalDelivery = false -%}
+
+                {%- break -%}
+            {%- endif -%}
+        {%- endfor -%}
+    {%- endif -%}
+
+    {%- if generalDelivery == true -%}
+        {%- assign date_from    = minDateFinal -%}
+        {%- assign date_to      = maxDateFinal -%}
+    {%- endif -%}
+
+    {%- if date_from != blank and date_to != blank -%}
+        <div class="dbtfy dbtfy-delivery_time">
+            <div id="DeliveryTime">
+                {%- if time_icon != blank -%}
+                    <span class="icon-width {{ settings.icon }}">
+                        {{- time_icon -}}
+                    </span>
+                {%- endif -%}
+
+                <span>
+                    {{- time_prefix -}}
+                </span>
+
+                <strong class="from-text-delivery_time">
+                    {{- date_from -}}
+                </strong>
+
+                <span>
+                    {{- time_separator -}}
+                </span>
+
+                <strong class="to-text-delivery_time">
+                    {{- date_to -}}
+                </strong>
+
+                <span>
+                    {{- time_suffix -}}
+                </span>
+            </div>
+        </div>
+    {%- endif -%}
+{%- endif -%}

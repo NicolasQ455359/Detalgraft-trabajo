@@ -1,0 +1,17 @@
+<!-- /templates/page.order-tracking.liquid — Portal Oficial de Rastreo y Logística de Despachos B2B -->
+<div class="website-wrapper">
+  {% section 'nqc-tracking-section' %}
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    var vt = document.getElementById('viewTrack');
+    if (vt) {
+      vt.classList.add('active');
+      vt.style.display = 'block';
+    }
+    if (typeof initTrackingSessionUI === 'function') {
+      initTrackingSessionUI();
+    }
+  });
+</script>

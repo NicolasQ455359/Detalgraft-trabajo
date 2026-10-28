@@ -1,0 +1,217 @@
+<!-- SECCIÓN "PRODUCTOS DESTACADOS" (CATÁLOGO OFICIAL DINÁMICO DE SHOPIFY) -->
+<section class="featured-products-section" id="catalogSection">
+  <div class="section-title-center">
+    <h2 class="section-catalog-title" style="color: #004b87; font-weight: 900; margin-bottom: 6px;">CATÁLOGO DE PRODUCTOS</h2>
+    <p>Todos los productos originales, fotos de alta resolución y precios oficiales de DetalShop</p>
+  </div>
+
+  <!-- BUSCADOR REACTIVO EN TIEMPO REAL -->
+  <div class="catalog-search-container">
+    <div class="catalog-search-bar-wrap">
+      <span class="catalog-search-icon">🔍</span>
+      <input type="text" id="catalogSearchInput" class="catalog-search-input" placeholder="Buscar productos (ej. Tapaboca, Wypall, Guantes, Detergente, Café, Papel, Alcohol...)" oninput="handleCatalogSearch(this.value)" autocomplete="off">
+      <button type="button" class="catalog-search-clear" id="catalogSearchClear" onclick="clearCatalogSearch()" title="Limpiar búsqueda" style="display:none;">✕</button>
+    </div>
+  </div>
+
+  <!-- TABS DE CATEGORÍA INTERACTIVOS TIPO PÍLDORA (SINCRONIZADOS CON EL MENÚ TIENDA) -->
+  <div class="cat-tabs-row" id="catalogCategoryTabs">
+    <button type="button" class="cat-tab-pill active" onclick="filterHomeCatalog('Todos', this)" id="tab-todos">Todos los Productos</button>
+    <button type="button" class="cat-tab-pill" onclick="filterHomeCatalog('Aseo', this)" id="tab-aseo">Productos de Aseo</button>
+    <button type="button" class="cat-tab-pill" onclick="filterHomeCatalog('Bioseguridad', this)" id="tab-bioseguridad">Productos de Bioseguridad</button>
+    <button type="button" class="cat-tab-pill" onclick="filterHomeCatalog('Cafeteria', this)" id="tab-cafeteria">Productos de Cafetería</button>
+    <button type="button" class="cat-tab-pill" onclick="filterHomeCatalog('Papeleria', this)" id="tab-papeleria">Productos de Papelería</button>
+    <button type="button" class="cat-tab-pill" onclick="filterHomeCatalog('Seguridad', this)" id="tab-seguridad">Productos de Seguridad Industrial</button>
+  </div>
+
+  <!-- GRID CON PRODUCTOS EN VIVO DESDE LA BASE DE DATOS DE SHOPIFY -->
+  <div class="products-grid-store" id="homeProductsGrid">
+    {%- assign featured_collection = collections.all -%}
+    {%- paginate featured_collection.products by 48 -%}
+      {%- for product in featured_collection.products -%}
+        {%- assign cat_norm = 'Aseo' -%}
+        {%- assign p_type = product.type | upcase -%}
+        {%- assign p_title = product.title | upcase -%}
+        {%- if p_type contains 'CAFETERIA' or p_title contains 'CAFÉ' or p_title contains 'CAFE' or p_title contains 'AZUCAR' or p_title contains 'AROMATICA' or p_title contains 'GALLETA' or p_title contains 'VASO' or p_title contains 'MEZCLADOR' -%}
+          {%- assign cat_norm = 'Cafeteria' -%}
+        {%- elsif p_type contains 'PAPELERIA' or p_title contains 'PAPEL' or p_title contains 'RESMA' or p_title contains 'CARPETA' or p_title contains 'SOBRE' or p_title contains 'BOLIGRAFO' -%}
+          {%- assign cat_norm = 'Papeleria' -%}
+        {%- elsif p_type contains 'SEGURIDAD' or p_type contains 'BIOSEGURIDAD' or p_type contains 'WYPALL' or p_title contains 'GUANTE' or p_title contains 'TAPABOCA' or p_title contains 'BATA' or p_title contains 'COFIA' or p_title contains 'CASCO' or p_title contains 'GAFAS' or p_title contains 'RESPIRADOR' or p_title contains 'STRECH' or p_title contains 'CARETA' or p_title contains 'ORUGA' or p_title contains 'POLAINA' or p_title contains 'SEMPERGUARD' or p_title contains 'KLEENGUARD' -%}
+          {%- assign cat_norm = 'Seguridad' -%}
+        {%- endif -%}
+
+        {%- assign variant = product.selected_or_first_available_variant -%}
+        {%- assign ft_val = product.metafields.custom.ficha_tecnica -%}
+        {%- assign ft_url = '' -%}
+        {%- if ft_val.value.url != blank -%}
+          {%- assign ft_url = ft_val.value.url -%}
+        {%- elsif ft_val.url != blank -%}
+          {%- assign ft_url = ft_val.url -%}
+        {%- elsif ft_val.value != blank -%}
+          {%- assign ft_url = ft_val.value | file_url -%}
+        {%- elsif ft_val != blank -%}
+          {%- assign ft_url = ft_val | file_url -%}
+        {%- endif -%}
+        {%- if ft_url == blank and product.title contains 'Blancox' and product.title contains 'Aroma' -%}
+          {%- assign ft_url = '5._DMS_020940-020941_F-T_BLANCOX_AROMA_PODER_NATURAL.pdf' | asset_url -%}
+        {%- elsif ft_url == blank and product.title contains 'Detergente' and product.title contains 'Detalgraf' -%}
+          {%- assign ft_url = 'ficha-tecnica-detalgraf.pdf' | asset_url -%}
+        {%- endif -%}
+        <div class="p-card-store" data-category="{{ cat_norm }}" data-id="{{ product.id }}" data-ficha-url="{{ ft_url }}" data-product-url="{{ product.url }}" data-sku="{{ variant.sku | escape }}" data-available="{{ variant.available }}" data-stock="{{ variant.inventory_quantity | default: 0 }}" data-inventory-management="{{ variant.inventory_management }}" data-inventory-policy="{{ variant.inventory_policy }}" id="card-{{ product.id }}">
+          <div class="p-card-img-wrap" onclick="openPdpWithProduct('{{ product.id }}')">
+            {%- if product.featured_image -%}
+              <img src="{{ product.featured_image | image_url: width: 450 }}" alt="{{ product.title | escape }}" loading="lazy" decoding="async">
+            {%- else -%}
+              <img src="{{ 'logo_detalshop_oficial.png' | asset_url }}" alt="{{ product.title | escape }}" loading="lazy">
+            {%- endif -%}
+
+            {%- if product.compare_at_price > product.price -%}
+              {%- assign ahorro = product.compare_at_price | minus: product.price -%}
+              <span class="p-card-badge-discount">
+                <svg class="ds-svg ds-svg-tag" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:4px; vertical-align:-1px;">
+                  <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/>
+                  <line x1="7" y1="7" x2="7.01" y2="7"/>
+                </svg>
+                AHORRA {{ ahorro | money_without_trailing_zeros }}
+              </span>
+            {%- endif -%}
+          </div>
+
+          <div class="p-card-cat">
+            <span>{{ product.type | default: "Línea B2B" }}</span>
+          </div>
+
+          <div class="p-card-title" onclick="openPdpWithProduct('{{ product.id }}')" title="{{ product.title | escape }}">
+            {{ product.title | escape }}
+          </div>
+
+          <div class="p-card-price-row">
+            <div class="p-card-price-wrap">
+              <span class="p-card-price{% if product.compare_at_price > product.price %} on-sale{% endif %}">
+                {{ product.price | money }}
+              </span>
+              {%- if product.compare_at_price > product.price -%}
+                <span class="p-card-compare-price">{{ product.compare_at_price | money }}</span>
+              {%- endif -%}
+            </div>
+          </div>
+
+          <!-- INDICADOR DE STOCK EN TIEMPO REAL -->
+          <div class="p-card-stock" id="card-stock-{{ product.id }}">
+            {%- if variant.available == false -%}
+              <span class="stock-badge stock-out">🔴 Agotado</span>
+            {%- elsif variant.inventory_management == 'shopify' and variant.inventory_quantity > 0 and variant.inventory_quantity <= 5 -%}
+              <span class="stock-badge stock-low">⚠️ Últimas {{ variant.inventory_quantity }} unds</span>
+            {%- elsif variant.inventory_management == 'shopify' and variant.inventory_quantity > 5 -%}
+              <span class="stock-badge stock-ok">🟢 {{ variant.inventory_quantity }} disponibles</span>
+            {%- else -%}
+              <span class="stock-badge stock-ok">🟢 En Stock</span>
+            {%- endif -%}
+          </div>
+
+          <!-- CONTROLES PARA AGREGAR MÚLTIPLES ITEMS DIRECTAMENTE -->
+          <div class="card-add-controls">
+            <div class="card-stepper">
+              <button type="button" class="btn-card-step" onclick="changeCardQty('{{ product.id }}', -1)" title="Disminuir">-</button>
+              <input type="number" id="qty-{{ product.id }}" class="input-card-qty" value="1" min="1" max="999" onchange="handleCardQtyDirectChange('{{ product.id }}', this.value)">
+              <button type="button" class="btn-card-step" onclick="changeCardQty('{{ product.id }}', 1)" title="Aumentar">+</button>
+            </div>
+            <button type="button" class="btn-card-add" onclick="addCardQtyToCart('{{ product.id }}')" title="Agregar cantidad seleccionada al pedido">
+              <svg class="ds-svg ds-svg-cart" width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="9" cy="21" r="1"/>
+                <circle cx="20" cy="21" r="1"/>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+              </svg>
+              <span>+ Agregar</span>
+            </button>
+          </div>
+
+          <!-- INDICADOR DE ESTADO EN CARRITO -->
+          <div id="in-cart-wrap-{{ product.id }}">
+            <div class="card-in-cart-pill" id="in-cart-{{ product.id }}"></div>
+          </div>
+
+          <!-- CHIPS DE CANTIDAD RÁPIDA B2B -->
+          <div class="card-bulk-chips">
+            <span style="font-size:10px; font-weight:800; color:#64748b; margin-right:2px;">Rápido:</span>
+            <button type="button" class="chip-qty" onclick="setAndAddQty('{{ product.id }}', 1)">+1</button>
+            <button type="button" class="chip-qty" onclick="setAndAddQty('{{ product.id }}', 5)">+5</button>
+            <button type="button" class="chip-qty" onclick="setAndAddQty('{{ product.id }}', 10)">+10</button>
+            {%- if ft_url != blank -%}
+              <a href="{{ ft_url }}" target="_blank" rel="noopener" download class="btn-card-pdp" onclick="event.stopPropagation();" title="Descargar Ficha Técnica Oficial (PDF)">Ficha 📄</a>
+            {%- else -%}
+              <button type="button" class="btn-card-pdp" onclick="openPdpWithProduct('{{ product.id }}')" title="Ver Ficha Técnica y Especificaciones">Ficha 📄</button>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    {%- endpaginate -%}
+  </div>
+
+  <div id="catalogLoadMoreWrap" style="text-align: center; margin-top: 30px; margin-bottom: 20px;">
+    <button type="button" class="btn-load-more" id="btnLoadMoreProducts" onclick="loadMoreProducts()" style="background:#004b87; color:#fff; font-weight:700; border:none; padding:12px 28px; border-radius:8px; cursor:pointer; font-size:14px; box-shadow: 0 4px 6px -1px rgba(0,75,135,0.2);">
+      Cargar Más Productos Oficiales ⬇
+    </button>
+  </div>
+
+  <!-- TRUST SIGNALS B2B (FILA HORIZONTAL DE BENEFICIOS) -->
+  <div class="catalog-trust-row" style="display: flex; flex-direction: row; flex-wrap: nowrap; align-items: stretch; justify-content: space-between; gap: 16px; margin: 35px auto 25px auto; padding: 20px 16px; background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 16px; box-shadow: 0 4px 16px rgba(0,0,0,0.04); max-width: 1360px; width: 100%; box-sizing: border-box;">
+    <div class="trust-col" style="flex: 1 1 25%; min-width: 0; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 10px 8px; border-right: 1px solid #f1f5f9;">
+      <div class="trust-icon-badge" title="icon-shipping-truck">
+        <svg class="ds-svg ds-svg-trust" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="1" y="3" width="15" height="13"/>
+          <polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/>
+          <circle cx="5.5" cy="18.5" r="2.5" stroke="#00A86B"/>
+          <circle cx="18.5" cy="18.5" r="2.5" stroke="#00A86B"/>
+        </svg>
+      </div>
+      <h5 style="font-size: 13px; font-weight: 800; color: #1a4b8c; margin-bottom: 4px; line-height: 1.2;">Envío gratis > $100k</h5>
+      <p style="font-size: 11.5px; color: #64748b; margin: 0; line-height: 1.3;">Bogotá ($100k) y Nacional ($200k)</p>
+    </div>
+    <div class="trust-col" style="flex: 1 1 25%; min-width: 0; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 10px 8px; border-right: 1px solid #f1f5f9;">
+      <div class="trust-icon-badge" title="icon-express-clock">
+        <svg class="ds-svg ds-svg-trust" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="13" r="9"/>
+          <polyline points="12 8 12 13 15 15"/>
+          <path d="M12 4V1"/>
+          <path d="M9 1h6"/>
+        </svg>
+      </div>
+      <h5 style="font-size: 13px; font-weight: 800; color: #1a4b8c; margin-bottom: 4px; line-height: 1.2;">Entrega 24 a 48 Horas</h5>
+      <p style="font-size: 11.5px; color: #64748b; margin: 0; line-height: 1.3;">Despacho rápido con flota propia</p>
+    </div>
+    <div class="trust-col" style="flex: 1 1 25%; min-width: 0; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 10px 8px; border-right: 1px solid #f1f5f9;">
+      <div class="trust-icon-badge" title="icon-dian-shield">
+        <svg class="ds-svg ds-svg-trust" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+          <polyline points="9 12 11 14 15 10" stroke="#00A86B" stroke-width="2.2"/>
+        </svg>
+      </div>
+      <h5 style="font-size: 13px; font-weight: 800; color: #1a4b8c; margin-bottom: 4px; line-height: 1.2;">Factura Electrónica DIAN</h5>
+      <p style="font-size: 11.5px; color: #64748b; margin: 0; line-height: 1.3;">100% legal con RUT y NIT empresarial</p>
+    </div>
+    <div class="trust-col" style="flex: 1 1 25%; min-width: 0; display: flex; flex-direction: column; align-items: center; text-align: center; padding: 10px 8px;">
+      <div class="trust-icon-badge" title="icon-b2b-support">
+        <svg class="ds-svg ds-svg-trust" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1A4B8C" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+          <path d="M9.5 12h.01m2.5 0h.01m2.5 0h.01" stroke="#00A86B" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <h5 style="font-size: 13px; font-weight: 800; color: #1a4b8c; margin-bottom: 4px; line-height: 1.2;">Asesoría B2B WhatsApp</h5>
+      <p style="font-size: 11.5px; color: #64748b; margin: 0; line-height: 1.3;">Atención directa para cotizaciones</p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "NQC Catálogo Productos",
+  "settings": [],
+  "presets": [
+    {
+      "name": "NQC Catálogo Productos",
+      "category": "Products"
+    }
+  ]
+}
+{% endschema %}

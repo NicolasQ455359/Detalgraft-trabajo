@@ -65,12 +65,19 @@
           </div>
         </div>
 
+        <!-- INDICADOR DE STOCK EN TIEMPO REAL -->
+        <div id="pdpStockBadge" class="pdp-stock-indicator" style="margin-top: 10px; margin-bottom: 14px;">
+          <span class="stock-badge stock-ok" id="pdpStockBadgeInner" style="font-size: 12.5px; padding: 6px 14px; font-weight: 700; border-radius: 6px; display: inline-flex; align-items: center; gap: 6px;">
+            🟢 Stock Disponible
+          </span>
+        </div>
+
         <!-- CONTROL DE CANTIDAD -->
         <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 20px;">
           <div style="font-size: 13px; font-weight: 800; color: #0f172a;">Cantidad a pedir:</div>
           <div class="card-stepper" style="border-width: 1.5px;">
             <button type="button" class="btn-card-step" style="width:36px; height:40px; font-size:18px;" onclick="changePdpQty(-1)">-</button>
-            <input type="number" id="pdpQtyInput" class="input-card-qty" style="width:48px; height:40px; font-size:15px;" value="1" min="1" max="999" onchange="updatePdpTotal()">
+            <input type="number" id="pdpQtyInput" class="input-card-qty" style="width:48px; height:40px; font-size:15px;" value="1" min="1" max="999" onchange="updatePdpTotal()" oninput="updatePdpTotal()">
             <button type="button" class="btn-card-step" style="width:36px; height:40px; font-size:18px;" onclick="changePdpQty(1)">+</button>
           </div>
           <div style="font-size: 14px; font-weight: 900; color: #004b87;" id="pdpSubtotalDisplay">
@@ -80,12 +87,9 @@
 
         <!-- BOTONES DE ACCIÓN -->
         <div class="pdp-actions-row">
-          <button class="btn-add-cart-figma" onclick="addPdpToCart()">
+          <button class="btn-add-cart-figma" id="btnPdpAddToCart" onclick="addPdpToCart()" style="width: 100%; display: flex; align-items: center; justify-content: center; gap: 8px;">
             🛒 Agregar al Carrito
           </button>
-          <a href="https://wa.me/573100000000?text=Hola,%20solicito%20cotizaci%C3%B3n%20empresarial%20de%20suministros" target="_blank" class="btn-quote-whatsapp">
-            💬 Cotizar WhatsApp
-          </a>
         </div>
 
         <!-- RESUMEN DE FICHA TÉCNICA OFICIAL ESPECÍFICO DEL PRODUCTO -->
@@ -127,13 +131,6 @@
           </button>
         </div>
       </div>
-    </div>
-
-    <!-- BARRA INFERIOR DE RETORNO AL CATÁLOGO -->
-    <div style="margin-top: 36px; padding-top: 20px; border-top: 1px solid #e2e8f0; display:flex; justify-content:space-between; align-items:center;">
-      <button type="button" class="btn-pdp-back" onclick="switchView('home')">
-        <span>←</span> Seguir Comprando en el Catálogo
-      </button>
     </div>
   </div>
 </main>

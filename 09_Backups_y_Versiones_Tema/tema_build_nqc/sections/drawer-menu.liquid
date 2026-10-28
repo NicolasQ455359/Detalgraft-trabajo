@@ -1,0 +1,345 @@
+<style>
+  /* ==========================================================
+     MENÚ DRAWER OFICIAL - ALTO CONTRASTE Y ENLACES 100% ACTIVOS
+     ========================================================== */
+  #NavDrawer,
+  #NavDrawer.drawer,
+  #NavDrawer.drawer--left {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    width: 360px !important;
+    max-width: 90vw !important;
+    z-index: 1000000 !important;
+    box-shadow: 10px 0 40px rgba(0, 0, 0, 0.25) !important;
+  }
+
+  #NavDrawer .drawer__header,
+  #NavDrawer .drawer__inner,
+  #NavDrawer .drawer__inner-section {
+    opacity: 1 !important;
+    visibility: visible !important;
+  }
+
+  /* TODOS LOS ENLACES: Color negro/azul oscuro contrastante (#0f172a), negrita y cursor pointer */
+  #NavDrawer .mobile-nav__link,
+  #NavDrawer .mobile-nav__item a,
+  #NavDrawer .drawer__inner-section a:not(.btn) {
+    color: #0f172a !important;
+    opacity: 1 !important;
+    font-size: 15px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+    text-decoration: none !important;
+    display: flex !important;
+    align-items: center !important;
+    padding: 10px 8px !important;
+    border-radius: 6px !important;
+    transition: all 0.2s ease !important;
+  }
+
+  #NavDrawer .mobile-nav__link:hover,
+  #NavDrawer .mobile-nav__item a:hover,
+  #NavDrawer .drawer__inner-section a:not(.btn):hover {
+    color: #005091 !important;
+    background-color: #f1f5f9 !important;
+    padding-left: 12px !important;
+  }
+
+  /* Submenús de categorías */
+  #NavDrawer .mobile-nav__sublist {
+    background: #f8fafc !important;
+    border-left: 3px solid #005091 !important;
+    border-radius: 0 8px 8px 0 !important;
+    margin: 6px 0 10px 10px !important;
+    padding: 6px 12px !important;
+    list-style: none !important;
+  }
+
+  #NavDrawer .mobile-nav__sublist .mobile-nav__link,
+  #NavDrawer .mobile-nav__sublist a {
+    font-size: 13.5px !important;
+    font-weight: 600 !important;
+    color: #334155 !important;
+    padding: 6px 8px !important;
+  }
+
+  #NavDrawer .mobile-nav__sublist .mobile-nav__link:hover,
+  #NavDrawer .mobile-nav__sublist a:hover {
+    color: #005091 !important;
+    background-color: #e2e8f0 !important;
+  }
+
+  /* Botón + de categorías */
+  #NavDrawer .mobile-nav__toggle-btn {
+    background: #f1f5f9 !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-radius: 6px !important;
+    color: #0f172a !important;
+    cursor: pointer !important;
+    font-weight: 800 !important;
+    width: 32px !important;
+    height: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  #NavDrawer .mobile-nav__toggle-btn:hover {
+    background: #e2e8f0 !important;
+    color: #005091 !important;
+  }
+</style>
+
+<div id="NavDrawer" class="drawer drawer--left" data-section-id="{{ section.id }}" data-section-type="drawer-menu-section" aria-hidden="true" tabindex="-1">
+  <div class="drawer__header">
+    <div class="drawer__title" style="color: #0f172a !important; font-weight: 800 !important;">
+      <span class="{{ settings.icon }}" aria-hidden="true">menu</span>
+      <span class="spacer-left-xs">
+        {%- if section.settings.title != blank -%}
+          {{ section.settings.title }}
+        {%- else -%}
+          {{ 'general.drawers.navigation' | t }}
+        {%- endif -%}
+      </span>
+    </div>
+    <div class="drawer__close">
+      <button type="button" class="btn btn-square-small drawer__close-button js-drawer-close" aria-label="{{ 'general.drawers.close_menu' | t }}" title="{{ 'general.drawers.close_menu' | t }}" onclick="if(window.timber && window.timber.LeftDrawer){window.timber.LeftDrawer.close();} if(window.closeNavDrawer){window.closeNavDrawer();}">
+        <span class="{{settings.icon}}" aria-hidden="true">close</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="drawer__inner drawer-left__inner">
+    {%- if section.settings.drawer_top_link_list -%}
+    <div class="drawer__inner-section">
+      <ul class="mobile-nav">
+        {%- for link in linklists[section.settings.drawer_top_link_list].links -%}
+        {%- if link.links != blank -%}
+        <li class="mobile-nav__item">
+          <div class="mobile-nav__has-sublist">
+            <a href="{{ link.url }}"
+               class="mobile-nav__link {% if section.settings.drawer_link_toggle %}mobile-nav__toggle-link{% endif %}"
+               id="Label-{{ forloop.index }}"
+               onclick="var s=document.getElementById('Linklist-{{ forloop.index }}'); if(s){ var isH=(s.style.display==='none'||getComputedStyle(s).display==='none'); s.style.display=isH?'block':'none'; var b=this.parentElement.querySelector('.mobile-nav__toggle-btn'); if(b){b.classList.toggle('is-active', isH); b.setAttribute('aria-expanded', isH?'true':'false');} } return false;"
+               {% unless request.page_type == 'index' %}{% if link.active %}aria-current="page"{% endif %}{% endunless %}>{{ link.title | escape }}</a>
+            <div class="mobile-nav__toggle">
+              <button type="button" class="btn btn-square-small mobile-nav__toggle-btn" aria-controls="Linklist-{{ forloop.index }}" aria-expanded="false" onclick="var s=document.getElementById('Linklist-{{ forloop.index }}'); if(s){ var isH=(s.style.display==='none'||getComputedStyle(s).display==='none'); s.style.display=isH?'block':'none'; this.classList.toggle('is-active', isH); this.setAttribute('aria-expanded', isH?'true':'false'); }">
+                <span class="mobile-nav__toggle-open" aria-label="{{ 'general.drawers.expand_submenu' | t }} {{ link.title | escape }}" title="{{ 'general.drawers.expand_submenu' | t }} {{ link.title | escape }}">
+                  <span class="{{settings.icon}}" aria-hidden="true">add</span>
+                </span>
+                <span class="mobile-nav__toggle-close" aria-label="{{ 'general.drawers.collapse_submenu' | t }} {{ link.title | escape }}" title="{{ 'general.drawers.collapse_submenu' | t }} {{ link.title | escape }}">
+                  <span class="{{settings.icon}}" aria-hidden="true">remove</span>
+                </span>
+              </button>
+            </div>
+          </div>
+          <ul class="mobile-nav__sublist" id="Linklist-{{ forloop.index }}" aria-labelledby="Label-{{ forloop.index }}" role="navigation">
+            {%- assign parent_index = forloop.index -%}
+            {%- for childlink in link.links -%}
+            {%- if childlink.links != blank -%}
+            <li class="mobile-nav__item">
+              <div class="mobile-nav__has-sublist">
+                <a
+                   href="{{ childlink.url }}"
+                   class="mobile-nav__link {% if section.settings.drawer_link_toggle %}mobile-nav__toggle-link{% endif %}"
+                   id="Label-{{ parent_index }}-{{ forloop.index }}"
+                   onclick="var s=document.getElementById('Linklist-{{ parent_index }}-{{ forloop.index }}'); if(s){ var isH=(s.style.display==='none'||getComputedStyle(s).display==='none'); s.style.display=isH?'block':'none'; var b=this.parentElement.querySelector('.mobile-nav__toggle-btn'); if(b){b.classList.toggle('is-active', isH); b.setAttribute('aria-expanded', isH?'true':'false');} } return false;"
+                   {% unless request.page_type == 'index' %}{% if link.active %}aria-current="page"{% endif %}{% endunless %}>
+                  {{ childlink.title }}
+                </a>
+                <div class="mobile-nav__toggle">
+                  <button type="button" class="btn btn-square-small mobile-nav__toggle-btn" aria-controls="Linklist-{{ parent_index }}-{{ forloop.index }}" aria-expanded="false" onclick="var s=document.getElementById('Linklist-{{ parent_index }}-{{ forloop.index }}'); if(s){ var isH=(s.style.display==='none'||getComputedStyle(s).display==='none'); s.style.display=isH?'block':'none'; this.classList.toggle('is-active', isH); this.setAttribute('aria-expanded', isH?'true':'false'); }">
+                    <span class="mobile-nav__toggle-open" aria-label="{{ 'general.drawers.expand_submenu' | t }} {{ childlink.title | escape }}" title="{{ 'general.drawers.expand_submenu' | t }} {{ childlink.title | escape }}">
+                      <span class="{{settings.icon}}" aria-hidden="true">add</span>
+                    </span>
+                    <span class="mobile-nav__toggle-close" aria-label="{{ 'general.drawers.collapse_submenu' | t }} {{ childlink.title | escape }}" title="{{ 'general.drawers.collapse_submenu' | t }} {{ childlink.title | escape }}">
+                      <span class="{{settings.icon}}" aria-hidden="true">remove</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <ul class="mobile-nav__sublist mobile-nav__subsublist" id="Linklist-{{ parent_index }}-{{ forloop.index }}" aria-labelledby="Label-{{ parent_index }}-{{ forloop.index }}" role="navigation">
+                {%- for grandchildlink in childlink.links -%}
+                <li class="mobile-nav__item">
+                  <a
+                     href="{{ grandchildlink.url }}"
+                     class="mobile-nav__link"
+                     {% unless request.page_type == 'index' %}{% if grandchildlink.active %}aria-current="page"{% endif %}{% endunless %}>
+                    {{ grandchildlink.title | escape }}
+                  </a>
+                </li>
+                {%- endfor -%}
+              </ul>
+            </li>
+            {%- else -%}
+            <li class="mobile-nav__item">
+              <a
+                 href="{{ childlink.url }}"
+                 class="mobile-nav__link"
+                 onclick="if(window.timber && window.timber.LeftDrawer){window.timber.LeftDrawer.close();} if(window.closeNavDrawer){window.closeNavDrawer();} if(window.switchView){window.switchView('home');} if(window.filterHomeCatalog){window.filterHomeCatalog('{{ childlink.title | escape }}');} if(window.scrollToCatalog){window.scrollToCatalog();} return false;"
+                 {% unless request.page_type == 'index' %}{%- if childlink.active -%}aria-current="page"{% endif %}{% endunless %}>
+                {{ childlink.title | escape }}
+              </a>
+            </li>
+            {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </li>
+        {%- else -%}
+        {%- assign link_title_lower = link.title | downcase -%}
+        {%- assign link_url_lower = link.url | downcase -%}
+        {%- if link_title_lower contains 'quienes' or link_title_lower contains 'somos' or link_url_lower contains 'quienes' -%}
+        <li class="mobile-nav__item">
+          <a href="#quienes-somos"
+             class="mobile-nav__link"
+             onclick="if(window.timber && window.timber.LeftDrawer){window.timber.LeftDrawer.close();} if(window.closeNavDrawer){window.closeNavDrawer();} if(window.openQuienesSomosModal){window.openQuienesSomosModal();} return false;">
+            {{ link.title | escape }}
+          </a>
+        </li>
+        {%- elsif link_title_lower contains 'inicio' or link_url_lower == '/' or link_url_lower contains 'detalshop.com/' -%}
+        <li class="mobile-nav__item">
+          <a href="/"
+             class="mobile-nav__link"
+             onclick="if(window.timber && window.timber.LeftDrawer){window.timber.LeftDrawer.close();} if(window.closeNavDrawer){window.closeNavDrawer();} if(window.switchView){window.switchView('home');} window.scrollTo({top:0,behavior:'smooth'}); return false;">
+            {{ link.title | escape }}
+          </a>
+        </li>
+        {%- else -%}
+        <li class="mobile-nav__item">
+          <a href="{{ link.url }}"
+             class="mobile-nav__link"
+             {% unless request.page_type == 'index' %}{% if link.active %}aria-current="page"{% endif %}{% endunless %}>
+            {{ link.title | escape }}
+          </a>
+        </li>
+        {%- endif -%}
+        {%- endif -%}
+        {%- endfor -%}
+        <li class="mobile-nav__item">
+          <a href="#tracking" class="mobile-nav__link" onclick="if(window.timber && window.timber.LeftDrawer){window.timber.LeftDrawer.close();} if(window.closeNavDrawer){window.closeNavDrawer();} if(window.switchView){window.switchView('track');} window.scrollTo({top:0,behavior:'smooth'}); return false;">
+            <span class="{{settings.icon}}" aria-hidden="true" style="margin-right:6px;">local_shipping</span>
+            Rastrear Pedido / Envíos
+          </a>
+        </li>
+      </ul>
+    </div>
+    {%- endif -%}
+
+    {%- if shop.customer_accounts_enabled -%}
+    <div class="drawer__inner-section">
+      {%- if customer -%}
+        <a href="{{ routes.account_logout_url }}" class="btn btn--small btn--full spacer-bottom">
+          <span class="{{settings.icon}} icon-width">exit_to_app</span>
+          {{ 'layout.customer.log_out' | t }}
+        </a>
+        <a href="{{ routes.account_url }}" class="btn btn--primary btn--small btn--full" title="{{ 'layout.customer.account' | t }}">
+          <span class="{{settings.icon}} icon-width">account_circle</span>
+          <span class="customer-name">{{ customer.first_name | capitalize }}</span>
+        </a>
+      {%- else -%}
+        <a href="{{ routes.account_login_url }}" class="btn btn--small btn--full spacer-bottom" style="color: #0f172a !important; font-weight: 700 !important; background: #ffffff !important; border: 1.5px solid #cbd5e1 !important; border-radius: 8px !important;">
+          <span class="{{settings.icon}} icon-width">exit_to_app</span>
+          {{ 'layout.customer.log_in' | t }}
+        </a>
+        <a href="{{ routes.account_register_url }}" class="btn btn--primary btn--small btn--full" style="background: #2e9d58 !important; color: #ffffff !important; font-weight: 700 !important; border: none !important; border-radius: 8px !important;">
+          <span class="{{settings.icon}} icon-width">person_add</span>
+          {{ 'layout.customer.create_account' | t }}
+        </a>
+      {%- endif -%}
+    </div>
+    {%- endif -%}
+
+    {%- if section.settings.email or section.settings.phone -%}
+    <div class="drawer__inner-section">
+      <ul class="mobile-nav">
+        {%- if section.settings.email -%}
+        <li class="mobile-nav__item mobile-nav__item--secondary">
+          <a href="mailto:info@detalgraf.com" class="mobile-nav__link" style="color: #334155 !important; font-weight: 600 !important; font-size: 14px !important; opacity: 1 !important;">
+            <span class="{{settings.icon}} icon-width" aria-hidden="true" style="margin-right: 8px;">email</span>
+            info@detalgraf.com
+          </a>
+        </li>
+        {%- endif -%}
+        {%- if section.settings.phone -%}
+        <li class="mobile-nav__item mobile-nav__item--secondary">
+          <a href="tel:6012772800" class="mobile-nav__link" style="color: #334155 !important; font-weight: 600 !important; font-size: 14px !important; opacity: 1 !important;">
+            <span class="{{settings.icon}} icon-width" aria-hidden="true" style="margin-right: 8px;">phone</span>
+            (601) 277 2800
+          </a>
+        </li>
+        {%- endif -%}
+      </ul>
+    </div>
+    {%- endif -%}
+
+    {%- if section.settings.drawer_bottom_link_list -%}
+    <div class="drawer__inner-section">
+      <ul class="mobile-nav">
+        {%- for link in linklists[section.settings.drawer_bottom_link_list].links -%}
+        <li class="mobile-nav__item mobile-nav__item--secondary">
+          <a href="{{ link.url }}" class="mobile-nav__link" style="color: #334155 !important; font-weight: 600 !important; font-size: 14px !important; opacity: 1 !important;">{{ link.title }}</a>
+        </li>
+        {%- endfor -%}
+      </ul>
+    </div>
+    {%- endif -%}
+  </div>
+
+  {%- if section.settings.show_social_medias -%}
+  <div class="drawer__footer">
+    {%- render 'social-medias' -%}
+  </div>
+  {%- endif -%}
+</div>
+<div class="overlay-backdrop overlay-drawer"></div>
+
+{% schema %}
+  {
+    "name": "Drawer menu",
+	  "class": "drawer-menu-section",
+    "settings": [
+	    {
+        "type": "checkbox",
+        "id": "drawer_link_toggle",
+        "label": "Toggle submenu on links",
+		    "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "email",
+        "label":"Show email address",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "phone",
+        "label":"Show phone number",
+        "default": true
+      },
+      {
+        "type": "checkbox",
+        "id": "show_social_medias",
+        "label": "Show social medias",
+		    "default": true
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "Menu Title",
+        "default": "Menu"
+      },
+      {
+        "type": "link_list",
+        "id": "drawer_top_link_list",
+        "label": "Primary menu",
+        "default": "main-menu"
+      },
+      {
+        "type": "link_list",
+        "id": "drawer_bottom_link_list",
+        "label": "Secondary menu",
+        "default": "footer"
+      }
+    ]
+  }
+{% endschema %}

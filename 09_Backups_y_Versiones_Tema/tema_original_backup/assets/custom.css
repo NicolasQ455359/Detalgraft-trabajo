@@ -1,0 +1,96 @@
+.card-image img {
+    height: 100%;
+    object-fit: contain;
+}
+
+.media-wrapper {
+    height: 100%;
+}
+
+.grid-product__image-wrapper {
+    height: 250px;
+}
+
+form.ca-form {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 10px;
+}
+
+.ca-form .qty-adjust, .ca-form .qty-adjust:hover {
+    border-radius: 0;
+  width: 20px;
+  height: 30px;
+    margin: 4px 4px;
+    display: flex;
+    align-items: center;
+   
+}
+.ca-form .qty-container, .ca-form .qty-container:hover {
+    border: 2px solid #257c38;
+  width: 33%!important;
+    min-width: 33%;
+    max-width: 33%;
+}
+
+.ca-form button.ca-button {
+    width: 62%!important;
+}
+.ca-form .btn__text {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.qty-container .qty-input, .qty-container .qty-input:hover {
+    border-radius: 0;
+}
+
+@media( max-width:767px){
+.ca-form button.ca-button {
+    width: 100%!important;
+    height: 40px;
+    margin-top: 10px;
+}
+  .ca-form .qty-container, .ca-form .qty-container:hover {
+    border: 2px solid #257c38;
+    width: 100%!important;
+    min-width: 100%;
+    max-width: 100%;
+}
+  form.ca-form {
+    display: block;
+    padding: 0 10px;
+}
+}
+@media( min-width:1200px){
+.border-right-custom:after {
+    content: "";
+    width: 1px;
+    height: 50px;
+    position: absolute;
+    background: #000;
+    right: 0;
+    transform: translateY(-50%);
+    top: 50%;
+}
+.border-right-custom {
+    position: relative;
+}
+
+}
+/* @media screen and (max-width: 769px){
+#section-guarantee .grid__item {
+    -webkit-flex: 25%;
+    -moz-flex: 25%;
+    -ms-flex: 25%;
+    flex: 25%;
+}
+} */
+
+/* .slick-list.draggable, .slick-track {
+    height: 100%;
+}
+ */
+.bgset {
+/*     background-size: contain; */
+}

@@ -69,10 +69,21 @@
 
     <!-- Preload assets -->
     <link rel="preload" href="{{ "theme.scss.css" | asset_url }}" as="style">
-    <link rel="preload" as="font" href="{{ header_family | font_url }}" type="font/woff2" crossorigin>
-    <link rel="preload" as="font" href="{{ accent_family | font_url }}" type="font/woff2" crossorigin>
-    <link rel="preload" as="font" href="{{ base_family | font_url }}" type="font/woff2" crossorigin>
-    <link rel="preload" as="font" href="{{ settings.icon | append: ".woff2" | asset_url }}" type="font/woff2" crossorigin>
+    {%- assign header_font_url = header_family | font_url -%}
+    {%- if header_font_url != blank -%}
+      <link rel="preload" as="font" href="{{ header_font_url }}" type="font/woff2" crossorigin>
+    {%- endif -%}
+    {%- assign accent_font_url = accent_family | font_url -%}
+    {%- if accent_font_url != blank -%}
+      <link rel="preload" as="font" href="{{ accent_font_url }}" type="font/woff2" crossorigin>
+    {%- endif -%}
+    {%- assign base_font_url = base_family | font_url -%}
+    {%- if base_font_url != blank -%}
+      <link rel="preload" as="font" href="{{ base_font_url }}" type="font/woff2" crossorigin>
+    {%- endif -%}
+    {%- if settings.icon != blank -%}
+      <link rel="preload" as="font" href="{{ settings.icon | append: ".woff2" | asset_url }}" type="font/woff2" crossorigin>
+    {%- endif -%}
     <link rel="preload" href="{{ "jquery-2.2.3.min.js" | asset_url }}" as="script">
     <link rel="preload" href="{{ "theme.min.js" | asset_url }}" as="script">
     <link rel="preload" href="{{ "lazysizes.min.js" | asset_url }}" as="script">
@@ -256,7 +267,7 @@
 
     {%- render "drawer-search" -%}
 
-    {%- section "drawer-menu" -%}
+    {%- comment -%}{%- section "drawer-menu" -%}{%- endcomment -%}
 
     {%- render "drawer-cart" -%}
 
@@ -340,26 +351,176 @@
     {%- render 'nqc-pdf-modal' -%}
     {%- render 'nqc-icons-modal' -%}
     {%- render 'nqc-quienes-somos-modal' -%}
+    {%- render 'nqc-contact-modal' -%}
+    {%- render 'nqc-ai-chat' -%}
 
-    <!-- Inyección dinámica de metadatos y fichas técnicas oficiales desde Shopify Liquid -->
+    <!-- Inyección dinámica de metadatos, productos y cliente desde Shopify Liquid -->
     <script>
-      window.SHOPIFY_COLLECTION_METADATA = {
-        {% for prod in collections['all'].products %}
-          "{{ prod.id }}": {
+      window.SHOPIFY_COLLECTION_METADATA = window.SHOPIFY_COLLECTION_METADATA || {};
+      window.SHOPIFY_STORE_PRODUCTS = window.SHOPIFY_STORE_PRODUCTS || [];
+      {%- paginate collections.all.products by 250 -%}
+      {%- for prod in collections.all.products -%}
+        {%- assign p_ft_val = prod.metafields.custom.ficha_tecnica -%}
+        {%- assign p_ft_url = '' -%}
+        {%- if p_ft_val.value.url != blank -%}
+          {%- assign p_ft_url = p_ft_val.value.url -%}
+        {%- elsif p_ft_val.url != blank -%}
+          {%- assign p_ft_url = p_ft_val.url -%}
+        {%- elsif p_ft_val.value != blank -%}
+          {%- assign p_ft_url = p_ft_val.value | file_url -%}
+        {%- elsif p_ft_val != blank -%}
+          {%- assign p_ft_url = p_ft_val | file_url -%}
+        {%- endif -%}
+        {%- if p_ft_url == blank and prod.title contains 'Blancox' and prod.title contains 'Aroma' -%}
+          {%- assign p_ft_url = '5._DMS_020940-020941_F-T_BLANCOX_AROMA_PODER_NATURAL.pdf' | asset_url -%}
+        {%- elsif p_ft_url == blank and prod.title contains 'Detergente' and prod.title contains 'Detalgraf' -%}
+          {%- assign p_ft_url = 'ficha-tecnica-detalgraf.pdf' | asset_url -%}
+        {%- endif -%}
+        if (!window.SHOPIFY_COLLECTION_METADATA["{{ prod.id }}"]) {
+          var itemMeta = {
             "id": "{{ prod.id }}",
             "variant_id": {{ prod.selected_or_first_available_variant.id | json }},
             "sku": {{ prod.selected_or_first_available_variant.sku | json }},
             "title": {{ prod.title | json }},
             "handle": {{ prod.handle | json }},
-            "ficha_url": {% if prod.metafields.custom.ficha_tecnica != blank %}{{ prod.metafields.custom.ficha_tecnica | file_url | json }}{% else %}null{% endif %},
+            "url": {{ prod.url | json }},
+            "category": {{ prod.type | default: "General" | json }},
+            "subcat": {{ prod.type | default: "General" | json }},
+            "price": {{ prod.price | divided_by: 100.0 }},
+            "compare_price": {% if prod.compare_at_price > prod.price %}{{ prod.compare_at_price | divided_by: 100.0 }}{% else %}null{% endif %},
+            "image": {{ prod.featured_image | image_url: width: 600 | json }},
+            "available": {{ prod.available | json }},
+            "inventory_quantity": {{ prod.selected_or_first_available_variant.inventory_quantity | default: 0 }},
+            "inventory_management": {{ prod.selected_or_first_available_variant.inventory_management | json }},
+            "inventory_policy": {{ prod.selected_or_first_available_variant.inventory_policy | json }},
+            "ficha_url": {% if p_ft_url != blank %}{{ p_ft_url | json }}{% else %}null{% endif %},
             "registro_sanitario": {% if prod.metafields.custom.registro_sanitario != blank %}{{ prod.metafields.custom.registro_sanitario | json }}{% else %}null{% endif %},
             "ph": {% if prod.metafields.custom.ph != blank %}{{ prod.metafields.custom.ph | json }}{% else %}null{% endif %},
             "biodegradabilidad": {% if prod.metafields.custom.biodegradabilidad != blank %}{{ prod.metafields.custom.biodegradabilidad | json }}{% else %}null{% endif %}
+          };
+          window.SHOPIFY_COLLECTION_METADATA["{{ prod.id }}"] = itemMeta;
+          window.SHOPIFY_COLLECTION_METADATA[{{ prod.handle | json }}] = itemMeta;
+          window.SHOPIFY_STORE_PRODUCTS.push(itemMeta);
+        }
+      {%- endfor -%}
+      {%- endpaginate -%}
+    </script>
+    {%- if request.page_type == 'product' -%}
+    <script>
+      (function() {
+        {%- assign p_ft_val = product.metafields.custom.ficha_tecnica -%}
+        {%- assign p_ft_url = '' -%}
+        {%- if p_ft_val.value.url != blank -%}
+          {%- assign p_ft_url = p_ft_val.value.url -%}
+        {%- elsif p_ft_val.url != blank -%}
+          {%- assign p_ft_url = p_ft_val.url -%}
+        {%- elsif p_ft_val.value != blank -%}
+          {%- assign p_ft_url = p_ft_val.value | file_url -%}
+        {%- elsif p_ft_val != blank -%}
+          {%- assign p_ft_url = p_ft_val | file_url -%}
+        {%- endif -%}
+        {%- if p_ft_url == blank and product.title contains 'Blancox' and product.title contains 'Aroma' -%}
+          {%- assign p_ft_url = '5._DMS_020940-020941_F-T_BLANCOX_AROMA_PODER_NATURAL.pdf' | asset_url -%}
+        {%- elsif p_ft_url == blank and product.title contains 'Detergente' and product.title contains 'Detalgraf' -%}
+          {%- assign p_ft_url = 'ficha-tecnica-detalgraf.pdf' | asset_url -%}
+        {%- endif -%}
+        var currentProdMeta = {
+          "id": "{{ product.id }}",
+          "variant_id": {{ product.selected_or_first_available_variant.id | json }},
+          "sku": {{ product.selected_or_first_available_variant.sku | json }},
+          "title": {{ product.title | json }},
+          "handle": {{ product.handle | json }},
+          "url": {{ product.url | json }},
+          "price": {{ product.price | divided_by: 100.0 }},
+          "available": {{ product.available | json }},
+          "inventory_quantity": {{ product.selected_or_first_available_variant.inventory_quantity | default: 0 }},
+          "inventory_management": {{ product.selected_or_first_available_variant.inventory_management | json }},
+          "inventory_policy": {{ product.selected_or_first_available_variant.inventory_policy | json }},
+          "ficha_url": {% if p_ft_url != blank %}{{ p_ft_url | json }}{% else %}null{% endif %}
+        };
+        window.CURRENT_PRODUCT_METADATA = currentProdMeta;
+        if (window.SHOPIFY_COLLECTION_METADATA) {
+          window.SHOPIFY_COLLECTION_METADATA["{{ product.id }}"] = currentProdMeta;
+          window.SHOPIFY_COLLECTION_METADATA[{{ product.handle | json }}] = currentProdMeta;
+        }
+      })();
+    </script>
+    {%- endif -%}
+
+    <script>
+      window.SHOPIFY_CUSTOMER = {% if customer %} {
+        id: {{ customer.id | json }},
+        name: {{ customer.name | json }},
+        first_name: {{ customer.first_name | json }},
+        last_name: {{ customer.last_name | json }},
+        email: {{ customer.email | json }},
+        orders_count: {{ customer.orders_count }},
+        orders: [
+          {% for order in customer.orders limit: 250 %}
+          {
+            id: {{ order.id | json }},
+            name: {{ order.name | json }},
+            order_number: {{ order.order_number | json }},
+            total_price: {{ order.total_price | money_without_trailing_zeros | json }},
+            created_at: {{ order.created_at | date: "%d/%m/%Y %I:%M %p" | json }},
+            financial_status: {{ order.financial_status_label | json }},
+            fulfillment_status: {{ order.fulfillment_status_label | json }},
+            raw_fulfillment_status: {{ order.fulfillment_status | json }},
+            cancelled: {{ order.cancelled | json }},
+            cancel_reason: {{ order.cancel_reason_label | default: order.cancel_reason | json }},
+            tags: {{ order.tags | json }},
+            tracking_number: {% if order.fulfillments.first.tracking_number %}{{ order.fulfillments.first.tracking_number | json }}{% else %}"DTL-2026-{{ order.order_number }}"{% endif %},
+            tracking_company: {% if order.fulfillments.first.tracking_company %}{{ order.fulfillments.first.tracking_company | json }}{% else %}"Flota Propia Detalgraf / Envía"{% endif %},
+            tracking_url: {% if order.fulfillments.first.tracking_url %}{{ order.fulfillments.first.tracking_url | json }}{% else %}""{% endif %},
+            note: {{ order.note | json }},
+            shipping_city: {{ order.shipping_address.city | default: "Bogotá D.C." | json }},
+            order_status_url: {{ order.order_status_url | json }},
+            fulfillments: [
+              {% for f in order.fulfillments %}
+              {
+                created_at: {{ f.created_at | date: "%d/%m/%Y %I:%M %p" | json }},
+                updated_at: {{ f.updated_at | date: "%d/%m/%Y %I:%M %p" | json }},
+                status: {{ f.status | json }},
+                tracking_company: {{ f.tracking_company | json }},
+                tracking_number: {{ f.tracking_number | json }},
+                tracking_url: {{ f.tracking_url | json }}
+              }{% unless forloop.last %},{% endunless %}
+              {% endfor %}
+            ],
+            note_attributes: {
+              {% for attr in order.note_attributes %}
+                {{ attr.name | json }}: {{ attr.value | json }}{% unless forloop.last %},{% endunless %}
+              {% endfor %}
+            }
           }{% unless forloop.last %},{% endunless %}
-        {% endfor %}
+          {% endfor %}
+        ]
+      } {% else %} null {% endif %};
+    </script>
+
+    <script>
+      window.INITIAL_SHOPIFY_CART = {
+        item_count: {{ cart.item_count }},
+        total_price: {{ cart.total_price | divided_by: 100.0 }},
+        items: [
+          {% for item in cart.items %}
+          {
+            id: "{{ item.product_id }}",
+            variant_id: {{ item.variant_id | json }},
+            sku: {{ item.sku | json }},
+            key: {{ item.key | json }},
+            title: {{ item.title | json }},
+            price: {{ item.price | divided_by: 100.0 }},
+            quantity: {{ item.quantity }},
+            image: {{ item.image | image_url: width: 300 | json }}
+          }{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        ]
       };
     </script>
 
+    <!-- NQC Official Shopify Real Orders Database -->
+    <script src="{{ 'shopify-orders-db.js' | asset_url }}"></script>
     <!-- NQC Interactive Application Logic & Product Catalog -->
     <script src="{{ 'nqc-scripts.js' | asset_url }}"></script>
   </body>

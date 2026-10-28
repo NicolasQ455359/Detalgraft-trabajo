@@ -94,17 +94,17 @@
           <ul class="no-bullets site-footer__linklist ">
             {%- if block.settings.email -%}
             <li>
-              <a href="mailto:{{ shop.email | escape }}">
+              <a href="mailto:info@detalgraf.com" onclick="if(window.openContactMail){window.openContactMail(event);}" style="cursor: pointer;">
                 <span class="{{settings.icon}} icon-width" aria-hidden="true">email</span>
-                {{ shop.email }}
+                info@detalgraf.com
               </a>
             </li>
             {%- endif -%}
             {%- if block.settings.phone -%}
             <li>
-              <a href="tel:{{ shop.phone | remove: '-' | replace: ' ', '' }}">
+              <a href="tel:6012772800">
                 <span class="{{settings.icon}} icon-width" aria-hidden="true">phone</span>
-                {{ shop.phone }}
+                (601) 277 2800
               </a>
             </li>
             {%- endif -%}

@@ -1,0 +1,27 @@
+{%- if settings.dbtfy_live_view -%}
+  <div class="dbtfy dbtfy-live_view">
+    <div id="LiveView">
+      <div class="container-live_view">
+        <div class="text-wrapper-live_view">
+          {%- unless settings.dbtfy_live_view_icons == blank -%}
+            <span class="{{ settings.icon }} icon-width">{{ settings.dbtfy_live_view_icons }}</span>
+          {% endunless %}
+
+          {%- unless settings.dbtfy_live_view_prefix == blank -%}
+            <span>{{ settings.dbtfy_live_view_prefix }}</span>
+          {% endunless %}
+
+          <strong class="number-live_view">{{ settings.dbtfy_live_view_min }}</strong>
+
+          {% unless settings.dbtfy_live_view_people == blank %}
+            <strong>{{ settings.dbtfy_live_view_people }}</strong>
+          {% endunless %}
+
+          {%- unless settings.dbtfy_live_view_suffix == blank -%}
+            <span class="text-live_view">{{ settings.dbtfy_live_view_suffix }}</span>
+          {%- endunless -%}
+        </div>
+      </div>
+    </div>
+  </div>
+{%- endif -%}

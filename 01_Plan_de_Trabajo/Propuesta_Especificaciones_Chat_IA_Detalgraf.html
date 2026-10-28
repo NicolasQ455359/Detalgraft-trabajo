@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Especificaciones del Chat con IA - Detalgraf S.A.S.</title>
+  <style>
+    @page {
+      size: letter;
+      margin: 18mm 20mm;
+    }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, Roboto, Helvetica, Arial, sans-serif;
+      color: #1e293b;
+      background-color: #f8fafc;
+      padding: 30px 15px;
+      line-height: 1.55;
+    }
+    .doc-container {
+      max-width: 820px;
+      margin: 0 auto;
+      background: #ffffff;
+      padding: 45px 50px;
+      border-radius: 10px;
+      box-shadow: 0 4px 18px rgba(0, 0, 0, 0.07);
+      border: 1px solid #cbd5e1;
+    }
+    .doc-header {
+      border-bottom: 2px solid #0f172a;
+      padding-bottom: 16px;
+      margin-bottom: 26px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .doc-header h1 {
+      font-size: 22px;
+      font-weight: 800;
+      color: #0f172a;
+      text-transform: uppercase;
+      letter-spacing: -0.3px;
+    }
+    .doc-header span {
+      font-size: 12.5px;
+      font-weight: 600;
+      color: #475569;
+    }
+    h2 {
+      font-size: 15px;
+      font-weight: 800;
+      text-transform: uppercase;
+      color: #0f172a;
+      background: #f1f5f9;
+      padding: 8px 12px;
+      border-left: 4px solid #0284c7;
+      margin: 24px 0 12px 0;
+      letter-spacing: 0.3px;
+    }
+    h3 {
+      font-size: 14px;
+      font-weight: 700;
+      color: #1e293b;
+      margin: 14px 0 6px 0;
+    }
+    p, li {
+      font-size: 13.5px;
+      color: #334155;
+    }
+    ul {
+      padding-left: 20px;
+      margin-bottom: 12px;
+    }
+    li {
+      margin-bottom: 6px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0 18px 0;
+      font-size: 13px;
+    }
+    th, td {
+      border: 1px solid #cbd5e1;
+      padding: 9px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background-color: #f8fafc;
+      font-weight: 700;
+      color: #0f172a;
+      width: 30%;
+    }
+    .flow-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 6px;
+      padding: 14px 18px;
+      margin-bottom: 14px;
+    }
+    .checklist-table th {
+      width: auto;
+    }
+    .action-bar {
+      max-width: 820px;
+      margin: 0 auto 15px auto;
+      text-align: right;
+    }
+    .btn-print {
+      background: #0f172a;
+      color: #ffffff;
+      padding: 9px 18px;
+      border: none;
+      border-radius: 6px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+      .action-bar {
+        display: none;
+      }
+      .doc-container {
+        border: none;
+        box-shadow: none;
+        padding: 0;
+        max-width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="action-bar">
+    <button class="btn-print" onclick="window.print()">🖨️ Imprimir / Guardar como PDF</button>
+  </div>
+
+  <div class="doc-container">
+    <div class="doc-header">
+      <div>
+        <h1>Especificaciones del Asistente Virtual con IA</h1>
+        <p style="font-size: 13px; color: #64748b; margin-top: 3px;">Documento de validación funcional — Detalgraf S.A.S. / DetalShop.com</p>
+      </div>
+      <span>Fecha: 26/10/2026</span>
+    </div>
+
+    <h2>1. Qué Tendrá el Chat en la Página</h2>
+    <p style="margin-bottom: 10px;">El asistente funcionará como un botón flotante en la esquina inferior derecha de la tienda online, disponible 24/7.</p>
+    <ul>
+      <li><strong>Botones de acceso rápido al abrir el chat:</strong>
+        <ul>
+          <li>📦 <strong>Pedido mínimo y envíos:</strong> Explica los topes de compra ($100.000 Bogotá / $200.000 Nacional) y tiempos de entrega.</li>
+          <li>🚚 <strong>Rastrear mi pedido:</strong> Redirige o abre directamente el módulo de rastreo de guías de la tienda.</li>
+          <li>📄 <strong>Fichas técnicas:</strong> Orienta al usuario sobre cómo visualizar y descargar los PDFs técnicos en cada producto.</li>
+          <li>🏢 <strong>Cotización para empresas (B2B):</strong> Captura los datos de compra al por mayor para enviarlos por correo.</li>
+          <li>✉️ <strong>Contacto directo:</strong> Abre el formulario oficial de correo o enlaza a <code>info@detalgraf.com</code>.</li>
+        </ul>
+      </li>
+      <li><strong>Base de conocimiento interna:</strong>
+        <ul>
+          <li>Catálogo de productos de Detalgraf / DetalShop (líneas de aseo, desinfección, lavandería, institucional y automotriz), presentaciones y precios actuales.</li>
+          <li>Políticas de despacho, cobertura geográfica y métodos de pago habilitados en la pasarela.</li>
+          <li>Requisitos de facturación electrónica (solicitud de Cédula o NIT en el carrito de compras).</li>
+        </ul>
+      </li>
+      <li><strong>Restricciones de seguridad:</strong>
+        <ul>
+          <li>El asistente solo responde temas relacionados con Detalgraf.</li>
+          <li>No inventa precios, descuentos ni productos fuera del catálogo.</li>
+          <li>No utiliza ni ofrece WhatsApp como canal de contacto; todo escalamiento se maneja por correo electrónico.</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h2>2. Cómo se Comunicará con el Cliente</h2>
+    <table>
+      <tr>
+        <th>Tono de comunicación</th>
+        <td>Corporativo, directo, técnico y resolutivo. Respuestas breves (máximo 3 a 4 líneas por mensaje) para facilitar la lectura en celular y computador.</td>
+      </tr>
+      <tr>
+        <th>Consultas de productos (B2C)</th>
+        <td>Si el cliente pregunta por un producto o necesidad (ej. desengrasante industrial o detergente líquido por caneca de 20L), el chat le indica la opción disponible en la tienda, su presentación y el enlace directo para agregarlo al carrito.</td>
+      </tr>
+      <tr>
+        <th>Consultas de estado de pedido</th>
+        <td>Si el cliente pregunta por un pedido en curso, el chat le solicita el número de orden (ej. <code>#2703</code>) y lo dirige a la sección de Rastreo de Envíos en tiempo real.</td>
+      </tr>
+      <tr>
+        <th>Casos fuera de alcance</th>
+        <td>Si el cliente realiza una consulta administrativa específica, reclamo o solicitud especial que la IA no deba decidir por sí misma, el chat informa que será atendido por el área encargada y genera el envío por correo electrónico.</td>
+      </tr>
+    </table>
+
+    <h2>3. Cómo se Comunicará con Usted / La Empresa (Canal de Escalamiento)</h2>
+    <p style="margin-bottom: 10px;">El chat no requiere que una persona esté conectada respondiendo en vivo. Toda solicitud que requiera intervención de la empresa llegará directamente al correo <strong><code>info@detalgraf.com</code></strong> (o al correo que usted indique) de dos formas:</p>
+
+    <div class="flow-box">
+      <h3>A. Solicitudes de Cotización Mayorista / B2B</h3>
+      <p>Cuando una empresa solicita precios por volumen o atención corporativa, el chat le pide en la conversación:</p>
+      <ul style="margin-top: 6px;">
+        <li>Razón Social y NIT (`830... / 900...`)</li>
+        <li>Ciudad de entrega</li>
+        <li>Productos y cantidades requeridas</li>
+        <li>Correo y teléfono de contacto</li>
+      </ul>
+      <p>Con esos datos completos, el chat genera automáticamente el correo estructurado con el asunto <strong>"Solicitud Cotización B2B - [Nombre Empresa]"</strong> o abre el Modal de Contacto Oficial de la página con toda la información prellenada lista para enviar a <code>info@detalgraf.com</code>.</p>
+    </div>
+
+    <div class="flow-box">
+      <h3>B. Consultas Especiales, Soporte o Facturación</h3>
+      <p>Si el usuario necesita soporte sobre facturación electrónica, certificados específicos o novedades con su entrega:</p>
+      <ul style="margin-top: 6px;">
+        <li>El chat recopila el número de pedido (si aplica) y el motivo de la solicitud.</li>
+        <li>Habilita un botón directo en el mismo chat que abre el formulario de correo oficial hacia <code>info@detalgraf.com</code> con el asunto clasificado (ej. <strong>"Consulta Pedido #XXXX"</strong> o <strong>"Soporte Comercial Web"</strong>) para que usted lo reciba ordenado en su bandeja de entrada.</li>
+      </ul>
+    </div>
+
+    <h2>4. Puntos para Revisar (Agregar, Modificar o Eliminar)</h2>
+    <p style="margin-bottom: 10px;">Por favor indique qué ajustes desea aplicar sobre los siguientes puntos antes de publicarlo en la tienda:</p>
+    <table class="checklist-table">
+      <thead>
+        <tr>
+          <th style="width: 28%;">Elemento</th>
+          <th style="width: 42%;">Configuración Propuesta</th>
+          <th style="width: 30%;">¿Aprobado / Qué cambiar?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Nombre del Asistente</strong></td>
+          <td>Asistente Virtual Detalgraf</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><strong>Correo receptor de solicitudes</strong></td>
+          <td><code>info@detalgraf.com</code></td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><strong>Regla de Pedido Mínimo</strong></td>
+          <td>$100.000 COP (Bogotá) / $200.000 COP (Nacional)</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><strong>Tiempos de Entrega informados</strong></td>
+          <td>Bogotá y Sabana: 24 a 48 horas hábiles.<br>Nacional: 2 a 5 días hábiles.</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><strong>Botones rápidos iniciales</strong></td>
+          <td>1. Pedido mínimo y envíos<br>2. Rastrear pedido<br>3. Fichas técnicas<br>4. Cotización empresas<br>5. Contacto por correo</td>
+          <td></td>
+        </tr>
+        <tr>
+          <td><strong>Información adicional que deba responder o restringir</strong></td>
+          <td>Horarios de atención, dirección de planta/bodega, condiciones de pago o políticas de devolución específicas.</td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+</body>
+</html>

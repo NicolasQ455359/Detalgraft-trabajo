@@ -1,11 +1,15 @@
-<!-- /templates/cart.liquid — Redirección a la nueva experiencia integrada DetalShop -->
+<!-- /templates/cart.liquid — Plantilla oficial del Carrito de DetalShop -->
 <script>
-  window.location.replace('/?openCart=1');
+  (function() {
+    var search = window.location.search || '';
+    var sep = search ? '&' : '?';
+    if (search.indexOf('open_cart=true') === -1) {
+      search = search + sep + 'open_cart=true';
+    }
+    window.location.replace('/' + search + '#cart');
+  })();
 </script>
 <noscript>
-  <meta http-equiv="refresh" content="0;url=/?openCart=1">
-  <div style="text-align: center; padding: 50px;">
-    <h2>Cargando tu carrito DetalShop...</h2>
-    <p><a href="/?openCart=1">Haz clic aquí si no eres redirigido automáticamente</a></p>
-  </div>
+  {% render "cart-page", cart: cart %}
 </noscript>
+<script async src="https://zooomyapps.com/agree/ZooomyCartTerms.js" data-shop="{{shop.permanent_domain}}" data-cart="{{ cart.item_count }}"></script>

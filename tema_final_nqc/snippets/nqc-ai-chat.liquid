@@ -1,0 +1,90 @@
+<!-- ==========================================================================
+     NQC AI CHATBOT — ASISTENTE VIRTUAL OFICIAL DETALGRAF S.A.S.
+     Snippet liquid embebible | Posición estratégica que no interfiere con compras ni tracking
+     ========================================================================== -->
+
+{{ 'nqc-ai-chat.css' | asset_url | stylesheet_tag }}
+
+<!-- Botón Flotante Lanzador (Bottom-Right, sobre la barra de carrito) -->
+<button type="button" class="nqc-chat-launcher" id="nqcChatLauncher" aria-label="Abrir asistente virtual de Detalgraf">
+  <span class="nqc-chat-status-dot" title="Asistente en línea"></span>
+  
+  <!-- Icono de Chat SVG -->
+  <svg class="icon-chat" viewBox="0 0 24 24">
+    <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
+    <circle cx="8" cy="10" r="1.5"/>
+    <circle cx="12" cy="10" r="1.5"/>
+    <circle cx="16" cy="10" r="1.5"/>
+  </svg>
+
+  <!-- Icono Cerrar (✕) -->
+  <span class="icon-close">✕</span>
+
+  <!-- Globo de Bienvenida Automático -->
+  <div class="nqc-chat-tooltip" id="nqcChatTooltip">
+    ¿Tienes dudas sobre productos o envíos? Chatea aquí 👋
+  </div>
+</button>
+
+<!-- Ventana Principal del Chat -->
+<div class="nqc-chat-window" id="nqcChatWindow" role="dialog" aria-modal="true" aria-label="Ventana del asistente virtual Detalgraf">
+  
+  <!-- Encabezado Corporativo -->
+  <div class="nqc-chat-header">
+    <div class="nqc-chat-header-info">
+      <div class="nqc-chat-avatar">
+        🤖
+      </div>
+      <div class="nqc-chat-header-text">
+        <h3>Asistente Detalgraf</h3>
+        <p><span class="nqc-chat-online-badge"></span> En línea · Soporte y Ventas</p>
+      </div>
+    </div>
+    <div class="nqc-chat-header-actions">
+      <button type="button" class="nqc-chat-btn-header" id="nqcChatRestartBtn" title="Reiniciar conversación">🔄</button>
+      <button type="button" class="nqc-chat-btn-header" id="nqcChatCloseBtn" title="Cerrar chat">✕</button>
+    </div>
+  </div>
+
+  <!-- Cuerpo de Mensajes -->
+  <div class="nqc-chat-body" id="nqcChatMessages">
+    <!-- Los mensajes se inyectan dinámicamente desde nqc-ai-chat.js -->
+  </div>
+
+  <!-- Indicador Animado de Escritura -->
+  <div class="nqc-typing-indicator" id="nqcChatTyping" style="margin: 0 16px 8px 16px;">
+    <span></span><span></span><span></span>
+  </div>
+
+  <!-- Pie de Entrada (Caja de Texto Libre Siempre Accesible) -->
+  <div class="nqc-chat-footer">
+    <div class="nqc-chat-input-form">
+      <input 
+        type="text" 
+        class="nqc-chat-input" 
+        id="nqcChatInput" 
+        placeholder="Escribe tu pregunta o busca un producto..." 
+        aria-label="Mensaje para el asistente"
+        onkeydown="if(event.key==='Enter'){event.preventDefault(); window.nqcChatSendMessage();}"
+      >
+      <button 
+        type="button" 
+        class="nqc-chat-btn-send" 
+        id="nqcChatSendBtn" 
+        onclick="window.nqcChatSendMessage()" 
+        aria-label="Enviar mensaje" 
+        title="Enviar mensaje"
+      >
+        <svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13"></line>
+          <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+        </svg>
+      </button>
+    </div>
+    <div class="nqc-chat-footer-note">
+      Detalgraf S.A.S. · Asistente Oficial 24/7
+    </div>
+  </div>
+</div>
+
+<script src="{{ 'nqc-ai-chat.js' | asset_url }}" defer="defer"></script>

@@ -1,0 +1,589 @@
+/* ==========================================================================
+   NQC AI CHATBOT — ASISTENTE VIRTUAL DETALGRAF
+   Posicionamiento estratégico: no interfiere con botones de compra, tracking ni sticky bar
+   ========================================================================== */
+
+/* Botón Flotante Lanzador */
+.nqc-chat-launcher {
+  position: fixed;
+  bottom: 95px;
+  right: 22px;
+  z-index: 10005;
+  width: 58px;
+  height: 58px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #004b87 0%, #002b54 100%);
+  color: #ffffff;
+  border: 2px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 8px 24px rgba(0, 75, 135, 0.4), 0 2px 6px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nqc-chat-launcher:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 28px rgba(0, 75, 135, 0.5), 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.nqc-chat-launcher:active {
+  transform: translateY(0) scale(0.96);
+}
+
+/* Ocultar cuando el carrito lateral esté abierto para no obstaculizarlo */
+body.cart-open .nqc-chat-launcher,
+body.cart-open .nqc-chat-window,
+.cart-drawer-overlay.active ~ * .nqc-chat-launcher,
+.cart-drawer-overlay.active ~ * .nqc-chat-window {
+  display: none !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
+
+/* Iconos dentro del lanzador */
+.nqc-chat-launcher svg {
+  width: 28px;
+  height: 28px;
+  fill: currentColor;
+  transition: transform 0.25s ease;
+}
+
+.nqc-chat-launcher .icon-close {
+  display: none;
+  font-size: 24px;
+  line-height: 1;
+  font-weight: 700;
+}
+
+.nqc-chat-launcher.is-active .icon-chat {
+  display: none;
+}
+
+.nqc-chat-launcher.is-active .icon-close {
+  display: block;
+}
+
+/* Indicador de Estado En Línea (Punto verde pulsante) */
+.nqc-chat-status-dot {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  width: 14px;
+  height: 14px;
+  background-color: #10b981;
+  border: 2px solid #ffffff;
+  border-radius: 50%;
+}
+
+.nqc-chat-status-dot::after {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background-color: #10b981;
+  opacity: 0.6;
+  animation: nqcPulseDot 2s infinite;
+}
+
+@keyframes nqcPulseDot {
+  0% { transform: scale(1); opacity: 0.8; }
+  70% { transform: scale(2.2); opacity: 0; }
+  100% { transform: scale(2.2); opacity: 0; }
+}
+
+/* Tooltip / Globo de bienvenida automático */
+.nqc-chat-tooltip {
+  position: absolute;
+  right: 70px;
+  bottom: 8px;
+  background: #0f172a;
+  color: #ffffff;
+  padding: 8px 14px;
+  border-radius: 20px;
+  font-size: 12.5px;
+  font-weight: 600;
+  white-space: nowrap;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: all 0.3s ease;
+  border: 1px solid #334155;
+}
+
+.nqc-chat-tooltip::after {
+  content: '';
+  position: absolute;
+  right: -6px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-width: 6px 0 6px 6px;
+  border-style: solid;
+  border-color: transparent transparent transparent #0f172a;
+}
+
+.nqc-chat-tooltip.show {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* Ventana Principal del Chat */
+.nqc-chat-window {
+  position: fixed;
+  bottom: 95px;
+  right: 22px;
+  width: 385px;
+  max-width: calc(100vw - 30px);
+  height: 560px;
+  max-height: calc(100vh - 120px);
+  background: #ffffff;
+  border-radius: 18px;
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.08);
+  z-index: 10006;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  animation: nqcSlideUpChat 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: inherit;
+}
+
+@keyframes nqcSlideUpChat {
+  from {
+    opacity: 0;
+    transform: translateY(25px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Cabecera del Chat */
+.nqc-chat-header {
+  background: linear-gradient(135deg, #004b87 0%, #002b54 100%);
+  color: #ffffff;
+  padding: 14px 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.nqc-chat-header-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.nqc-chat-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  flex-shrink: 0;
+}
+
+.nqc-chat-header-text h3 {
+  margin: 0;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.2;
+}
+
+.nqc-chat-header-text p {
+  margin: 2px 0 0 0;
+  font-size: 11px;
+  color: #bfdbfe;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.nqc-chat-online-badge {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  background-color: #34d399;
+  border-radius: 50%;
+}
+
+.nqc-chat-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nqc-chat-btn-header {
+  background: rgba(255, 255, 255, 0.12);
+  border: none;
+  color: #ffffff;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+
+.nqc-chat-btn-header:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+/* Área de Mensajes */
+.nqc-chat-body {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  background: #f8fafc;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scroll-behavior: smooth;
+}
+
+.nqc-chat-body::-webkit-scrollbar {
+  width: 5px;
+}
+.nqc-chat-body::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+/* Mensaje del Bot */
+.nqc-msg-bot {
+  align-self: flex-start;
+  max-width: 86%;
+  background: #ffffff;
+  color: #1e293b;
+  padding: 12px 14px;
+  border-radius: 14px 14px 14px 3px;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+  border: 1px solid #e2e8f0;
+  font-size: 13px;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+/* Mensaje del Usuario */
+.nqc-msg-user {
+  align-self: flex-end;
+  max-width: 86%;
+  background: #004b87;
+  color: #ffffff;
+  padding: 10px 14px;
+  border-radius: 14px 14px 3px 14px;
+  box-shadow: 0 2px 6px rgba(0, 75, 135, 0.25);
+  font-size: 13px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* Timestamp discreto */
+.nqc-msg-time {
+  font-size: 10px;
+  opacity: 0.65;
+  margin-top: 4px;
+  text-align: right;
+}
+
+/* Indicador de Escritura */
+.nqc-typing-indicator {
+  align-self: flex-start;
+  background: #ffffff;
+  padding: 8px 12px;
+  border-radius: 12px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+  border: 1px solid #e2e8f0;
+  display: none;
+  align-items: center;
+  gap: 4px;
+}
+
+.nqc-typing-indicator span {
+  width: 6px;
+  height: 6px;
+  background: #94a3b8;
+  border-radius: 50%;
+  animation: nqcTyping 1.4s infinite ease-in-out both;
+}
+
+.nqc-typing-indicator span:nth-child(1) { animation-delay: -0.32s; }
+.nqc-typing-indicator span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes nqcTyping {
+  0%, 80%, 100% { transform: scale(0); opacity: 0.4; }
+  40% { transform: scale(1); opacity: 1; }
+}
+
+/* Tarjeta Interactiva de Producto en el Chat */
+.nqc-chat-product-card {
+  margin-top: 8px;
+  background: #f1f5f9;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.nqc-chat-product-img {
+  width: 52px;
+  height: 52px;
+  object-fit: contain;
+  background: #ffffff;
+  border-radius: 6px;
+  border: 1px solid #e2e8f0;
+  flex-shrink: 0;
+}
+
+.nqc-chat-product-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.nqc-chat-product-title {
+  font-weight: 700;
+  font-size: 12px;
+  color: #0f172a;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.nqc-chat-product-price {
+  font-size: 12.5px;
+  color: #004b87;
+  font-weight: 800;
+  margin: 2px 0 6px 0;
+}
+
+.nqc-chat-product-actions {
+  display: flex;
+  gap: 6px;
+}
+
+.nqc-chat-btn-product {
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.nqc-chat-btn-view {
+  background: #0f172a;
+  color: #ffffff;
+  border: none;
+}
+
+.nqc-chat-btn-add {
+  background: #004b87;
+  color: #ffffff;
+  border: none;
+}
+
+/* Tarjeta de Rastreo en el Chat */
+.nqc-chat-tracking-card {
+  margin-top: 8px;
+  background: #ffffff;
+  border: 1.5px solid #0284c7;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 2px 6px rgba(2, 132, 199, 0.1);
+}
+
+.nqc-chat-tracking-status {
+  display: inline-block;
+  padding: 3px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.nqc-chat-tracking-status.step1 { background: #fef3c7; color: #b45309; }
+.nqc-chat-tracking-status.step2 { background: #e0f2fe; color: #0369a1; }
+.nqc-chat-tracking-status.step3 { background: #dcfce7; color: #15803d; }
+
+.nqc-chat-tracking-details {
+  font-size: 11.5px;
+  color: #334155;
+  line-height: 1.4;
+}
+
+/* Botones de Acción Rápida (Action Buttons en mensajes) */
+.nqc-chat-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: #eff6ff;
+  color: #004b87;
+  border: 1px solid #bfdbfe;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 6px;
+  text-decoration: none;
+  transition: all 0.2s;
+}
+
+.nqc-chat-action-btn:hover {
+  background: #004b87;
+  color: #ffffff;
+  border-color: #004b87;
+}
+
+/* Opciones Rápidas Directamente Dentro del Chat */
+.nqc-chat-options-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.nqc-chat-inline-pill {
+  background: #f1f5f9;
+  color: #004b87;
+  border: 1px solid #cbd5e1;
+  padding: 8px 10px;
+  border-radius: 10px;
+  font-size: 11.5px;
+  font-weight: 700;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+  font-family: inherit;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+}
+
+.nqc-chat-inline-pill:hover {
+  background: #004b87;
+  color: #ffffff;
+  border-color: #004b87;
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(0,75,135,0.2);
+}
+
+/* Pie de Entrada (Input Form) */
+.nqc-chat-footer {
+  padding: 12px 14px;
+  background: #ffffff;
+  border-top: 1px solid #e2e8f0;
+  flex-shrink: 0;
+}
+
+.nqc-chat-input-form {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: #f8fafc;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 24px;
+  padding: 5px 8px 5px 14px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.nqc-chat-input-form:focus-within {
+  border-color: #004b87;
+  box-shadow: 0 0 0 3px rgba(0, 75, 135, 0.15);
+  background: #ffffff;
+}
+
+.nqc-chat-input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  outline: none;
+  font-size: 13.5px;
+  color: #0f172a;
+  font-family: inherit;
+  padding: 4px 0;
+}
+
+.nqc-chat-input::placeholder {
+  color: #94a3b8;
+}
+
+.nqc-chat-btn-send {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #004b87;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.15s;
+  flex-shrink: 0;
+}
+
+.nqc-chat-btn-send:hover {
+  background: #003662;
+  transform: scale(1.05);
+}
+
+.nqc-chat-btn-send:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.nqc-chat-btn-send svg {
+  width: 15px;
+  height: 15px;
+  fill: currentColor;
+}
+
+.nqc-chat-footer-note {
+  text-align: center;
+  font-size: 10px;
+  color: #94a3b8;
+  margin-top: 5px;
+}
+
+/* Adaptabilidad Responsiva para Pantallas Pequeñas */
+@media (max-width: 480px) {
+  .nqc-chat-launcher {
+    bottom: 85px;
+    right: 16px;
+    width: 52px;
+    height: 52px;
+  }
+  .nqc-chat-window {
+    bottom: 80px;
+    right: 12px;
+    left: 12px;
+    width: auto;
+    height: 72vh;
+    max-height: 520px;
+  }
+}

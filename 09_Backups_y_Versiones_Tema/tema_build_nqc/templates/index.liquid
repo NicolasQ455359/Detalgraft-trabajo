@@ -1,0 +1,13 @@
+<!-- /templates/index.liquid — Portada Oficial DetalShop B2B y Catálogo Sincronizado -->
+<div class="nqc-store-wrapper" id="mainWebsite">
+  <div id="viewHome" class="page-view-block active">
+    {% section 'nqc-category-lines' %}
+    {% section 'nqc-featured-products' %}
+  </div>
+  {% section 'nqc-featured-pdp' %}
+  {% section 'nqc-tracking-section' %}
+</div>
+
+<div class="index-sections" style="display:none;">
+  {{ content_for_index }}
+</div>

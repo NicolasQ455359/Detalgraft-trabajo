@@ -1,6 +1,10 @@
 <!-- /templates/collection.liquid — Integración con la nueva interfaz de catálogo DetalShop -->
 <script>
-  window.location.replace('/?collection={{ collection.handle }}#catalogo');
+  (function() {
+    var searchParams = new URLSearchParams(window.location.search);
+    searchParams.set('collection', '{{ collection.handle }}');
+    window.location.replace('/?' + searchParams.toString() + '#catalogo');
+  })();
 </script>
 <noscript>
   <meta http-equiv="refresh" content="0;url=/?collection={{ collection.handle }}#catalogo">

@@ -1,62 +1,115 @@
 <div class="cart-drawer-overlay" id="cartDrawerOverlay" onclick="closeCartDrawer(event)">
-    <div class="cart-drawer-panel" onclick="event.stopPropagation()">
-      <div class="drawer-header">
-        <div class="drawer-header-title" id="drawerHeaderTitle">Tu Carrito (0 productos)</div>
-        <button class="drawer-close-btn" onclick="closeCartDrawer()">✕</button>
+  <div class="cart-drawer-panel" onclick="event.stopPropagation()">
+    <div class="drawer-header">
+      <div class="drawer-header-title" id="drawerHeaderTitle">Tu Carrito (0 productos)</div>
+      <button class="drawer-close-btn" onclick="closeCartDrawer()" type="button" aria-label="Cerrar carrito">✕</button>
+    </div>
+
+    <div class="drawer-body">
+      <!-- BARRA DE PEDIDO MÍNIMO BOGOTÁ / NACIONAL -->
+      <div class="min-order-card">
+        <div class="min-toggle-row">
+          <button type="button" class="min-toggle-btn active" id="btnZoneBog" onclick="setCartZone(100000)">
+            📍 Bogotá ($100k Mínimo)
+          </button>
+          <button type="button" class="min-toggle-btn" id="btnZoneNac" onclick="setCartZone(200000)">
+            Nacional ($200k Mínimo)
+          </button>
+        </div>
+
+        <div class="min-progress-track">
+          <div class="min-progress-bar" id="drawerProgressBar"></div>
+        </div>
+        <div class="min-alert-text" id="drawerAlertText"></div>
       </div>
 
-      <div class="drawer-body">
-        <!-- BARRA DE PEDIDO MÍNIMO BOGOTÁ / NACIONAL -->
-        <div class="min-order-card">
-          <div class="min-toggle-row">
-            <button class="min-toggle-btn active" id="btnZoneBog" onclick="setCartZone(100000)">
-              📍 Bogotá ($100k Mínimo)
-            </button>
-            <button class="min-toggle-btn" id="btnZoneNac" onclick="setCartZone(200000)">
-              🇨🇴 Nacional ($200k Mínimo)
-            </button>
-          </div>
+      <!-- LISTA DINÁMICA DE ITEMS EN CARRITO -->
+      <div id="drawerItemsList"></div>
 
-          <div class="min-progress-track">
-            <div class="min-progress-bar" id="drawerProgressBar"></div>
-          </div>
-          <div class="min-alert-text" id="drawerAlertText"></div>
-        </div>
+      <!-- CROSS-SELL / SUGERENCIAS DINÁMICAS PARA COMPLETAR EL PEDIDO MÍNIMO -->
+      <div id="drawerCrossSell"></div>
+    </div>
 
-        <!-- LISTA DINÁMICA DE ITEMS EN CARRITO -->
-        <div id="drawerItemsList"></div>
-
-        <!-- CROSS-SELL / SUGERENCIAS DINÁMICAS PARA COMPLETAR EL PEDIDO MÍNIMO -->
-        <div id="drawerCrossSell"></div>
+    <!-- FOOTER DEL CARRITO DRAWER -->
+    <div class="drawer-footer">
+      <div class="drawer-total-row">
+        <span style="font-size: 13px; font-weight: 700; color: var(--slate-600);">Total Pedido:</span>
+        <span class="drawer-total-val" id="drawerTotalText">$0 COP</span>
+      </div>
+      <div style="font-size: 11px; color: #16a34a; font-weight: 700; margin-bottom: 12px;">
+        ✓ IVA incluido · Despacho oficial Detalgraf
       </div>
 
-      <!-- FOOTER DEL CARRITO DRAWER -->
-      <div class="drawer-footer">
-        <div class="drawer-total-row">
-          <span style="font-size: 13px; font-weight: 700; color: var(--slate-600);">Total Pedido:</span>
-          <span class="drawer-total-val" id="drawerTotalText">$0 COP</span>
-        </div>
-        <div style="font-size: 11px; color: #16a34a; font-weight: 700; margin-bottom: 12px;">
-          ✓ IVA incluido · Despacho con flota propia Detalgraf
-        </div>
-
-        <!-- CAMPO OBLIGATORIO CÉDULA / NIT DIAN -->
+      <!-- FORMULARIO NATIVO DE CHECKOUT DE SHOPIFY (CONEXIÓN EXACTA A PAGOS) -->
+      <form id="nqcDrawerCartForm" action="{{ routes.cart_url }}" method="post" novalidate onsubmit="return handleDrawerCartSubmit(event)">
+        <!-- CAMPOS DE IDENTIFICACIÓN DIAN (EXACTO A LA TIENDA ORIGINAL) -->
         <div style="background: #f8fafc; border: 1.5px solid #cbd5e1; border-radius: 8px; padding: 10px; margin-bottom: 10px;">
-          <label style="font-size: 11.5px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 4px;">
-            🏢 Cédula / NIT para Facturación Electrónica DIAN:
-          </label>
-          <input type="text" id="cedulaNitDrawer" placeholder="Ej: 900.123.456-7 o 80.123.456" style="width: 100%; border: 1px solid #cbd5e1; padding: 7px 10px; border-radius: 5px; font-size: 12px; font-weight: 700;">
+          <div style="display: flex; gap: 8px; margin-bottom: 4px;">
+            <div style="width: 38%;">
+              <label for="tipoIdentificacionDrawer" style="font-size: 11px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 3px;">
+                Tipo Doc. <span style="color:red;">*</span>
+              </label>
+              <select id="tipoIdentificacionDrawer" name="attributes[Tipo de identificación]" style="width: 100%; border: 1px solid #cbd5e1; padding: 6px 4px; border-radius: 5px; font-size: 11.5px; font-weight: 700; background: #fff; height: 34px;">
+                <option value="NIT" selected>NIT</option>
+                <option value="CC">Cédula (CC)</option>
+                <option value="CE">Cédula Ext. (CE)</option>
+                <option value="PP">Pasaporte</option>
+              </select>
+            </div>
+            <div style="width: 62%;">
+              <label for="cedulaNitDrawer" style="font-size: 11px; font-weight: 800; color: #1e293b; display: block; margin-bottom: 3px;">
+                Número / NIT DIAN <span style="color:red;">*</span>
+              </label>
+              <input type="text" id="cedulaNitDrawer" name="attributes[Número de documento]" placeholder="Ej: 830.005.293-5" style="width: 100%; border: 1px solid #cbd5e1; padding: 6px 8px; border-radius: 5px; font-size: 11.5px; font-weight: 700; height: 34px; box-sizing: border-box;" value="">
+            </div>
+          </div>
+          <div style="font-size: 10px; color: #64748b; font-weight: 600;">
+            Requerido para Facturación Electrónica DIAN y remisión oficial.
+          </div>
         </div>
 
-        <button class="btn-drawer-checkout" id="btnCheckoutFigma" onclick="proceedCheckoutFigma()">
-          [ Proceder al Pago Seguro 🔒 ]
+        <input type="hidden" name="attributes[Cédula / NIT DIAN]" id="nqcDrawerAttrCedulaDian" value="">
+        <input type="hidden" name="attributes[Número de Guía]" id="nqcDrawerAttrGuia" value="">
+        <input type="hidden" name="attributes[Zona Despacho]" id="nqcDrawerAttrZona" value="">
+        <input type="hidden" name="note" id="nqcDrawerNote" value="">
+        <!-- AUTORIZACIÓN MANEJO DE DATOS PERSONALES -->
+        <div style="margin: 10px 0 12px 0; display: flex; align-items: center; gap: 8px; font-size: 11.5px; color: #334155;">
+          <input type="checkbox" id="authDatosPersonalesDrawer" required style="cursor: pointer; width: 16px; height: 16px; accent-color: #004b87; margin-top: 1px;">
+          <label for="authDatosPersonalesDrawer" style="cursor: pointer; line-height: 1.35; font-size: 11.5px; font-weight: 600; margin: 0;">
+            <a href="/policies/privacy-policy" target="_blank" rel="noopener" style="color: #0284c7; text-decoration: underline; font-weight: 700;">Autorización manejo de datos personales</a>
+          </label>
+        </div>
+
+        <!-- BOTÓN GENERAR / DESCARGAR COTIZACIÓN PDF OFICIAL B2B (COMO PEDIDO_DETALGRAF_19296.PDF) -->
+        <button type="button" class="btn-drawer-quote-pdf" id="btnDrawerQuotePdf" onclick="generateCartQuotePDF()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 6px; vertical-align: -2px;">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+          <span>📄 Descargar Cotización PDF</span>
         </button>
 
-        <div style="text-align: center; margin-top: 10px;">
-          <a href="#tracking" onclick="closeCartDrawer(); if(window.switchView){window.switchView('track');} return false;" style="font-size: 11.5px; font-weight: 700; color: #005091; text-decoration: none;">
-            📦 ¿Ya tienes una guía de despacho? <u>Rastrear Envío Aquí</u>
-          </a>
+        <button type="submit" name="checkout" class="btn-drawer-checkout" id="btnCheckoutFigma">
+          [ Proceder al Pago Seguro 🔒 ]
+        </button>
+      </form>
+
+      <!-- ICONOS DE MEDIOS DE PAGO NATIVOS DE SHOPIFY (PASARELA CONECTADA) -->
+      <div style="margin-top: 10px; text-align: center;">
+        {% render 'payment-icons' %}
+        <div style="font-size: 10.5px; color: #64748b; font-weight: 600; margin-top: 4px;">
+          🔒 Pagos seguros y cifrados vía pasarela oficial Shopify
         </div>
       </div>
+
+      <div style="text-align: center; margin-top: 10px;">
+        <a href="#tracking" onclick="closeCartDrawer(); if(window.switchView){window.switchView('track');} return false;" style="font-size: 11.5px; font-weight: 700; color: #005091; text-decoration: none;">
+          📦 ¿Ya tienes una guía de despacho? <u>Rastrear Envío Aquí</u>
+        </a>
+      </div>
     </div>
+  </div>
 </div>
