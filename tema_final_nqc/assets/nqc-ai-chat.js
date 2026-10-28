@@ -117,16 +117,16 @@
     `;
   }
 
-  // 2. Submenú interactivo para Categorías de Productos
+  // 2. Submenú interactivo con las 5 Líneas Oficiales ("NUESTRAS LINEAS")
   function getProductCategoriesHtml() {
     return `
       <div class="nqc-chat-options-grid">
-        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('cat_desengrasante', '🍳 Cocina & Grasa')">🍳 Cocina & Grasa</button>
-        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('cat_cloro', '🧴 Cloro & Desinfección')">🧴 Cloro & Desinfección</button>
-        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('cat_lavanderia', '🧺 Lavandería & Ropa')">🧺 Lavandería & Ropa</button>
-        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('cat_pisos', '✨ Cuidado de Pisos')">✨ Cuidado de Pisos</button>
-        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('cat_jabon', '🧼 Higiene & Manos')">🧼 Higiene & Manos</button>
-        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('cat_panos', '🧻 Paños & Wypall')">🧻 Paños & Wypall</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('linea_aseo', '🧹 Productos de Aseo')">🧹 Productos de Aseo</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('linea_bioseguridad', '🛡️ Productos de Bioseguridad')">🛡️ Productos de Bioseguridad</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('linea_cafeteria', '☕ Productos de Cafetería')">☕ Productos de Cafetería</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('linea_papeleria', '📄 Productos de Papelería')">📄 Productos de Papelería</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('linea_seguridad', '🦺 Productos de Seguridad Industrial')">🦺 Productos de Seguridad Industrial</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('linea_todas', '📦 Ver Todas las Líneas')">📦 Ver Todas las Líneas</button>
       </div>
     `;
   }
@@ -210,6 +210,24 @@
         case 'faqs':
           explainFaqs();
           break;
+        case 'linea_aseo':
+          recommendLineaAseo();
+          break;
+        case 'linea_bioseguridad':
+          recommendLineaBioseguridad();
+          break;
+        case 'linea_cafeteria':
+          recommendLineaCafeteria();
+          break;
+        case 'linea_papeleria':
+          recommendLineaPapeleria();
+          break;
+        case 'linea_seguridad':
+          recommendLineaSeguridad();
+          break;
+        case 'linea_todas':
+          recommendLineaTodas();
+          break;
         case 'cat_desengrasante':
           recommendDesengrasante();
           break;
@@ -232,6 +250,36 @@
           processUserQuery(label);
       }
     }, 400);
+  };
+
+  // Redirección directa al Catálogo filtrado por Línea Oficial
+  window.goToLineCatalog = function (category) {
+    closeChat();
+    if (typeof window.switchView === 'function') {
+      window.switchView('home');
+    }
+    if (typeof window.filterHomeCatalog === 'function') {
+      window.filterHomeCatalog(category);
+    }
+    setTimeout(() => {
+      const catalogEl = document.getElementById('catalogSection') || document.querySelector('.main-catalog-section') || document.querySelector('.category-filter-bar');
+      if (catalogEl) {
+        catalogEl.scrollIntoView({ behavior: 'smooth' });
+      } else if (typeof window.scrollToCatalog === 'function') {
+        window.scrollToCatalog();
+      }
+    }, 120);
+  };
+
+  // Visualización de Ficha Técnica / PDP directa desde el Chat
+  window.viewProductDetail = function (productId, handle) {
+    closeChat();
+    if (typeof window.openPdpWithProduct === 'function' && document.getElementById('viewPdp')) {
+      window.openPdpWithProduct(productId);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    } else if (handle) {
+      window.location.href = '/products/' + handle;
+    }
   };
 
   // Redirección directa al Tracking (Punto 2 del usuario)
@@ -295,8 +343,8 @@
       return;
     }
 
-    // 6. CATÁLOGO GENERAL / RECOMENDACIONES / "QUÉ VENDEN"
-    if (qLower.includes('recomendacion') || qLower.includes('recomendación') || qLower.includes('recomendar') || qLower.includes('recomiendas') || qLower.includes('catalogo') || qLower.includes('catálogo') || qLower.includes('que venden') || qLower.includes('qué venden') || qLower.includes('que tienen') || qLower.includes('qué tienen')) {
+    // 6. CATÁLOGO GENERAL / RECOMENDACIONES / "QUÉ VENDEN" / "LÍNEAS"
+    if (qLower.includes('recomendacion') || qLower.includes('recomendación') || qLower.includes('recomendar') || qLower.includes('recomiendas') || qLower.includes('catalogo') || qLower.includes('catálogo') || qLower.includes('que venden') || qLower.includes('qué venden') || qLower.includes('que tienen') || qLower.includes('qué tienen') || qLower.includes('lineas') || qLower.includes('líneas') || qLower.includes('nuestras lineas') || qLower.includes('nuestras líneas')) {
       setTyping(false);
       askProductCategory();
       return;
@@ -343,7 +391,37 @@
       return;
     }
 
-    // 12. CASOS DE LIMPIEZA ESPECÍFICOS Y PRODUCTOS
+    // 12. CONSULTA DE LÍNEAS OFICIALES O CASOS DE LIMPIEZA ESPECÍFICOS
+    if (qClean === 'aseo' || qClean === 'productos de aseo' || qClean === 'linea de aseo' || qClean === 'linea aseo') {
+      setTyping(false);
+      recommendLineaAseo();
+      return;
+    }
+
+    if (qClean === 'bioseguridad' || qClean === 'productos de bioseguridad' || qClean === 'linea de bioseguridad' || qClean === 'linea bioseguridad') {
+      setTyping(false);
+      recommendLineaBioseguridad();
+      return;
+    }
+
+    if (qClean === 'cafeteria' || qClean === 'cafetería' || qClean === 'productos de cafeteria' || qClean === 'linea de cafeteria' || qClean === 'linea cafeteria') {
+      setTyping(false);
+      recommendLineaCafeteria();
+      return;
+    }
+
+    if (qClean === 'papeleria' || qClean === 'papelería' || qClean === 'productos de papeleria' || qClean === 'linea de papeleria' || qClean === 'linea papeleria') {
+      setTyping(false);
+      recommendLineaPapeleria();
+      return;
+    }
+
+    if (qClean === 'seguridad' || qClean === 'seguridad industrial' || qClean === 'productos de seguridad industrial' || qClean === 'linea de seguridad industrial' || qClean === 'epp') {
+      setTyping(false);
+      recommendLineaSeguridad();
+      return;
+    }
+
     if (qLower.includes('grasa') || qLower.includes('campana') || qLower.includes('estufa') || qLower.includes('motor') || qLower.includes('taller') || qLower.includes('desengrasante')) {
       setTyping(false);
       recommendDesengrasante();
@@ -406,9 +484,9 @@
   // SUB-RUTINAS DE RESPUESTAS CONCRETAS Y TÉCNICAS
   // =========================================================================
 
-  // Pregunta interactiva de categorías para Recomendaciones
+  // Pregunta interactiva de categorías para Recomendaciones (Líneas Oficiales)
   function askProductCategory() {
-    const text = `¿Para qué área o necesidad buscas producto? Selecciona una categoría o cuéntame qué deseas limpiar:`;
+    const text = `Te presentamos nuestras **5 Líneas Oficiales** de productos institucionales. Selecciona una línea para ver los productos recomendados o cuéntame qué necesidad específica buscas resolver:`;
     appendMessage('bot', text, getProductCategoriesHtml());
   }
 
@@ -498,6 +576,134 @@
     appendMessage('bot', text, extras);
   }
 
+  // =========================================================================
+  // RECOMENDADORES DE LAS 5 LÍNEAS OFICIALES ("NUESTRAS LINEAS")
+  // =========================================================================
+
+  function getCatalogProducts() {
+    if (typeof PRODUCTS_DATA !== 'undefined' && Array.isArray(PRODUCTS_DATA) && PRODUCTS_DATA.length > 0) {
+      return PRODUCTS_DATA;
+    }
+    if (typeof window !== 'undefined' && window.SHOPIFY_STORE_PRODUCTS && Array.isArray(window.SHOPIFY_STORE_PRODUCTS)) {
+      return window.SHOPIFY_STORE_PRODUCTS;
+    }
+    return [];
+  }
+
+  function getFeaturedProducts(lineOrCategory, keywords = []) {
+    const catalog = getCatalogProducts();
+    if (!catalog.length) return [];
+
+    let filtered = [];
+    const catLow = lineOrCategory.toLowerCase();
+
+    // 1. Priorizar coincidencias por palabras clave
+    for (const kw of keywords) {
+      const kwLow = kw.toLowerCase();
+      const match = catalog.find(p => {
+        const titleLow = (p.title || '').toLowerCase();
+        const pCatLow = (p.category || '').toLowerCase();
+        const pSubcatLow = (p.subcat || '').toLowerCase();
+        return titleLow.includes(kwLow) || pSubcatLow.includes(kwLow);
+      });
+      if (match && !filtered.some(f => String(f.id) === String(match.id))) {
+        filtered.push(match);
+      }
+      if (filtered.length >= 2) break;
+    }
+
+    // 2. Rellenar con productos de la misma línea si faltan
+    if (filtered.length < 2) {
+      const more = catalog.filter(p => {
+        const pCatLow = (p.category || '').toLowerCase();
+        const matchCat = (catLow === 'bioseguridad')
+          ? (pCatLow === 'seguridad' || /kleenex|antibacterial|alcohol|jabon/i.test(p.title || ''))
+          : (pCatLow === catLow);
+        return matchCat && !filtered.some(f => String(f.id) === String(p.id));
+      });
+      filtered = filtered.concat(more.slice(0, 2 - filtered.length));
+    }
+
+    return filtered.slice(0, 2);
+  }
+
+  function recommendLineaAseo() {
+    const text = `En nuestra línea oficial de **Productos de Aseo Institucional** disponemos de soluciones para desinfección, lavado de manos, toallas de secado y mantenimiento de pisos y superficies.\n\nAquí tienes productos recomendados listos para agregar o revisar:`;
+    const prods = getFeaturedProducts('Aseo', ['toalla mano z', 'desengrasante', 'mopa']);
+    const extras = renderProductCardsHtml(prods) + `
+      <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
+        <button type="button" class="nqc-chat-action-btn" onclick="window.goToLineCatalog('Aseo')">🛒 Ver Catálogo de Aseo</button>
+        <button type="button" class="nqc-chat-action-btn" onclick="window.nqcChatTriggerAction('cotizar_b2b', '🏢 Cotizar empresas')">🏢 Cotizar por volumen</button>
+      </div>
+    `;
+    appendMessage('bot', text, extras);
+  }
+
+  function recommendLineaBioseguridad() {
+    const text = `Nuestra línea de **Productos de Bioseguridad** cuenta con registros sanitarios y formulaciones de grado institucional para clínicas, oficinas y manipulación segura (jabón espuma Kleenex Foam, pañitos antibacterial, alcohol antiséptico y gel).\n\nAquí tienes productos recomendados de esta línea:`;
+    const prods = getFeaturedProducts('Bioseguridad', ['kleenex foam', 'antibacterial', 'alcohol']);
+    const extras = renderProductCardsHtml(prods) + `
+      <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
+        <button type="button" class="nqc-chat-action-btn" onclick="window.goToLineCatalog('Bioseguridad')">🛒 Ver Catálogo de Bioseguridad</button>
+        <button type="button" class="nqc-chat-action-btn" onclick="window.nqcChatTriggerAction('cotizar_b2b', '🏢 Cotizar empresas')">🏢 Cotizar por volumen</button>
+      </div>
+    `;
+    appendMessage('bot', text, extras);
+  }
+
+  function recommendLineaCafeteria() {
+    const text = `En la línea de **Productos de Cafetería** cubrimos los insumos esenciales para casinos empresariales, cafeterías y oficinas (mezcladores de madera El Sol, infusiones naturales Isashii y Hindú, vasos térmicos y de cartón Barval).\n\nAquí tienes productos recomendados de esta línea:`;
+    const prods = getFeaturedProducts('Cafeteria', ['mezclador', 'aromatica', 'vaso']);
+    const extras = renderProductCardsHtml(prods) + `
+      <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
+        <button type="button" class="nqc-chat-action-btn" onclick="window.goToLineCatalog('Cafeteria')">🛒 Ver Catálogo de Cafetería</button>
+        <button type="button" class="nqc-chat-action-btn" onclick="window.nqcChatTriggerAction('cotizar_b2b', '🏢 Cotizar empresas')">🏢 Cotizar por volumen</button>
+      </div>
+    `;
+    appendMessage('bot', text, extras);
+  }
+
+  function recommendLineaPapeleria() {
+    const text = `Nuestra línea de **Productos de Papelería** abarca insumos operativos, embalaje y archivo de alto tráfico (papel kraft por rollo, bolsillos de laminación carta, cintas de empaque Tesa, sobres manila y yoyo vertical).\n\nAquí tienes productos recomendados de esta línea:`;
+    const prods = getFeaturedProducts('Papeleria', ['bolsillo laminacion', 'kraft', 'tesa']);
+    const extras = renderProductCardsHtml(prods) + `
+      <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
+        <button type="button" class="nqc-chat-action-btn" onclick="window.goToLineCatalog('Papeleria')">🛒 Ver Catálogo de Papelería</button>
+        <button type="button" class="nqc-chat-action-btn" onclick="window.nqcChatTriggerAction('cotizar_b2b', '🏢 Cotizar empresas')">🏢 Cotizar por volumen</button>
+      </div>
+    `;
+    appendMessage('bot', text, extras);
+  }
+
+  function recommendLineaSeguridad() {
+    const text = `En la línea de **Seguridad Industrial** proveemos equipos de protección personal (EPP) y suministros de embalaje industrial (paños Wypall X-75 Plus, dispensadores Kimberly, guantes de nitrilo sin polvo y film strech para paletizado).\n\nAquí tienes productos recomendados de esta línea:`;
+    const prods = getFeaturedProducts('Seguridad', ['wypall x-75', 'dispensador wypall', 'nitrilo']);
+    const extras = renderProductCardsHtml(prods) + `
+      <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
+        <button type="button" class="nqc-chat-action-btn" onclick="window.goToLineCatalog('Seguridad')">🛒 Ver Catálogo de Seguridad Industrial</button>
+        <button type="button" class="nqc-chat-action-btn" onclick="window.nqcChatTriggerAction('cotizar_b2b', '🏢 Cotizar empresas')">🏢 Cotizar por volumen</button>
+      </div>
+    `;
+    appendMessage('bot', text, extras);
+  }
+
+  function recommendLineaTodas() {
+    const text = `Disponemos de más de **900 referencias institucionales** con entregas de 24 a 48 horas en Bogotá y despachos a nivel nacional.\n\nTe llevo directamente al catálogo completo con todas las líneas organizadas:`;
+    const extras = `
+      <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
+        <button type="button" class="nqc-chat-action-btn" onclick="window.goToLineCatalog('Todos')">📦 Ver Todas las Líneas en Catálogo</button>
+      </div>
+    `;
+    appendMessage('bot', text, extras);
+    setTimeout(() => {
+      window.goToLineCatalog('Todos');
+    }, 1200);
+  }
+
+  // =========================================================================
+  // SUB-RUTINAS ESPECÍFICAS DE CASOS DE LIMPIEZA
+  // =========================================================================
+
   function recommendDesengrasante() {
     const text = `Para remover grasa pesada en campanas, estufas industriales, talleres o motores, el producto indicado es nuestro **Desengrasante Multiusos Industrial Detalgraf**.\n\n• **Modo de aplicación:** Aplica puro o 1:3 en agua tibia para suciedad acumulada (o 1:10 para mantenimiento regular). Deja actuar 5 a 10 minutos y retira con esponja o paño húmedo.\n• **Precaución:** Evita dejar secar sobre aluminio pulido.\n\n*Si necesitas algo más sobre fichas técnicas o compras por volumen, con gusto también nos puedes escribir a **${CHAT_CONFIG.companyEmail}**.*`;
     const prods = searchLocalProducts('desengrasante').slice(0, 2);
@@ -545,7 +751,7 @@
   }
 
   function searchLocalProducts(query) {
-    const catalog = (typeof PRODUCTS_DATA !== 'undefined' && Array.isArray(PRODUCTS_DATA)) ? PRODUCTS_DATA : (window.SHOPIFY_STORE_PRODUCTS || []);
+    const catalog = getCatalogProducts();
     if (!catalog.length) return [];
 
     const words = query.toUpperCase().split(/\s+/).filter(w => w.length > 2);
@@ -553,7 +759,9 @@
 
     return catalog.filter(p => {
       const title = (p.title || '').toUpperCase();
-      return words.some(w => title.includes(w));
+      const subcat = (p.subcat || '').toUpperCase();
+      const cat = (p.category || '').toUpperCase();
+      return words.some(w => title.includes(w) || subcat.includes(w) || cat.includes(w));
     });
   }
 
@@ -565,7 +773,19 @@
       const priceFmt = (p.price ? Math.round(p.price) : 0).toLocaleString('es-CO');
       const img = p.image || 'https://cdn.shopify.com/s/files/1/0285/4309/0820/files/logo_detalshop_oficial.png';
       const handle = p.handle || '';
-      const variantId = p.variant_id || '';
+      const pid = String(p.id || '');
+
+      const isTracked = p.inventory_management === 'shopify';
+      const rawStock = (typeof p.inventory_quantity === 'number') ? p.inventory_quantity : 25;
+      const isSoldOut = (p.available === false) || (isTracked && rawStock <= 0);
+
+      const stockBadge = isSoldOut 
+        ? `<span class="nqc-chat-stock-badge soldout">🚫 Agotado en Bodega</span>`
+        : `<span class="nqc-chat-stock-badge available">✓ En Stock (${isTracked ? rawStock + ' uds' : 'Inmediato'})</span>`;
+
+      const addBtnHtml = isSoldOut
+        ? `<button type="button" class="nqc-chat-btn-product nqc-chat-btn-add" disabled>Agotado</button>`
+        : `<button type="button" class="nqc-chat-btn-product nqc-chat-btn-add" onclick="window.nqcChatAddToCart('${pid}', this)">+ Agregar</button>`;
 
       html += `
         <div class="nqc-chat-product-card">
@@ -573,9 +793,10 @@
           <div class="nqc-chat-product-info">
             <div class="nqc-chat-product-title" title="${escapeHtml(p.title)}">${escapeHtml(p.title)}</div>
             <div class="nqc-chat-product-price">$${priceFmt} COP</div>
+            <div>${stockBadge}</div>
             <div class="nqc-chat-product-actions">
-              <a href="/products/${handle}" class="nqc-chat-btn-product nqc-chat-btn-view">Ver Producto</a>
-              ${variantId ? `<button type="button" class="nqc-chat-btn-product nqc-chat-btn-add" onclick="window.nqcChatAddToCart(${variantId}, this)">+ Agregar</button>` : ''}
+              <button type="button" class="nqc-chat-btn-product nqc-chat-btn-view" onclick="window.viewProductDetail('${pid}', '${handle}')">Ver Producto</button>
+              ${addBtnHtml}
             </div>
           </div>
         </div>
@@ -590,37 +811,65 @@
   window.closeNqcChat = closeChat;
   window.toggleNqcChat = toggleChat;
 
-  window.nqcChatAddToCart = async function (variantId, btnElement) {
-    if (!variantId) return;
-    const oldText = btnElement ? btnElement.textContent : '';
+  // Agregar al Carrito Conectado al Carrito Oficial y Actualización de Stock en Tiempo Real
+  window.nqcChatAddToCart = async function (productId, btnElement) {
+    if (!productId) return;
+    const oldHtml = btnElement ? btnElement.innerHTML : '';
     if (btnElement) {
       btnElement.disabled = true;
-      btnElement.textContent = 'Agregando...';
+      btnElement.innerHTML = '⏳ Agregando...';
     }
 
     try {
-      const res = await fetch('/cart/add.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: variantId, quantity: 1 })
-      });
-      if (res.ok) {
-        if (btnElement) btnElement.textContent = '✓ Agregado';
-        if (typeof openCartDrawer === 'function') {
-          setTimeout(() => openCartDrawer(), 400);
+      if (typeof window.addToCart === 'function') {
+        // Ejecución del método maestro: valida inventario, actualiza cart, sync UI y recalcula stock visual
+        await window.addToCart(String(productId), 1);
+        if (btnElement) {
+          btnElement.innerHTML = '✓ ¡Agregado!';
+          btnElement.style.background = '#059669';
+          btnElement.style.color = '#ffffff';
+        }
+        if (typeof window.openCartDrawer === 'function') {
+          setTimeout(() => window.openCartDrawer(), 350);
         }
       } else {
-        if (btnElement) btnElement.textContent = 'Error';
+        // Fallback directo a la API de Shopify si el script maestro no estuviera listo
+        let variantId = null;
+        if (typeof PRODUCT_VARIANT_MAP !== 'undefined' && PRODUCT_VARIANT_MAP[String(productId)]) {
+          variantId = PRODUCT_VARIANT_MAP[String(productId)];
+        } else {
+          variantId = productId;
+        }
+        const res = await fetch('/cart/add.js', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: parseInt(variantId), quantity: 1 })
+        });
+        if (res.ok) {
+          if (btnElement) {
+            btnElement.innerHTML = '✓ ¡Agregado!';
+            btnElement.style.background = '#059669';
+            btnElement.style.color = '#ffffff';
+          }
+          if (typeof window.openCartDrawer === 'function') {
+            setTimeout(() => window.openCartDrawer(), 350);
+          }
+        } else {
+          if (btnElement) btnElement.innerHTML = 'Sin existencias';
+        }
       }
     } catch (e) {
-      if (btnElement) btnElement.textContent = 'Error';
+      console.error('Error al agregar al carrito desde el chat:', e);
+      if (btnElement) btnElement.innerHTML = 'Error';
     } finally {
       setTimeout(() => {
         if (btnElement) {
           btnElement.disabled = false;
-          btnElement.textContent = oldText || '+ Agregar';
+          btnElement.innerHTML = oldHtml || '+ Agregar';
+          btnElement.style.background = '';
+          btnElement.style.color = '';
         }
-      }, 2000);
+      }, 2500);
     }
   };
 

@@ -402,6 +402,35 @@ body.cart-open .nqc-chat-window,
   background: #004b87;
   color: #ffffff;
   border: none;
+  transition: background 0.2s ease, opacity 0.2s ease;
+}
+
+.nqc-chat-btn-add:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  background: #94a3b8 !important;
+}
+
+.nqc-chat-stock-badge {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-bottom: 5px;
+  line-height: 1.2;
+}
+
+.nqc-chat-stock-badge.available {
+  background: #ecfdf5;
+  color: #059669;
+  border: 1px solid #a7f3d0;
+}
+
+.nqc-chat-stock-badge.soldout {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
 }
 
 /* Tarjeta de Rastreo en el Chat */

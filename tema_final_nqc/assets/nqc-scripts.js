@@ -3244,6 +3244,7 @@ function openQuienesSomosModal() {
     window.openPdfModal = openPdfModal;
     window.closePdfModal = closePdfModal;
     window.downloadOrPrintPdf = downloadOrPrintPdf;
+    window.scrollToCatalog = scrollToCatalog;
         function openIconModal() {
       const modal = document.getElementById('iconModalOverlay');
       if (modal) modal.classList.add('active');
