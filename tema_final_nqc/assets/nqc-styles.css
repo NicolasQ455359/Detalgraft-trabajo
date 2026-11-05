@@ -2557,36 +2557,7 @@ input.input-card-qty {
   margin: 0 !important;
 }
 
-/* CARRITO DRAWER LATERAL: APERTURA Y CAPA SUPERIOR GARANTIZADA */
-.cart-drawer-overlay {
-  position: fixed !important;
-  top: 0 !important;
-  left: 0 !important;
-  width: 100vw !important;
-  height: 100vh !important;
-  background: rgba(15, 23, 42, 0.65) !important;
-  backdrop-filter: blur(4px) !important;
-  z-index: 999999 !important;
-  display: none;
-  justify-content: flex-end !important;
-  align-items: stretch !important;
-}
-.cart-drawer-overlay.active {
-  display: flex !important;
-  pointer-events: auto !important;
-}
-.cart-drawer-panel {
-  position: relative !important;
-  width: 440px !important;
-  max-width: 95vw !important;
-  height: 100vh !important;
-  background: #ffffff !important;
-  display: flex !important;
-  flex-direction: column !important;
-  box-shadow: -10px 0 40px rgba(0,0,0,0.3) !important;
-  z-index: 1000000 !important;
-  overflow: hidden !important;
-}
+/* CARRITO DRAWER LATERAL (UNIFICADO EN SECCION PRINCIPAL MAS ABAJO) */
 
 /* BARRA INFERIOR FLOTANTE CON BOTÓN VER CARRITO */
 .sticky-bottom-bar {
@@ -3191,17 +3162,27 @@ input.drawer-step-val {
 }
 
 /* ==========================================================================
-   CART DRAWER & STICKY BAR — ZERO CUT-OFF & ACCESIBILIDAD TOTAL
+   CART DRAWER & STICKY BAR — ZERO CUT-OFF & ACCESIBILIDAD TOTAL (100% ZOOM)
    ========================================================================== */
 .cart-drawer-overlay {
   position: fixed !important;
-  inset: 0 !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  width: 100% !important; /* CRITICO: 100% para no desbordar por el ancho de la barra de scroll de Windows */
+  max-width: 100% !important;
+  height: 100% !important;
+  height: 100dvh !important;
+  max-height: 100dvh !important;
   background: rgba(15, 23, 42, 0.65) !important;
   backdrop-filter: blur(4px) !important;
   -webkit-backdrop-filter: blur(4px) !important;
-  z-index: 99999 !important;
+  z-index: 999999 !important;
   display: none;
   justify-content: flex-end !important;
+  overflow: hidden !important;
+  box-sizing: border-box !important;
 }
 
 .cart-drawer-overlay.active {
@@ -3209,42 +3190,613 @@ input.drawer-step-val {
 }
 
 .cart-drawer-panel {
-  width: 440px !important;
-  max-width: 95vw !important;
+  position: relative !important;
+  width: 420px !important;
+  max-width: 100% !important;
+  height: 100% !important;
   height: 100vh !important;
   height: 100dvh !important;
+  max-height: 100% !important;
+  max-height: 100vh !important;
   max-height: 100dvh !important;
   background: #ffffff !important;
   display: flex !important;
   flex-direction: column !important;
-  box-shadow: -8px 0 35px rgba(0,0,0,0.3) !important;
-  animation: slideInRight 0.3s ease !important;
+  box-shadow: -10px 0 35px rgba(0,0,0,0.25) !important;
+  animation: slideInRight 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
   overflow: hidden !important;
   box-sizing: border-box !important;
+  margin: 0 !important;
+  right: 0 !important;
 }
 
 .drawer-header {
   flex: 0 0 auto !important;
-  padding: 16px 20px !important;
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  padding: 13px 20px !important;
   border-bottom: 1px solid #e2e8f0 !important;
   background: #f8fafc !important;
+  box-sizing: border-box !important;
 }
 
+.drawer-header-title {
+  font-size: 14px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  display: flex !important;
+  align-items: center !important;
+  gap: 10px !important;
+}
+
+.drawer-close-btn {
+  background: none !important;
+  border: none !important;
+  font-size: 18px !important;
+  cursor: pointer !important;
+  color: #64748b !important;
+  width: 30px !important;
+  height: 30px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 6px !important;
+  transition: all 0.15s ease !important;
+}
+
+.drawer-close-btn:hover {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+/* ---------------- DRAWER BODY & PRODUCT LIST ---------------- */
 .drawer-body {
   flex: 1 1 auto !important;
   overflow-y: auto !important;
-  min-height: 0 !important;
-  padding: 16px 20px !important;
-  -webkit-overflow-scrolling: touch;
+  min-height: 120px !important;
+  padding: 10px 20px !important;
+  -webkit-overflow-scrolling: touch !important;
+  box-sizing: border-box !important;
 }
 
+/* MINIMUM ORDER CARD (COMPACT 48px) */
+.min-order-card {
+  background: #fffbeb !important;
+  border: 1px solid #fde68a !important;
+  border-radius: 8px !important;
+  padding: 7px 10px !important;
+  margin-bottom: 10px !important;
+  box-sizing: border-box !important;
+}
+
+.min-toggle-row {
+  display: flex !important;
+  gap: 6px !important;
+  margin-bottom: 6px !important;
+}
+
+.min-toggle-btn {
+  flex: 1 !important;
+  background: #ffffff !important;
+  border: 1.5px solid #e2e8f0 !important;
+  padding: 4px 6px !important;
+  border-radius: 5px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  cursor: pointer !important;
+  text-align: center !important;
+  transition: all 0.15s ease !important;
+  color: #475569 !important;
+  line-height: 1.2 !important;
+  white-space: nowrap !important;
+}
+
+.min-toggle-btn.active {
+  background: #004b87 !important;
+  color: #ffffff !important;
+  border-color: #004b87 !important;
+  box-shadow: 0 1px 3px rgba(0, 75, 135, 0.2) !important;
+}
+
+.min-progress-track {
+  height: 5px !important;
+  background: #e2e8f0 !important;
+  border-radius: 99px !important;
+  overflow: hidden !important;
+  margin-bottom: 5px !important;
+}
+
+.min-progress-bar {
+  height: 100% !important;
+  background: linear-gradient(90deg, #f59e0b, #f97316) !important;
+  border-radius: 99px !important;
+  transition: width 0.3s ease !important;
+  width: 0%;
+}
+
+.min-progress-bar.success {
+  background: linear-gradient(90deg, #22c55e, #16a34a) !important;
+}
+
+.min-status-row {
+  display: flex !important;
+  align-items: center !important;
+  justify-content: space-between !important;
+  gap: 6px !important;
+}
+
+.min-alert-text {
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  color: #92400e !important;
+  line-height: 1.2 !important;
+  flex: 1 !important;
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}
+
+.min-alert-text.success {
+  color: #166534 !important;
+}
+
+.min-progress-percent-badge {
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  background: #fef3c7 !important;
+  color: #92400e !important;
+  padding: 1px 6px !important;
+  border-radius: 10px !important;
+  white-space: nowrap !important;
+  flex-shrink: 0 !important;
+}
+
+.min-progress-percent-badge.success {
+  background: #dcfce7 !important;
+  color: #166534 !important;
+}
+
+/* CART ITEM */
+.drawer-cart-item {
+  display: flex !important;
+  align-items: flex-start !important;
+  gap: 10px !important;
+  padding: 10px 0 !important;
+  border-bottom: 1px solid #f1f5f9 !important;
+  position: relative !important;
+  padding-right: 70px !important; /* Espacio amplio para que el boton Quitar no toque el borde */
+  box-sizing: border-box !important;
+}
+
+.drawer-cart-img {
+  width: 52px !important;
+  height: 52px !important;
+  min-width: 52px !important;
+  border-radius: 6px !important;
+  overflow: hidden !important;
+  background: #f8fafc !important;
+  border: 1px solid #e2e8f0 !important;
+  flex-shrink: 0 !important;
+}
+
+.drawer-cart-img img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+}
+
+.drawer-cart-info {
+  flex: 1 !important;
+  min-width: 0 !important;
+}
+
+.drawer-cart-title {
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  color: #0f172a !important;
+  line-height: 1.25 !important;
+  display: -webkit-box !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+  overflow: hidden !important;
+  margin-bottom: 3px !important;
+}
+
+.drawer-cart-price {
+  font-size: 12.5px !important;
+  font-weight: 800 !important;
+  color: #004b87 !important;
+}
+
+.drawer-item-stepper {
+  display: inline-flex !important;
+  align-items: center !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 5px !important;
+  overflow: hidden !important;
+  background: #ffffff !important;
+  height: 26px !important;
+}
+
+.btn-drawer-step {
+  width: 24px !important;
+  height: 26px !important;
+  min-width: 24px !important;
+  background: #f8fafc !important;
+  border: none !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  cursor: pointer !important;
+  color: #0f172a !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  line-height: 1 !important;
+  transition: background 0.15s !important;
+}
+
+.btn-drawer-step:hover {
+  background: #e2e8f0 !important;
+}
+
+.drawer-step-val,
+input.drawer-step-val {
+  width: 32px !important;
+  min-width: 32px !important;
+  max-width: 32px !important;
+  height: 26px !important;
+  text-align: center !important;
+  border: none !important;
+  border-left: 1px solid #e2e8f0 !important;
+  border-right: 1px solid #e2e8f0 !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  color: #0f172a !important;
+  background: #ffffff !important;
+  padding: 0 !important;
+  outline: none !important;
+}
+
+.drawer-item-remove,
+.btn-drawer-delete {
+  position: absolute !important;
+  top: 8px !important;
+  right: 0 !important;
+  background: #fef2f2 !important;
+  border: 1px solid #fecaca !important;
+  color: #dc2626 !important;
+  font-size: 10.5px !important;
+  font-weight: 700 !important;
+  padding: 3px 6px !important;
+  border-radius: 5px !important;
+  cursor: pointer !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 3px !important;
+  transition: all 0.15s ease !important;
+  line-height: 1 !important;
+}
+
+.drawer-item-remove:hover,
+.btn-drawer-delete:hover {
+  background: #fee2e2 !important;
+  border-color: #f87171 !important;
+}
+
+/* ---------------- DRAWER FOOTER (ESPACIO INFERIOR DE SEGURIDAD 55PX) ---------------- */
 .drawer-footer {
   flex: 0 0 auto !important;
-  padding: 14px 20px 24px 20px !important;
+  padding: 12px 20px 55px 20px !important; /* 55px inferior para librar la barra Shopify Preview / safeara */
   border-top: 1.5px solid #e2e8f0 !important;
   background: #f8fafc !important;
   box-shadow: 0 -4px 16px rgba(0,0,0,0.06) !important;
+  box-sizing: border-box !important;
 }
+
+.drawer-total-row {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-bottom: 7px !important;
+}
+
+.drawer-total-label-wrap {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1px !important;
+}
+
+.drawer-total-title {
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  color: #475569 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+.drawer-total-iva {
+  font-size: 10px !important;
+  color: #16a34a !important;
+  font-weight: 700 !important;
+}
+
+.drawer-total-val {
+  font-size: 17px !important;
+  font-weight: 900 !important;
+  color: #004b87 !important;
+}
+
+/* DIAN FORM */
+.drawer-dian-box {
+  background: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 7px !important;
+  padding: 5px 8px !important;
+  margin-bottom: 7px !important;
+  box-sizing: border-box !important;
+}
+
+.drawer-dian-fields {
+  display: flex !important;
+  gap: 6px !important;
+  align-items: center !important;
+}
+
+.drawer-dian-select {
+  width: 82px !important;
+  min-width: 82px !important;
+  border: 1px solid #cbd5e1 !important;
+  padding: 4px 5px !important;
+  border-radius: 5px !important;
+  font-size: 11px !important;
+  font-weight: 700 !important;
+  background: #f8fafc !important;
+  height: 30px !important;
+  box-sizing: border-box !important;
+  color: #0f172a !important;
+}
+
+.drawer-dian-input {
+  flex: 1 !important;
+  min-width: 0 !important;
+  border: 1px solid #cbd5e1 !important;
+  padding: 4px 8px !important;
+  border-radius: 5px !important;
+  font-size: 11.5px !important;
+  font-weight: 700 !important;
+  height: 30px !important;
+  box-sizing: border-box !important;
+  color: #0f172a !important;
+  background: #ffffff !important;
+}
+
+.drawer-dian-input:focus,
+.drawer-dian-select:focus {
+  border-color: #004b87 !important;
+  outline: none !important;
+  box-shadow: 0 0 0 2px rgba(0, 75, 135, 0.15) !important;
+}
+
+.drawer-dian-hint {
+  font-size: 9.5px !important;
+  color: #64748b !important;
+  font-weight: 600 !important;
+  margin-top: 2px !important;
+  line-height: 1.2 !important;
+}
+
+/* DATA AUTH */
+.drawer-auth-row {
+  display: flex !important;
+  align-items: center !important;
+  gap: 6px !important;
+  font-size: 10.5px !important;
+  color: #334155 !important;
+  font-weight: 600 !important;
+  margin-bottom: 7px !important;
+  cursor: pointer !important;
+  line-height: 1.25 !important;
+}
+
+.drawer-auth-row input[type="checkbox"] {
+  width: 14px !important;
+  height: 14px !important;
+  cursor: pointer !important;
+  accent-color: #004b87 !important;
+  margin: 0 !important;
+  flex-shrink: 0 !important;
+}
+
+.drawer-auth-row a {
+  color: #0284c7 !important;
+  text-decoration: underline !important;
+  font-weight: 700 !important;
+}
+
+/* SECONDARY BUTTONS (PDF + COMPARTIR) - 2 COLUMNS */
+.drawer-secondary-actions {
+  display: grid !important;
+  grid-template-columns: 1fr 1fr !important;
+  gap: 6px !important;
+  margin-bottom: 7px !important;
+}
+
+.btn-drawer-quote-pdf,
+.btn-drawer-share-mail {
+  width: 100% !important;
+  height: 32px !important;
+  margin: 0 !important;
+  padding: 5px 8px !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+  transition: all 0.15s ease !important;
+}
+
+.btn-drawer-quote-pdf {
+  background: #ffffff !important;
+  color: #004b87 !important;
+  border: 1.5px solid #004b87 !important;
+  box-shadow: 0 1px 3px rgba(0, 75, 135, 0.08) !important;
+}
+
+.btn-drawer-quote-pdf:hover {
+  background: #004b87 !important;
+  color: #ffffff !important;
+  box-shadow: 0 2px 6px rgba(0, 75, 135, 0.22) !important;
+}
+
+.btn-drawer-share-mail {
+  background: #f0fdf4 !important;
+  color: #166534 !important;
+  border: 1.5px solid #86efac !important;
+  box-shadow: 0 1px 3px rgba(22, 101, 52, 0.06) !important;
+}
+
+.btn-drawer-share-mail:hover {
+  background: #dcfce7 !important;
+  color: #14532d !important;
+  border-color: #4ade80 !important;
+  box-shadow: 0 2px 6px rgba(22, 101, 52, 0.18) !important;
+}
+
+/* CHECKOUT BUTTON */
+.btn-drawer-checkout {
+  width: 100% !important;
+  padding: 10px 14px !important;
+  height: 40px !important;
+  background: #004b87 !important;
+  color: #ffffff !important;
+  border: none !important;
+  border-radius: 7px !important;
+  font-size: 13px !important;
+  font-weight: 800 !important;
+  cursor: pointer !important;
+  text-align: center !important;
+  letter-spacing: 0.02em !important;
+  transition: all 0.2s ease !important;
+  box-shadow: 0 3px 8px rgba(0, 75, 135, 0.25) !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  box-sizing: border-box !important;
+}
+
+.btn-drawer-checkout:hover {
+  background: #003a6b !important;
+  box-shadow: 0 4px 12px rgba(0, 75, 135, 0.35) !important;
+}
+
+.btn-drawer-checkout.disabled,
+.btn-drawer-checkout:disabled {
+  background: #94a3b8 !important;
+  cursor: not-allowed !important;
+  box-shadow: none !important;
+}
+
+/* FOOTER BOTTOM (TRUST & TRACKING) */
+.drawer-footer-bottom {
+  display: flex !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  margin-top: 5px !important;
+  padding-top: 4px !important;
+  font-size: 10px !important;
+  color: #64748b !important;
+}
+
+.drawer-trust-text {
+  font-weight: 600 !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 3px !important;
+}
+
+.drawer-track-link {
+  color: #005091 !important;
+  font-weight: 700 !important;
+  text-decoration: underline !important;
+  cursor: pointer !important;
+}
+
+/* ==========================================================================
+   RESPONSIVE QUERIES FOR SCREEN HEIGHTS (LAPTOPS, TABLETS, MOBILE)
+   ========================================================================== */
+@media (max-height: 720px) {
+  .drawer-header {
+    padding: 10px 18px !important;
+  }
+  .drawer-body {
+    padding: 7px 16px !important;
+  }
+  .min-order-card {
+    padding: 5px 8px !important;
+    margin-bottom: 7px !important;
+  }
+  .drawer-cart-item {
+    padding: 7px 0 !important;
+    gap: 7px !important;
+  }
+  .drawer-cart-img {
+    width: 44px !important;
+    height: 44px !important;
+    min-width: 44px !important;
+  }
+  .drawer-footer {
+    padding: 8px 18px 50px 18px !important;
+  }
+  .drawer-dian-hint {
+    display: none !important;
+  }
+  .drawer-dian-box {
+    margin-bottom: 5px !important;
+    padding: 3px 6px !important;
+  }
+  .drawer-auth-row {
+    margin-bottom: 5px !important;
+  }
+  .drawer-secondary-actions {
+    margin-bottom: 5px !important;
+  }
+  .btn-drawer-checkout {
+    height: 36px !important;
+    padding: 8px !important;
+    font-size: 12.5px !important;
+  }
+}
+
+@media (max-height: 600px) {
+  .cart-drawer-panel {
+    overflow-y: auto !important;
+  }
+  .drawer-footer {
+    padding-bottom: 60px !important;
+  }
+}
+
+@media (max-width: 480px) {
+  .cart-drawer-panel {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    border-radius: 0 !important;
+  }
+  .drawer-cart-title {
+    font-size: 11.5px !important;
+  }
+  .drawer-cart-price {
+    font-size: 12px !important;
+  }
+}
+
 
 /* Ocultar barra flotante de fondo si el carrito está abierto para evitar recortes */
 body.cart-open .sticky-bottom-bar,
@@ -3839,47 +4391,49 @@ html, body {
   /* CARRITO DRAWER EN DISPOSITIVOS MÓVILES (100% PANTALLA COMPLETA) */
   .cart-drawer-panel {
     width: 100% !important;
-    max-width: 100vw !important;
-    height: 100vh !important;
+    max-width: 100% !important;
+    height: 100% !important;
     border-radius: 0 !important;
   }
   .drawer-header {
-    padding: 14px 16px !important;
+    padding: 12px 16px !important;
   }
   .drawer-header-title {
-    font-size: 15px !important;
+    font-size: 14px !important;
   }
   .drawer-body {
-    padding: 12px 14px !important;
+    padding: 10px 16px !important;
   }
   .drawer-footer {
-    padding: 12px 14px 22px 14px !important;
+    padding: 10px 16px 55px 16px !important;
   }
   .min-toggle-row {
     gap: 6px !important;
   }
   .min-toggle-btn {
     font-size: 11px !important;
-    padding: 7px 6px !important;
+    padding: 5px 6px !important;
   }
   .drawer-cart-item {
-    gap: 10px !important;
-    padding: 10px 0 !important;
+    gap: 8px !important;
+    padding: 8px 0 !important;
+    padding-right: 65px !important;
   }
   .drawer-cart-img {
-    width: 52px !important;
-    height: 52px !important;
-    min-width: 52px !important;
+    width: 48px !important;
+    height: 48px !important;
+    min-width: 48px !important;
   }
   .drawer-cart-title {
     font-size: 11.5px !important;
   }
   .drawer-cart-price {
-    font-size: 12.5px !important;
+    font-size: 12px !important;
   }
   .btn-drawer-checkout {
-    padding: 13px !important;
-    font-size: 13.5px !important;
+    padding: 10px !important;
+    font-size: 13px !important;
+    height: 38px !important;
     letter-spacing: 0.02em !important;
   }
 
@@ -4341,26 +4895,29 @@ footer.site-footer,
    ========================================================================== */
 .btn-drawer-quote-pdf {
   width: 100% !important;
-  padding: 12px 14px !important;
-  border-radius: 8px !important;
-  font-size: 13.5px !important;
+  height: 32px !important;
+  margin: 0 !important;
+  padding: 5px 8px !important;
+  font-size: 11px !important;
   font-weight: 800 !important;
+  border-radius: 6px !important;
   cursor: pointer !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
-  gap: 8px !important;
-  margin-bottom: 10px !important;
+  gap: 5px !important;
   background: #ffffff !important;
   color: #004b87 !important;
-  border: 2px solid #004b87 !important;
-  transition: all 0.2s ease !important;
-  box-shadow: 0 2px 6px rgba(0, 75, 135, 0.1) !important;
+  border: 1.5px solid #004b87 !important;
+  box-shadow: 0 1px 3px rgba(0, 75, 135, 0.08) !important;
+  transition: all 0.15s ease !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
 }
 .btn-drawer-quote-pdf:hover {
   background: #004b87 !important;
   color: #ffffff !important;
-  box-shadow: 0 4px 12px rgba(0, 75, 135, 0.28) !important;
+  box-shadow: 0 2px 6px rgba(0, 75, 135, 0.22) !important;
 }
 
 /* ==========================================================================
@@ -4413,3 +4970,99 @@ footer.site-footer,
   padding: 6px 12px;
 }
 
+
+
+/* ==========================================================================
+   BARRA DE PROGRESO DE PEDIDO MÍNIMO VISUAL E INTERACTIVA (CARRITO DRAWER)
+   ========================================================================== */
+.min-progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.min-progress-label {
+  font-size: 11px;
+  font-weight: 800;
+  color: #1e293b;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+}
+.min-progress-percent-badge {
+  font-size: 11px;
+  font-weight: 800;
+  background: #fef3c7;
+  color: #92400e;
+  border: 1px solid #fde68a;
+  padding: 2px 8px;
+  border-radius: 99px;
+  transition: all 0.3s ease;
+}
+.min-progress-percent-badge.success {
+  background: #dcfce7 !important;
+  color: #15803d !important;
+  border-color: #86efac !important;
+  box-shadow: 0 0 8px rgba(34, 197, 94, 0.3);
+}
+
+.min-progress-track {
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: 99px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 4px;
+}
+.min-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, #f59e0b, #0284c7);
+  border-radius: 99px;
+  transition: width 0.4s ease-out;
+  position: relative;
+  width: 0%;
+}
+.min-progress-bar.success {
+  background: linear-gradient(90deg, #10b981, #059669) !important;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.5);
+}
+
+.min-progress-milestones {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  font-weight: 700;
+  color: #94a3b8;
+  margin-bottom: 8px;
+  padding: 0 2px;
+}
+
+/* ==========================================================================
+   BOTÓN COMPARTIR CARRITO POR CORREO (DRAWER)
+   ========================================================================== */
+.btn-drawer-share-mail {
+  width: 100% !important;
+  height: 32px !important;
+  margin: 0 !important;
+  padding: 5px 8px !important;
+  font-size: 11px !important;
+  font-weight: 800 !important;
+  border-radius: 6px !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 5px !important;
+  background: #f0fdf4 !important;
+  color: #166534 !important;
+  border: 1.5px solid #86efac !important;
+  box-shadow: 0 1px 3px rgba(22, 101, 52, 0.06) !important;
+  transition: all 0.15s ease !important;
+  box-sizing: border-box !important;
+  white-space: nowrap !important;
+}
+.btn-drawer-share-mail:hover {
+  background: #dcfce7 !important;
+  color: #14532d !important;
+  border-color: #4ade80 !important;
+  box-shadow: 0 2px 6px rgba(22, 101, 52, 0.18) !important;
+}

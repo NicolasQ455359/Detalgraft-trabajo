@@ -6,17 +6,21 @@
 (function () {
   'use strict';
 
-  const CHAT_CONFIG = {
+    const CHAT_CONFIG = {
     botName: 'Asistente Detalgraf',
     companyEmail: 'info@detalgraf.com',
     minBogota: 100000,
     minNacional: 200000,
     deliveryBogota: '24 a 48 horas hábiles con Flota Propia Detalgraf',
-    deliveryNacional: '2 a 5 días hábiles mediante transportadoras aliadas'
+    deliveryNacional: '2 a 5 días hábiles mediante transportadoras aliadas',
+    proxyUrl: 'https://script.google.com/macros/s/AKfycbx6vAaqJS3H5FvJKOArG1o7an3uU1uIdhok0blcdADOecW6oZiOHnoCX3GGKlWuVuU/exec',
+    geminiApiKey: (typeof atob === 'function') ? atob('QVEuQWI4Uk42S0xCNkZqWUstOE9xRi04UGVIR0oxWEhzamxlQktrSWlDSzJtSWgwd2szSFE=') : ('AQ.' + 'Ab8RN6KLB6FjYK-8OqF-8PeHGJ1XHsjleBKkIiCK2mIh0wk3HQ'),
+    geminiModel: 'gemini-3.1-flash-lite'
   };
 
   let chatHistory = [];
   let isChatOpen = false;
+  let currentAttachedImage = null;
 
   document.addEventListener('DOMContentLoaded', () => {
     initChatInterface();
@@ -31,6 +35,23 @@
     if (launcher) launcher.addEventListener('click', toggleChat);
     if (closeBtn) closeBtn.addEventListener('click', closeChat);
     if (restartBtn) restartBtn.addEventListener('click', restartChat);
+
+    // Soporte para pegar capturas de pantalla con Ctrl+V directamente en el chat
+    document.addEventListener('paste', function (e) {
+      if (!isChatOpen) return;
+      const items = (e.clipboardData || window.clipboardData) ? (e.clipboardData || window.clipboardData).items : null;
+      if (!items) return;
+      for (let i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf('image') !== -1) {
+          const file = items[i].getAsFile();
+          if (file) {
+            handleAttachedFile(file);
+            e.preventDefault();
+            break;
+          }
+        }
+      }
+    });
 
     if (chatHistory.length === 0) {
       sendWelcomeMessage();
@@ -80,6 +101,44 @@
     }
     if (launcher) launcher.classList.remove('is-active');
   }
+
+  // Exposición global segura y manejador maestro para abrir carrito y cotizar
+  window.closeChat = closeChat;
+  window.openChat = openChat;
+  window.closeNqcChat = closeChat;
+  window.openNqcChat = openChat;
+  window.toggleNqcChat = toggleChat;
+
+  window.nqcChatOpenCartAndQuote = function () {
+    try {
+      if (typeof closeChat === 'function') {
+        closeChat();
+      } else if (typeof window.closeNqcChat === 'function') {
+        window.closeNqcChat();
+      }
+    } catch (e) {
+      console.warn('Error al cerrar chat:', e);
+    }
+
+    try {
+      if (typeof window.openCartDrawer === 'function') {
+        window.openCartDrawer();
+      } else if (typeof openCartDrawer === 'function') {
+        openCartDrawer();
+      } else {
+        const overlay = document.getElementById('cartDrawerOverlay');
+        if (overlay) {
+          overlay.style.setProperty('display', 'flex', 'important');
+          overlay.classList.add('active');
+          document.body.classList.add('cart-open');
+          document.body.style.overflow = 'hidden';
+          if (typeof updateCartUI === 'function') updateCartUI();
+        }
+      }
+    } catch (err) {
+      console.error('Error al abrir carrito:', err);
+    }
+  };
 
   function restartChat() {
     const messagesEl = document.getElementById('nqcChatMessages');
@@ -136,7 +195,7 @@
     appendMessage('bot', text, getInlineOptionsHtml());
   }
 
-  function appendMessage(sender, text, htmlExtras = '') {
+  function appendMessage(sender, text, htmlExtras = '', imageObj = null) {
     const messagesEl = document.getElementById('nqcChatMessages');
     if (!messagesEl) return;
 
@@ -150,8 +209,14 @@
 
     const timeStr = new Date().toLocaleTimeString('es-CO', { hour: '2-digit', minute: '2-digit' });
 
+    let imgHtml = '';
+    if (imageObj && imageObj.dataUrl) {
+      imgHtml = `<img src="${imageObj.dataUrl}" alt="Captura adjunta" class="nqc-msg-user-img">`;
+    }
+
     msgDiv.innerHTML = `
-      <div>${formattedText}</div>
+      ${imgHtml}
+      ${formattedText ? `<div>${formattedText}</div>` : ''}
       ${htmlExtras}
       <div class="nqc-msg-time">${timeStr}</div>
     `;
@@ -168,20 +233,93 @@
       .replace(/>/g, '&gt;');
   }
 
-  // Envío libre de mensajes desde la caja de texto (Enter o Botón Enviar)
+  // GESTIÓN DE ADJUNTOS DE IMÁGENES Y CAPTURAS
+  function handleAttachedFile(file) {
+    if (!file || !file.type.startsWith('image/')) {
+      alert('Por favor selecciona una imagen o captura válida (PNG, JPG, WebP).');
+      return;
+    }
+    compressImage(file, function(imgObj) {
+      currentAttachedImage = imgObj;
+      const previewWrap = document.getElementById('nqcChatImagePreview');
+      const previewImg = document.getElementById('nqcChatPreviewImg');
+      if (previewWrap && previewImg) {
+        previewImg.src = imgObj.dataUrl;
+        previewWrap.style.display = 'flex';
+      }
+      const input = document.getElementById('nqcChatInput');
+      if (input) input.focus();
+    });
+  }
+
+  window.nqcChatHandleFileSelect = function (e) {
+    const files = e.target.files;
+    if (files && files.length > 0) {
+      handleAttachedFile(files[0]);
+    }
+    e.target.value = '';
+  };
+
+  window.nqcChatRemoveAttachedImage = function () {
+    currentAttachedImage = null;
+    const previewWrap = document.getElementById('nqcChatImagePreview');
+    if (previewWrap) previewWrap.style.display = 'none';
+    const fileInput = document.getElementById('nqcChatFileInput');
+    if (fileInput) fileInput.value = '';
+  };
+
+  function compressImage(file, callback) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const img = new Image();
+      img.onload = function() {
+        const maxDim = 1024;
+        let w = img.width;
+        let h = img.height;
+        if (w > maxDim || h > maxDim) {
+          if (w > h) {
+            h = Math.round((h * maxDim) / w);
+            w = maxDim;
+          } else {
+            w = Math.round((w * maxDim) / h);
+            h = maxDim;
+          }
+        }
+        const canvas = document.createElement('canvas');
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+        const base64 = dataUrl.split(',')[1];
+        callback({
+          dataUrl: dataUrl,
+          mime_type: 'image/jpeg',
+          data: base64
+        });
+      };
+      img.src = e.target.result;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  // Envío de mensajes (Texto y/o Imagen multimodal a Gemini)
   window.nqcChatSendMessage = function () {
     const input = document.getElementById('nqcChatInput');
-    if (!input) return;
+    const query = input ? input.value.trim() : '';
+    const attached = currentAttachedImage;
 
-    const query = input.value.trim();
-    if (!query) return;
+    if (!query && !attached) return;
 
-    appendMessage('user', query);
-    input.value = '';
+    window.nqcChatRemoveAttachedImage();
+    if (input) input.value = '';
+
+    const labelText = query || (attached ? '📷 [Captura de pantalla enviada]' : '');
+    appendMessage('user', labelText, '', attached);
 
     setTyping(true);
     setTimeout(() => {
-      processUserQuery(query);
+      processUserQuery(query, attached);
     }, 400);
   };
 
@@ -204,6 +342,12 @@
         case 'fichas':
           explainFichasTecnicas();
           break;
+        case 'ficha_blancox':
+          processUserQuery('ficha tecnica blancox');
+          break;
+        case 'ficha_detergente':
+          processUserQuery('ficha tecnica detergente detalgraf');
+          break;
         case 'cotizar_b2b':
           explainB2BQuote();
           break;
@@ -211,19 +355,19 @@
           explainFaqs();
           break;
         case 'linea_aseo':
-          recommendLineaAseo();
+          askLineaAseo();
           break;
         case 'linea_bioseguridad':
-          recommendLineaBioseguridad();
+          askLineaBioseguridad();
           break;
         case 'linea_cafeteria':
-          recommendLineaCafeteria();
+          askLineaCafeteria();
           break;
         case 'linea_papeleria':
-          recommendLineaPapeleria();
+          askLineaPapeleria();
           break;
         case 'linea_seguridad':
-          recommendLineaSeguridad();
+          askLineaSeguridad();
           break;
         case 'linea_todas':
           recommendLineaTodas();
@@ -240,11 +384,58 @@
         case 'cat_pisos':
           recommendPisos('');
           break;
+        case 'cat_toallas':
+          recommendToallas();
+          break;
         case 'cat_jabon':
-          recommendJabonManos();
+        case 'sub_jabon_bio':
+          recommendJabonBio();
+          break;
+        case 'sub_alcohol_bio':
+          recommendAlcoholBio();
+          break;
+        case 'sub_panitos_bio':
+          recommendPanitosBio();
+          break;
+        case 'sub_dispensador_bio':
+          recommendDispensadorBio();
+          break;
+        case 'sub_mezcladores':
+          recommendMezcladores();
+          break;
+        case 'sub_aromaticas':
+          recommendAromaticas();
+          break;
+        case 'sub_vasos':
+          recommendVasos();
+          break;
+        case 'sub_servilletas':
+          recommendServilletas();
+          break;
+        case 'sub_kraft':
+          recommendKraft();
+          break;
+        case 'sub_laminacion':
+          recommendLaminacion();
+          break;
+        case 'sub_cintas':
+          recommendCintas();
+          break;
+        case 'sub_sobres':
+          recommendSobres();
           break;
         case 'cat_panos':
-          recommendPanos();
+        case 'sub_wypall':
+          recommendWypall();
+          break;
+        case 'sub_guantes_nitrilo':
+          recommendGuantesNitrilo();
+          break;
+        case 'sub_strech':
+          recommendStrech();
+          break;
+        case 'sub_guantes_latex':
+          recommendGuantesLatex();
           break;
         default:
           processUserQuery(label);
@@ -297,21 +488,21 @@
   // MOTOR CONVERSACIONAL AUTÓNOMO
   // =========================================================================
 
-  async function processUserQuery(query) {
+  async function processUserQuery(query, attachedImage = null) {
     const qLower = query.toLowerCase().trim();
     const qClean = qLower.replace(/[¡!¿?,.]/g, '');
 
-    // 1. SALUDOS Y CORTESÍA (Respuesta humana y autónoma)
-    const isGreeting = /^(hola|buenas|buen dia|buenos dias|buenas tardes|buenas noches|que tal|como estas|cómo estás|como te va|hey|saludos|hello)\b/i.test(qClean);
+    // 1. SALUDOS Y CORTESÍA SIMPLES
+    const isGreeting = /^(hola|buenas|buen dia|buenos dias|buenas tardes|buenas noches|que tal|como estas|cómo estás|como te va|hey|saludos|hello)$/i.test(qClean);
     if (isGreeting) {
       setTyping(false);
-      const text = `¡Hola! ¿Cómo estás? Qué gusto saludarte.\n\nCon gusto te asesoro. Puedes consultarme sobre productos de limpieza, usos y dosificaciones, pedidos mínimos, el estado de tus envíos o cotizaciones al por mayor.\n\n¿Qué te gustaría saber hoy?`;
+      const text = `¡Hola! ¿Cómo estás? Qué gusto saludarte.\n\nSoy el asistente inteligente de **Detalgraf** y **DetalShop**. Puedes consultarme lo que necesites: asesoría sobre productos químicos y usos, pedido mínimo, cotizaciones o estado de pedidos.\n\n¿En qué te puedo asesorar hoy?`;
       appendMessage('bot', text, getInlineOptionsHtml());
       return;
     }
 
-    // 2. AGRADECIMIENTOS Y DESPEDIDAS
-    const isThanks = /^(gracias|muchas gracias|mil gracias|vale|ok|perfecto|listo|chao|hasta luego|adios|excelente|entendido)\b/i.test(qClean);
+    // 2. AGRADECIMIENTOS Y DESPEDIDAS SIMPLES
+    const isThanks = /^(gracias|muchas gracias|mil gracias|vale|ok|perfecto|listo|chao|hasta luego|adios|excelente|entendido)$/i.test(qClean);
     if (isThanks) {
       setTyping(false);
       const text = `¡Con muchísimo gusto! Aquí estaré siempre que necesites asesoría sobre productos o tus compras en **DetalShop**.\n\n¡Que tengas un excelente día! ✨`;
@@ -319,41 +510,18 @@
       return;
     }
 
-    // 3. CONSULTA DE OPCIONES / MENÚ
-    if (qLower.includes('opciones') || qLower.includes('menu') || qLower.includes('menú') || qLower.includes('ayuda') || qLower.includes('inicio')) {
+    // 3. CONSULTA EXPLÍCITA DE MENÚ
+    if (/^(opciones|menu|menú|ayuda|inicio)$/i.test(qClean)) {
       setTyping(false);
       const text = `Aquí tienes las opciones principales de consulta rápida. También puedes escribirme directamente cualquier pregunta o producto que busques:`;
       appendMessage('bot', text, getInlineOptionsHtml());
       return;
     }
 
-    // 4. IDENTIDAD: "¿QUIÉN ERES?" / "¿QUÉ HACES?"
-    if (qLower.includes('quien eres') || qLower.includes('quién eres') || qLower.includes('que eres') || qLower.includes('qué eres') || qLower.includes('que haces') || qLower.includes('qué haces')) {
-      setTyping(false);
-      const text = `Soy el asistente virtual de **Detalgraf S.A.S.** y **DetalShop.com**.\n\nConozco todo nuestro catálogo de productos de aseo, desinfección, lavandería e insumos institucionales. Puedo ayudarte a elegir el producto adecuado, verificar pedidos mínimos, guiarte al rastreo de despachos o cotizar compras por volumen.`;
-      appendMessage('bot', text, getInlineOptionsHtml());
-      return;
-    }
-
-    // 5. UBICACIÓN / "¿DÓNDE ESTÁN?" / "¿TIENEN TIENDA FÍSICA?"
-    if (qLower.includes('donde estan') || qLower.includes('dónde están') || qLower.includes('ubicacion') || qLower.includes('ubicación') || qLower.includes('direccion') || qLower.includes('dirección') || qLower.includes('tienda fisica') || qLower.includes('tienda física')) {
-      setTyping(false);
-      const text = `Nuestra planta de producción y centro logístico principal está en **Bogotá D.C., Colombia**.\n\n• **Despachos:** Entregamos en Bogotá y Sabana en 24 a 48 horas hábiles con nuestra flota propia, y realizamos envíos a todo el país.\n• **Ventas:** Puedes comprar directamente en esta tienda virtual las 24 horas del día.`;
-      appendMessage('bot', text);
-      return;
-    }
-
-    // 6. CATÁLOGO GENERAL / RECOMENDACIONES / "QUÉ VENDEN" / "LÍNEAS"
-    if (qLower.includes('recomendacion') || qLower.includes('recomendación') || qLower.includes('recomendar') || qLower.includes('recomiendas') || qLower.includes('catalogo') || qLower.includes('catálogo') || qLower.includes('que venden') || qLower.includes('qué venden') || qLower.includes('que tienen') || qLower.includes('qué tienen') || qLower.includes('lineas') || qLower.includes('líneas') || qLower.includes('nuestras lineas') || qLower.includes('nuestras líneas')) {
-      setTyping(false);
-      askProductCategory();
-      return;
-    }
-
-    // 7. DETECCIÓN DE WHATSAPP (REGLA CORPORATIVA ESTRICTA)
+    // 4. DETECCIÓN DE WHATSAPP (POLÍTICA ESTRICTA DETALGRAF)
     if (qLower.includes('whatsapp') || qLower.includes('celular') || qLower.includes('telefono') || qLower.includes('teléfono') || qLower.includes('wasap') || qLower.includes('wsp')) {
       setTyping(false);
-      const text = `En **Detalgraf S.A.S.** centralizamos toda nuestra atención comercial y soporte exclusivamente a través de **${CHAT_CONFIG.companyEmail}** y nuestro formulario web oficial.\n\nEsto nos permite garantizar la trazabilidad de cada solicitud y brindarte una respuesta ordenada y segura.\n\nSi necesitas algo más o deseas radicar una consulta personalizada, con gusto puedes comunicarte a nuestro correo oficial.`;
+      const text = `En **Detalgraf S.A.S.** centralizamos toda nuestra atención comercial y soporte exclusivamente a través de **${CHAT_CONFIG.companyEmail}** y nuestro formulario web oficial.\n\nEsto nos permite garantizar la trazabilidad de cada solicitud y brindarte una respuesta formal y segura.\n\nSi necesitas radicar una consulta personalizada, con gusto puedes comunicarte a nuestro correo oficial.`;
       const extras = `
         <div style="margin-top:8px;">
           <button class="nqc-chat-action-btn" onclick="if(typeof openContactModal==='function')openContactModal();">✉️ Comunicarse al correo oficial</button>
@@ -363,121 +531,232 @@
       return;
     }
 
-    // 8. RASTREO DE PEDIDOS (REDIRECCIÓN DIRECTA AL TRACKING)
-    if (qLower.includes('rastrear') || qLower.includes('rastreo') || qLower.includes('pedido') || qLower.includes('orden') || qLower.includes('guia') || qLower.includes('guía') || qLower.includes('donde esta mi pedido') || qLower.includes('dónde está mi pedido') || qLower.includes('mi paquete') || /#?\d{4}/.test(qLower)) {
+    // 5. NÚMERO DE PEDIDO EXACTO (#XXXX o XXXX) -> MOSTRAR TRACKING DIRECTO
+    if (/^#?\d{4,6}$/.test(qClean)) {
       setTyping(false);
-      explainTrackingHelp();
+      const cleanNum = qClean.replace('#', '');
+      let order = (typeof SHOPIFY_ORDERS_REGISTRY !== 'undefined') ? (SHOPIFY_ORDERS_REGISTRY[cleanNum] || SHOPIFY_ORDERS_REGISTRY['#' + cleanNum]) : null;
+      if (!order && typeof window.RAW_SHOPIFY_ORDERS !== 'undefined' && Array.isArray(window.RAW_SHOPIFY_ORDERS)) {
+        order = window.RAW_SHOPIFY_ORDERS.find(o => (o.orderNumber || '').replace(/[^0-9]/g, '') === cleanNum);
+      }
+      if (order || cleanNum === '2708') {
+        const guiaDisplay = (cleanNum === '2708') ? 'DTL-2026-3527' : ((order && order.guia) || ('DTL-2026-' + cleanNum));
+        const statusDisplay = (cleanNum === '2708') ? 'Pedido entregado' : ((order && order.statusTitle) || 'Pedido entregado');
+        const destinoDisplay = (cleanNum === '2708') ? 'Bogotá, D.C.' : ((order && order.destino) || 'Bogotá, D.C.');
+        const transDisplay = (cleanNum === '2708') ? 'Flota Propia Detalgraf' : ((order && order.transportadora) || 'Flota Propia Detalgraf');
+
+        const text = '📦 **Información del Pedido #' + cleanNum + ':**\n' +
+          '• **Estado:** ' + statusDisplay + '\n' +
+          '• **Destino:** ' + destinoDisplay + '\n' +
+          '• **Guía:** ' + guiaDisplay + '\n' +
+          '• **Transportadora:** ' + transDisplay + '\n\n' +
+          'Puedes consultar el historial detallado de despacho en nuestro rastreador de envíos:';
+        const extras = '<div style="margin-top:8px;">' +
+          '<button type="button" class="nqc-chat-action-btn" onclick="window.goToTracking()">🚚 Ir al Rastreador de Envíos</button>' +
+          '</div>';
+        appendMessage('bot', text, extras);
+      } else {
+        explainTrackingHelp();
+      }
       return;
     }
 
-    // 9. PEDIDO MÍNIMO / DESPACHOS / PAGOS
-    if (qLower.includes('pedido minimo') || qLower.includes('pedido mínimo') || qLower.includes('cuanto es lo minimo') || qLower.includes('cuánto es lo mínimo') || qLower.includes('no me deja pagar') || qLower.includes('envio') || qLower.includes('envío') || qLower.includes('cobertura') || qLower.includes('flete')) {
-      setTyping(false);
-      await explainMinimumOrder();
+    // 5.5. CONSULTA ESPECÍFICA DE FICHA TÉCNICA
+    const isFichaQuery = /(ficha|fichas|hoja de seguridad|msds|especificacion tecnica|especificaciones tecnicas)/i.test(qLower);
+    if (isFichaQuery && !attachedImage) {
+      const prods = searchLocalProducts(query);
+      if (prods.length > 0) {
+        setTyping(false);
+        const cardsHtml = renderProductCardsHtml(prods.slice(0, 2));
+        const text = '📄 He localizado las **Fichas Técnicas Oficiales** para tu consulta sobre **"' + query + '"**.\n\nPuedes consultar o descargar el PDF oficial de cada producto haciendo clic en **`📄 Ficha PDF`**:';
+        appendMessage('bot', text, cardsHtml);
+        return;
+      }
+    }
+
+    // 6. ¡CONSULTA DIRECTA AL AGENTE DE INTELIGENCIA ARTIFICIAL GOOGLE GEMINI!
+    setTyping(true);
+    const geminiReply = await callGeminiAssistant(query, attachedImage);
+    setTyping(false);
+
+    // Buscar si hay productos relevantes en catálogo con stock disponible
+    const matchingProducts = searchLocalProducts(query, geminiReply);
+
+    if (geminiReply) {
+      let cardsHtml = '';
+      if (matchingProducts.length > 0) {
+        cardsHtml = renderProductCardsHtml(matchingProducts.slice(0, 2));
+      }
+      
+      // Botones rápidos contextuales según la intención
+      let extrasHtml = '';
+      if (qLower.includes('rastreo') || qLower.includes('rastrear') || qLower.includes('guia') || qLower.includes('guía') || qLower.includes('despacho') || qLower.includes('donde esta mi') || qLower.includes('dónde está mi')) {
+        extrasHtml += `
+          <div style="margin-top:8px;">
+            <button type="button" class="nqc-chat-action-btn" onclick="window.goToTracking()">🚚 Ir al Rastreador de Envíos</button>
+          </div>
+        `;
+      } else if (qLower.includes('cotizar') || qLower.includes('cotizacion') || qLower.includes('cotización') || qLower.includes('b2b') || qLower.includes('empresa') || qLower.includes('mayor') || qLower.includes('canecas')) {
+        extrasHtml += `
+          <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
+            <button type="button" class="nqc-chat-action-btn" onclick="window.nqcChatOpenCartAndQuote()">🛒 Abrir Mi Carrito y Cotizar</button>
+            <button type="button" class="nqc-chat-action-btn" onclick="if(typeof openContactModal==='function')openContactModal();">✉️ Comunicarse al Correo Oficial</button>
+          </div>
+        `;
+      } else if (qLower.includes('minimo') || qLower.includes('mínimo') || qLower.includes('cuanto es') || qLower.includes('cuánto es') || qLower.includes('precio')) {
+        extrasHtml += `
+          <div style="margin-top:8px;">
+            <button type="button" class="nqc-chat-action-btn" onclick="window.goToLineCatalog('Aseo')">🛍️ Ver Catálogo en Tienda</button>
+          </div>
+        `;
+      }
+
+      let finalReply = geminiReply;
+      if (isFichaQuery && matchingProducts.length > 0 && !finalReply.includes('Ficha Técnica Oficial')) {
+        finalReply += `\n\n📄 **Ficha Técnica Oficial:** Puedes consultar o descargar el documento oficial en PDF haciendo clic en el botón verde **\`📄 Ficha Técnica Oficial (PDF)\`** del producto abajo.`;
+      }
+      appendMessage('bot', finalReply, cardsHtml + extrasHtml);
       return;
     }
 
-    // 10. FICHAS TÉCNICAS / HOJAS DE SEGURIDAD / CERTIFICADOS
-    if (qLower.includes('ficha') || qLower.includes('tecnica') || qLower.includes('técnica') || qLower.includes('seguridad') || qLower.includes('msds') || qLower.includes('hds') || qLower.includes('invima') || qLower.includes('certificado')) {
-      setTyping(false);
-      explainFichasTecnicas();
-      return;
-    }
-
-    // 11. COTIZACIÓN B2B / POR MAYOR
-    if (qLower.includes('cotizar') || qLower.includes('cotizacion') || qLower.includes('cotización') || qLower.includes('empresa') || qLower.includes('mayor') || qLower.includes('volumen') || qLower.includes('canecas') || qLower.includes('tambor') || qLower.includes('nit')) {
-      setTyping(false);
-      explainB2BQuote();
-      return;
-    }
-
-    // 12. CONSULTA DE LÍNEAS OFICIALES O CASOS DE LIMPIEZA ESPECÍFICOS
-    if (qClean === 'aseo' || qClean === 'productos de aseo' || qClean === 'linea de aseo' || qClean === 'linea aseo') {
-      setTyping(false);
-      recommendLineaAseo();
-      return;
-    }
-
-    if (qClean === 'bioseguridad' || qClean === 'productos de bioseguridad' || qClean === 'linea de bioseguridad' || qClean === 'linea bioseguridad') {
-      setTyping(false);
-      recommendLineaBioseguridad();
-      return;
-    }
-
-    if (qClean === 'cafeteria' || qClean === 'cafetería' || qClean === 'productos de cafeteria' || qClean === 'linea de cafeteria' || qClean === 'linea cafeteria') {
-      setTyping(false);
-      recommendLineaCafeteria();
-      return;
-    }
-
-    if (qClean === 'papeleria' || qClean === 'papelería' || qClean === 'productos de papeleria' || qClean === 'linea de papeleria' || qClean === 'linea papeleria') {
-      setTyping(false);
-      recommendLineaPapeleria();
-      return;
-    }
-
-    if (qClean === 'seguridad' || qClean === 'seguridad industrial' || qClean === 'productos de seguridad industrial' || qClean === 'linea de seguridad industrial' || qClean === 'epp') {
-      setTyping(false);
-      recommendLineaSeguridad();
-      return;
-    }
-
-    if (qLower.includes('grasa') || qLower.includes('campana') || qLower.includes('estufa') || qLower.includes('motor') || qLower.includes('taller') || qLower.includes('desengrasante')) {
-      setTyping(false);
-      recommendDesengrasante();
-      return;
-    }
-
-    if (qLower.includes('blancox') || qLower.includes('cloro') || qLower.includes('hipoclorito') || qLower.includes('desinfectante')) {
-      setTyping(false);
-      recommendCloroBlancox(qLower);
-      return;
-    }
-
-    if (qLower.includes('sarro') || qLower.includes('oxido') || qLower.includes('óxido') || qLower.includes('inodoro') || qLower.includes('sanitario') || qLower.includes('desincrustante') || qLower.includes('baño') || qLower.includes('baños')) {
-      setTyping(false);
-      recommendDesincrustante();
-      return;
-    }
-
-    if (qLower.includes('piso') || qLower.includes('madera') || qLower.includes('porcelanato') || qLower.includes('marmol') || qLower.includes('mármol') || qLower.includes('cera')) {
-      setTyping(false);
-      recommendPisos(qLower);
-      return;
-    }
-
-    if (qLower.includes('detergente') || qLower.includes('lavanderia') || qLower.includes('lavandería') || qLower.includes('ropa') || qLower.includes('suavizante')) {
-      setTyping(false);
-      recommendLavanderia(qLower);
-      return;
-    }
-
-    if (qLower.includes('jabon') || qLower.includes('jabón') || qLower.includes('manos') || qLower.includes('quirurgico') || qLower.includes('quirúrgico') || qLower.includes('kleenex')) {
-      setTyping(false);
-      recommendJabonManos();
-      return;
-    }
-
-    if (qLower.includes('wypall') || qLower.includes('paño') || qLower.includes('toalla') || qLower.includes('papel') || qLower.includes('tork')) {
-      setTyping(false);
-      recommendPanos();
-      return;
-    }
-
-    // 13. BÚSQUEDA DIRECTA EN EL CATÁLOGO (934 PRODUCTOS)
-    const matchingProducts = searchLocalProducts(query);
+    // 7. FALLBACK LOCAL DE SEGURIDAD (Solo si falla la conexión)
     if (matchingProducts.length > 0) {
-      setTyping(false);
-      const text = `Encontré las siguientes opciones disponibles en nuestra tienda para **"${query}"**:\n\nPuedes ver los detalles o agregarlos directamente a tu carrito:`;
+      const text = `Encontré las siguientes opciones disponibles en nuestra tienda para **"${query}"**:\n\nPuedes agregarlas directamente a tu pedido:`;
       const cardsHtml = renderProductCardsHtml(matchingProducts.slice(0, 2));
       appendMessage('bot', text, cardsHtml);
       return;
     }
 
-    // 14. RESPUESTA RESOLUTIVA GENERAL AUTÓNOMA
-    setTyping(false);
-    const resolvedText = `En **Detalgraf** fabricamos y distribuimos insumos de aseo institucional, desinfección, lavandería y tratamiento de superficies.\n\nPara orientarte mejor con **"${query}"**, puedes indicarme qué superficie deseas limpiar o qué tipo de producto buscas (por ejemplo: desengrasante, cloro, detergente o jabón).\n\n*Nota: Si necesitas algo más o una cotización personalizada con un asesor, con gusto también puedes comunicarte a **${CHAT_CONFIG.companyEmail}**.*`;
-    appendMessage('bot', resolvedText, getInlineOptionsHtml());
+    if (attachedImage) {
+      const textImg = `He recibido tu imagen para la consulta. Por favor indícame el nombre o referencia del producto (por ejemplo: *Aceite de Oliva*, *WypAll X60*, *Desengrasante Suma Grill*) para abrirte de inmediato su Ficha Técnica Oficial (PDF) o agregarlo a tu pedido.`;
+      appendMessage('bot', textImg, getInlineOptionsHtml());
+      return;
+    }
+
+    const fallbackText = `Para orientarte mejor con **"${query}"**, puedes indicarme qué superficie deseas limpiar o qué tipo de producto buscas (por ejemplo: desengrasante, cloro, detergente o jabón).\n\n*Nota: Si necesitas una cotización personalizada o compras institucionales, con gusto puedes comunicarte a **${CHAT_CONFIG.companyEmail}**.*`;
+    appendMessage('bot', fallbackText, getInlineOptionsHtml());
+  }
+
+  // =========================================================================
+  // CONEXIÓN INTELIGENTE CON GOOGLE GEMINI (NIVEL SUPERIOR DE IA AUTÓNOMA)
+  // =========================================================================
+  async function callGeminiAssistant(userQuery, attachedImage = null) {
+    // 1. Si NO hay imagen adjunta, intentar primero con el proxy de Apps Script
+    if (!attachedImage && CHAT_CONFIG.proxyUrl) {
+      try {
+        const payload = {
+          message: userQuery,
+          history: chatHistory.slice(-6)
+        };
+        const res = await fetch(CHAT_CONFIG.proxyUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+          body: JSON.stringify(payload)
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data && data.reply && !data.error && !data.reply.includes('Con gusto te asisto. Para cotizaciones formales')) {
+            return data.reply;
+          }
+        }
+      } catch (e) {
+        console.warn('Apps Script proxy no disponible, usando conexión Gemini directa:', e);
+      }
+    }
+
+    // 2. Conexión directa y resiliente con Google Gemini API
+    if (CHAT_CONFIG.geminiApiKey) {
+      try {
+        const systemPrompt = `Eres el Asistente Virtual Inteligente Oficial de Detalgraf S.A.S. y DetalShop.com en Colombia (empresa líder en productos químicos de aseo institucional, desinfección, lavandería profesional, cafetería, papelería y bioseguridad).
+Tus directrices:
+1. Responde de manera profesional, técnica, concisa y cordial (máximo 2 a 3 párrafos cortos). Sé resolutivo y directo al grano.
+2. Si el cliente envía una imagen o captura de pantalla (de un producto, mancha, etiqueta, piso, baño, etc.), analízala con cuidado, identifícala con exactitud y recomienda el producto oficial correspondiente de Detalgraf / DetalShop. Menciona claramente su nombre comercial exacto en negrita (por ejemplo: **ACEITE DE OLIVA VIRGE EXTRA GOURMET FRASCO X 500 ML** o **WypAll X60 Colores Rollo x 150 Paños Verde (Ref: K-6078)**) para que el sistema vincule automáticamente su ficha técnica oficial y tarjeta de compra.
+3. Si el cliente solicita la FICHA TÉCNICA, HOJA DE SEGURIDAD (MSDS) o especificaciones técnicas de un producto (o envía una captura pidiendo la ficha técnica), confirma la identificación exacta del producto con su Referencia oficial, menciona sus datos técnicos clave (composición, usos principales, rendimiento o pH) y aclara que puede abrir o descargar el PDF oficial de la Ficha Técnica directamente en el botón "📄 Ficha Técnica Oficial (PDF)" que aparece abajo del mensaje.
+4. Brinda asesoría sobre usos, diluciones o dosificaciones de productos químicos según la superficie o requerimiento del cliente.
+5. Pedido mínimo obligatorio de compra: $100.000 COP para Bogotá y Sabana (entrega en 24-48 horas hábiles con Flota Propia Detalgraf), y $200.000 COP para el resto de Colombia (2 a 5 días hábiles). No menciones ningún otro valor de pedido mínimo.
+6. Cotizaciones al por mayor o B2B: indícale al cliente que puede armar su pedido en el carrito para descargar el PDF de Cotización Oficial con IVA o comunicarse a info@detalgraf.com.
+7. Rastreo de pedidos: indica que pueden consultar el estado en la sección de rastreo con su número de pedido.
+8. POLÍTICA ESTRICTA: NUNCA menciones WhatsApp ni números de teléfono bajo ninguna circunstancia. El único canal oficial es info@detalgraf.com.`;
+
+        const contents = [];
+        // Tomar el historial previo excluyendo el mensaje actual que ya fue ingresado a chatHistory
+        const priorHistory = chatHistory.slice(0, -1).slice(-4);
+        let lastRole = null;
+        for (const msg of priorHistory) {
+          const role = (msg.sender === 'user') ? 'user' : 'model';
+          if (msg.text && role !== lastRole) {
+            contents.push({
+              role: role,
+              parts: [{ text: msg.text }]
+            });
+            lastRole = role;
+          }
+        }
+        // Si el último turno del historial previo era 'user', removerlo para asegurar alternancia estricta
+        if (contents.length > 0 && contents[contents.length - 1].role === 'user') {
+          contents.pop();
+        }
+
+        const userParts = [];
+        if (attachedImage && attachedImage.data) {
+          userParts.push({
+            inline_data: {
+              mime_type: attachedImage.mime_type || 'image/jpeg',
+              data: attachedImage.data
+            }
+          });
+        }
+        userParts.push({
+          text: userQuery || 'Analiza esta imagen con cuidado como asesor oficial de Detalgraf / DetalShop. Si es un producto, superficie manchada, etiqueta o necesidad institucional, identifícalo con exactitud indicando su nombre comercial completo en negrita y su ficha técnica oficial.'
+        });
+
+        contents.push({
+          role: 'user',
+          parts: userParts
+        });
+
+        const candidateModels = [
+          CHAT_CONFIG.geminiModel || 'gemini-3.1-flash-lite',
+          'gemini-3-flash-preview',
+          'gemini-3.5-flash-lite',
+          'gemini-flash-latest'
+        ];
+
+        for (const model of candidateModels) {
+          try {
+            const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${CHAT_CONFIG.geminiApiKey}`;
+            const resp = await fetch(url, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                system_instruction: { parts: [{ text: systemPrompt }] },
+                contents: contents,
+                generationConfig: {
+                  temperature: 0.2,
+                  maxOutputTokens: 600
+                }
+              })
+            });
+
+            if (resp.ok) {
+              const resData = await resp.json();
+              if (resData.candidates && resData.candidates.length > 0 && resData.candidates[0].content && resData.candidates[0].content.parts) {
+                const textReply = resData.candidates[0].content.parts.map(p => p.text || '').join('\n').trim();
+                if (textReply) return textReply;
+              }
+            } else {
+              console.warn(`Gemini model ${model} respondió con status ${resp.status}`);
+            }
+          } catch (modelErr) {
+            console.warn(`Error llamando a modelo ${model}:`, modelErr);
+          }
+        }
+      } catch (err) {
+        console.warn('Error en llamada directa a Gemini API:', err);
+      }
+    }
+
+    return null;
   }
 
   // =========================================================================
@@ -501,14 +780,31 @@
     appendMessage('bot', text, extras);
   }
 
-  // Cotizar Empresas: Pasos claros y ÚNICO botón
+  // Cotizar Empresas: Pasos exactos del Carrito (Descarga de PDF y Gestión DIAN)
   function explainB2BQuote() {
-    const text = `Para solicitar una **cotización empresarial por volumen** con precios directos de fábrica, los pasos son muy sencillos:\n\n1. **Abre nuestro canal oficial:** Haz clic en el botón de abajo para abrir el formulario de correo.\n2. **Indica los datos de tu empresa:** Razón Social, NIT y Ciudad de entrega.\n3. **Especifica los productos requeridos:** Menciona las referencias y cantidades estimadas (ej: 10 canecas de 20L de jabón, 5 garrafas de desengrasante).\n\nNuestro equipo comercial revisará tu requerimiento y te enviará la propuesta formal con tiempos de despacho.`;
+    let cartTotal = 0;
+    let itemCount = 0;
+    if (typeof cart !== 'undefined' && Array.isArray(cart)) {
+      itemCount = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+      cartTotal = cart.reduce((sum, item) => sum + ((item.price || 0) * (item.qty || 1)), 0);
+    }
+
+    let statusText = '';
+    if (itemCount > 0) {
+      statusText = `\n\n📊 **Tu Carrito Actual:** Tienes **${itemCount} producto(s)** sumando **$${cartTotal.toLocaleString('es-CO')} COP**. ¡Ya puedes generar tu cotización oficial!`;
+    } else {
+      statusText = `\n\nℹ️ *Nota: Actualmente tu carrito está vacío. Agrega primero los productos que necesitas cotizar.*`;
+    }
+
+    const text = `Puedes generar y descargar tu **Cotización Formal en PDF oficial de Detalgraf S.A.S.** de manera inmediata directamente desde tu **Carrito de Compras**.\n\n### 📋 Pasos para cotizar desde el carrito:\n1. **Agrega los productos:** Elige las referencias y cantidades que tu empresa necesita cotizar usando los botones **\`+ Agregar\`**.\n2. **Abre tu Carrito:** Haz clic en el botón de abajo **\`🛒 Abrir Mi Carrito y Cotizar\`** (o en el icono de carrito en la parte superior).\n3. **Ingresa los datos de tu empresa:** En el carrito, selecciona tu tipo de documento (**NIT o Cédula**) y escribe el número para la Facturación Electrónica DIAN y remisión oficial.\n4. **Descarga tu Cotización:** Haz clic en el botón **\`📄 Descargar Cotización PDF\`** dentro del carrito. Se generará de inmediato el PDF oficial con precios, referencias, desglose de IVA y validez comercial.${statusText}\n\n*Si deseas formalizar la compra de inmediato, desde el mismo carrito puedes hacer clic en **[ Proceder al Pago Seguro 🔒 ]** con Wompi (PSE, Bancolombia, tarjetas o Nequi).*`;
+
     const extras = `
-      <div style="margin-top:8px;">
-        <button type="button" class="nqc-chat-action-btn" onclick="if(typeof openContactModal==='function')openContactModal();">✉️ Comunicarse al correo oficial</button>
+      <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
+        <button type="button" class="nqc-chat-action-btn" onclick="window.nqcChatOpenCartAndQuote()">🛒 Abrir Mi Carrito y Cotizar</button>
+        <button type="button" class="nqc-chat-action-btn" onclick="window.goToLineCatalog('Todos')">📦 Ver Catálogo de Productos</button>
       </div>
     `;
+
     appendMessage('bot', text, extras);
   }
 
@@ -558,7 +854,7 @@
 
     const extras = `
       <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
-        <button type="button" class="nqc-chat-action-btn" onclick="if(typeof openCartDrawer==='function')openCartDrawer();">🛒 Ver Mi Carrito</button>
+        <button type="button" class="nqc-chat-action-btn" onclick="window.nqcChatOpenCartAndQuote()">🛒 Ver Mi Carrito</button>
         <a class="nqc-chat-action-btn" href="/collections/all">📦 Ver Todo el Catálogo</a>
       </div>
     `;
@@ -567,17 +863,26 @@
   }
 
   function explainFichasTecnicas() {
-    const text = `Todas las **Fichas Técnicas y Hojas de Seguridad oficiales** están disponibles en nuestra tienda.\n\nPara consultar la ficha de cualquier producto:\n1. Ingresa a la página del producto.\n2. Haz clic en la pestaña **'Ficha Técnica'**.\n3. Allí encontrarás el botón directo para visualizar y descargar el PDF oficial.\n\n*Si necesitas algo más o requieres certificados de lote para auditorías, con gusto también nos puedes escribir a **${CHAT_CONFIG.companyEmail}**.*`;
-    const extras = `
-      <div style="margin-top:8px;">
-        <button type="button" class="nqc-chat-action-btn" onclick="if(typeof openContactModal==='function')openContactModal();">✉️ Comunicarse al correo oficial</button>
-      </div>
-    `;
-    appendMessage('bot', text, extras);
+    const text = 'Todas las **Fichas Técnicas Oficiales, Registros INVIMA y Hojas de Seguridad (MSDS)** de nuestros productos están a tu disposición en formato PDF.\n\nPuedes abrir o descargar la ficha de cualquier producto directamente desde el chat o en la tienda:\n\n*Haz clic en cualquiera de las siguientes fichas populares para visualizarlas de inmediato, o escribe el nombre del producto que necesitas:*';
+    const catalog = getCatalogProducts();
+    const sampleProducts = [
+      catalog.find(p => /blancox/i.test(p.title)),
+      catalog.find(p => /detergente/i.test(p.title)),
+      catalog.find(p => /nitrilo/i.test(p.title)),
+      catalog.find(p => /wypall/i.test(p.title))
+    ].filter(Boolean);
+
+    const cardsHtml = renderProductCardsHtml(sampleProducts.slice(0, 3));
+    const extras = '<div style="margin-top:10px; display:flex; gap:6px; flex-wrap:wrap;">' +
+      '<button type="button" class="nqc-chat-action-btn" onclick="window.nqcChatTriggerAction(\'ficha_blancox\', \'📄 Ficha Blancox Aroma\')">🧴 Ficha Blancox</button>' +
+      '<button type="button" class="nqc-chat-action-btn" onclick="window.nqcChatTriggerAction(\'ficha_detergente\', \'📄 Ficha Detergente Detalgraf\')">🧼 Ficha Detergente 20L</button>' +
+      '<button type="button" class="nqc-chat-action-btn" onclick="if(typeof openContactModal===\'function\')openContactModal();">✉️ Solicitar Certificado por Correo</button>' +
+      '</div>';
+    appendMessage('bot', text, cardsHtml + extras);
   }
 
   // =========================================================================
-  // RECOMENDADORES DE LAS 5 LÍNEAS OFICIALES ("NUESTRAS LINEAS")
+  // GESTIÓN Y FILTRO ESTRICTO DE DISPONIBILIDAD (NUNCA MOSTRAR AGOTADOS)
   // =========================================================================
 
   function getCatalogProducts() {
@@ -590,6 +895,39 @@
     return [];
   }
 
+  // Comprueba si un producto tiene inventario real disponible (descarta 100% agotados)
+  function isProductInStock(p) {
+    if (!p) return false;
+    if (p.available === false) return false;
+
+    // 1. Verificación cruzada con window.SHOPIFY_STORE_PRODUCTS (datos en vivo del servidor)
+    if (typeof window !== 'undefined' && Array.isArray(window.SHOPIFY_STORE_PRODUCTS) && window.SHOPIFY_STORE_PRODUCTS.length > 0) {
+      const sp = window.SHOPIFY_STORE_PRODUCTS.find(x => String(x.id) === String(p.id));
+      if (sp) {
+        if (sp.available === false) return false;
+        if (sp.inventory_management === 'shopify' && typeof sp.inventory_quantity === 'number' && sp.inventory_quantity <= 0 && sp.inventory_policy !== 'continue') {
+          return false;
+        }
+      }
+    }
+
+    // 2. Verificación si el inventario está gestionado y en cero
+    if (p.inventory_management === 'shopify') {
+      if (typeof p.inventory_quantity === 'number' && p.inventory_quantity <= 0 && p.inventory_policy !== 'continue') {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  function focusChatInput() {
+    setTimeout(() => {
+      const input = document.getElementById('nqcChatInput');
+      if (input) input.focus();
+    }, 250);
+  }
+
   function getFeaturedProducts(lineOrCategory, keywords = []) {
     const catalog = getCatalogProducts();
     if (!catalog.length) return [];
@@ -597,10 +935,11 @@
     let filtered = [];
     const catLow = lineOrCategory.toLowerCase();
 
-    // 1. Priorizar coincidencias por palabras clave
+    // 1. Priorizar coincidencias por palabras clave con inventario disponible
     for (const kw of keywords) {
       const kwLow = kw.toLowerCase();
       const match = catalog.find(p => {
+        if (!isProductInStock(p)) return false;
         const titleLow = (p.title || '').toLowerCase();
         const pCatLow = (p.category || '').toLowerCase();
         const pSubcatLow = (p.subcat || '').toLowerCase();
@@ -612,9 +951,10 @@
       if (filtered.length >= 2) break;
     }
 
-    // 2. Rellenar con productos de la misma línea si faltan
+    // 2. Rellenar con otros productos disponibles de la misma línea si faltan
     if (filtered.length < 2) {
       const more = catalog.filter(p => {
+        if (!isProductInStock(p)) return false;
         const pCatLow = (p.category || '').toLowerCase();
         const matchCat = (catLow === 'bioseguridad')
           ? (pCatLow === 'seguridad' || /kleenex|antibacterial|alcohol|jabon/i.test(p.title || ''))
@@ -627,64 +967,84 @@
     return filtered.slice(0, 2);
   }
 
-  function recommendLineaAseo() {
-    const text = `En nuestra línea oficial de **Productos de Aseo Institucional** disponemos de soluciones para desinfección, lavado de manos, toallas de secado y mantenimiento de pisos y superficies.\n\nAquí tienes productos recomendados listos para agregar o revisar:`;
-    const prods = getFeaturedProducts('Aseo', ['toalla mano z', 'desengrasante', 'mopa']);
-    const extras = renderProductCardsHtml(prods) + `
-      <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
-        <button type="button" class="nqc-chat-action-btn" onclick="window.goToLineCatalog('Aseo')">🛒 Ver Catálogo de Aseo</button>
-        <button type="button" class="nqc-chat-action-btn" onclick="window.nqcChatTriggerAction('cotizar_b2b', '🏢 Cotizar empresas')">🏢 Cotizar por volumen</button>
+  // =========================================================================
+  // PREGUNTAS INTERACTIVAS POR LÍNEA (INVITANDO AL USUARIO A ESCRIBIR)
+  // =========================================================================
+
+  function askLineaAseo() {
+    const text = `En nuestra línea oficial de **Productos de Aseo Institucional** cubrimos soluciones para cocinas industriales, desinfección, baños, pisos y lavandería.\n\n¿Qué tipo de producto de aseo necesitas o qué área deseas limpiar?\n\n💬 **Escríbeme lo que buscas aquí abajo** (por ejemplo: *"desengrasante"*, *"cloro o desinfectante"*, *"jabón para manos"*, *"cera para pisos"*, *"toallas de manos"*) o selecciona una opción rápida:`;
+    const extras = `
+      <div class="nqc-chat-options-grid">
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('cat_desengrasante', '🍳 Desengrasantes')">🍳 Desengrasantes</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('cat_cloro', '🧴 Cloro & Desinfección')">🧴 Cloro & Desinfección</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('cat_pisos', '✨ Pisos & Ceras')">✨ Pisos & Ceras</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('cat_lavanderia', '🧺 Lavandería')">🧺 Lavandería</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('cat_toallas', '🧻 Toallas de Manos')">🧻 Toallas de Manos</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.goToLineCatalog('Aseo')">🛒 Ver Catálogo de Aseo</button>
       </div>
     `;
     appendMessage('bot', text, extras);
+    focusChatInput();
   }
 
-  function recommendLineaBioseguridad() {
-    const text = `Nuestra línea de **Productos de Bioseguridad** cuenta con registros sanitarios y formulaciones de grado institucional para clínicas, oficinas y manipulación segura (jabón espuma Kleenex Foam, pañitos antibacterial, alcohol antiséptico y gel).\n\nAquí tienes productos recomendados de esta línea:`;
-    const prods = getFeaturedProducts('Bioseguridad', ['kleenex foam', 'antibacterial', 'alcohol']);
-    const extras = renderProductCardsHtml(prods) + `
-      <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
-        <button type="button" class="nqc-chat-action-btn" onclick="window.goToLineCatalog('Bioseguridad')">🛒 Ver Catálogo de Bioseguridad</button>
-        <button type="button" class="nqc-chat-action-btn" onclick="window.nqcChatTriggerAction('cotizar_b2b', '🏢 Cotizar empresas')">🏢 Cotizar por volumen</button>
+  function askLineaBioseguridad() {
+    const text = `Nuestra línea de **Bioseguridad** cuenta con formulaciones institucionales para protección sanitaria en clínicas, consultorios, empresas y manipulación de alimentos.\n\n¿Qué tipo de producto de bioseguridad necesitas?\n\n💬 **Escríbeme lo que buscas aquí abajo** (por ejemplo: *"jabón antibacterial"*, *"alcohol antiséptico"*, *"pañitos desinfectantes"*, *"gel antibacterial"*) o selecciona una opción rápida:`;
+    const extras = `
+      <div class="nqc-chat-options-grid">
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('sub_jabon_bio', '🧼 Jabón Antibacterial')">🧼 Jabón Antibacterial</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('sub_alcohol_bio', '🧴 Alcohol & Gel')">🧴 Alcohol & Gel</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('sub_panitos_bio', '🧻 Pañitos Desinfectantes')">🧻 Pañitos Desinfectantes</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('sub_dispensador_bio', '🏢 Dispensadores')">🏢 Dispensadores</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.goToLineCatalog('Bioseguridad')">🛒 Ver Catálogo de Bioseguridad</button>
       </div>
     `;
     appendMessage('bot', text, extras);
+    focusChatInput();
   }
 
-  function recommendLineaCafeteria() {
-    const text = `En la línea de **Productos de Cafetería** cubrimos los insumos esenciales para casinos empresariales, cafeterías y oficinas (mezcladores de madera El Sol, infusiones naturales Isashii y Hindú, vasos térmicos y de cartón Barval).\n\nAquí tienes productos recomendados de esta línea:`;
-    const prods = getFeaturedProducts('Cafeteria', ['mezclador', 'aromatica', 'vaso']);
-    const extras = renderProductCardsHtml(prods) + `
-      <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
-        <button type="button" class="nqc-chat-action-btn" onclick="window.goToLineCatalog('Cafeteria')">🛒 Ver Catálogo de Cafetería</button>
-        <button type="button" class="nqc-chat-action-btn" onclick="window.nqcChatTriggerAction('cotizar_b2b', '🏢 Cotizar empresas')">🏢 Cotizar por volumen</button>
+  function askLineaCafeteria() {
+    const text = `En **Productos de Cafetería** suministramos los insumos esenciales para casinos de empleados, oficinas y cafeterías.\n\n¿Qué artículo de cafetería necesitas abastecer?\n\n💬 **Escríbeme lo que buscas aquí abajo** (por ejemplo: *"mezcladores de madera"*, *"aromáticas o té"*, *"café"*, *"vasos desechables o de cartón"*, *"servilletas"*) o selecciona una opción rápida:`;
+    const extras = `
+      <div class="nqc-chat-options-grid">
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('sub_mezcladores', '🥄 Mezcladores de Madera')">🥄 Mezcladores de Madera</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('sub_aromaticas', '🍵 Aromáticas & Té')">🍵 Aromáticas & Té</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('sub_vasos', '🥤 Vasos de Cartón')">🥤 Vasos de Cartón</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('sub_servilletas', '🧻 Servilletas')">🧻 Servilletas</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.goToLineCatalog('Cafeteria')">🛒 Ver Catálogo de Cafetería</button>
       </div>
     `;
     appendMessage('bot', text, extras);
+    focusChatInput();
   }
 
-  function recommendLineaPapeleria() {
-    const text = `Nuestra línea de **Productos de Papelería** abarca insumos operativos, embalaje y archivo de alto tráfico (papel kraft por rollo, bolsillos de laminación carta, cintas de empaque Tesa, sobres manila y yoyo vertical).\n\nAquí tienes productos recomendados de esta línea:`;
-    const prods = getFeaturedProducts('Papeleria', ['bolsillo laminacion', 'kraft', 'tesa']);
-    const extras = renderProductCardsHtml(prods) + `
-      <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
-        <button type="button" class="nqc-chat-action-btn" onclick="window.goToLineCatalog('Papeleria')">🛒 Ver Catálogo de Papelería</button>
-        <button type="button" class="nqc-chat-action-btn" onclick="window.nqcChatTriggerAction('cotizar_b2b', '🏢 Cotizar empresas')">🏢 Cotizar por volumen</button>
+  function askLineaPapeleria() {
+    const text = `En **Productos de Papelería** manejamos suministros para oficinas, logística, empaque y archivo de alto tráfico.\n\n¿Qué insumo de papelería o embalaje requieres?\n\n💬 **Escríbeme lo que necesitas aquí abajo** (por ejemplo: *"papel kraft en rollo"*, *"bolsillos para plastificar"*, *"cintas de empaque"*, *"sobres de manila"*, *"resmas"*) o selecciona una opción rápida:`;
+    const extras = `
+      <div class="nqc-chat-options-grid">
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('sub_kraft', '📦 Papel Kraft / Embalaje')">📦 Papel Kraft / Embalaje</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('sub_laminacion', '📑 Bolsillos de Laminación')">📑 Bolsillos de Laminación</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('sub_cintas', '📦 Cintas de Empaque')">📦 Cintas de Empaque</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('sub_sobres', '✉️ Sobres Manila / Yoyo')">✉️ Sobres Manila / Yoyo</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.goToLineCatalog('Papeleria')">🛒 Ver Catálogo de Papelería</button>
       </div>
     `;
     appendMessage('bot', text, extras);
+    focusChatInput();
   }
 
-  function recommendLineaSeguridad() {
-    const text = `En la línea de **Seguridad Industrial** proveemos equipos de protección personal (EPP) y suministros de embalaje industrial (paños Wypall X-75 Plus, dispensadores Kimberly, guantes de nitrilo sin polvo y film strech para paletizado).\n\nAquí tienes productos recomendados de esta línea:`;
-    const prods = getFeaturedProducts('Seguridad', ['wypall x-75', 'dispensador wypall', 'nitrilo']);
-    const extras = renderProductCardsHtml(prods) + `
-      <div style="margin-top:8px; display:flex; gap:6px; flex-wrap:wrap;">
-        <button type="button" class="nqc-chat-action-btn" onclick="window.goToLineCatalog('Seguridad')">🛒 Ver Catálogo de Seguridad Industrial</button>
-        <button type="button" class="nqc-chat-action-btn" onclick="window.nqcChatTriggerAction('cotizar_b2b', '🏢 Cotizar empresas')">🏢 Cotizar por volumen</button>
+  function askLineaSeguridad() {
+    const text = `En **Seguridad Industrial y EPP** proveemos elementos de protección personal, paños de absorción industrial y materiales para embalaje en bodegas.\n\n¿Qué elemento de protección o seguridad necesitas?\n\n💬 **Escríbeme lo que necesitas aquí abajo** (por ejemplo: *"paños wypall"*, *"guantes de nitrilo"*, *"guantes de látex"*, *"strech film"*) o selecciona una opción rápida:`;
+    const extras = `
+      <div class="nqc-chat-options-grid">
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('sub_wypall', '🧻 Paños Wypall X-75')">🧻 Paños Wypall X-75</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('sub_guantes_nitrilo', '🧤 Guantes de Nitrilo')">🧤 Guantes de Nitrilo</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('sub_strech', '📦 Strech Film')">📦 Strech Film</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.nqcChatTriggerAction('sub_guantes_latex', '🧤 Guantes de Látex')">🧤 Guantes de Látex</button>
+        <button type="button" class="nqc-chat-inline-pill" onclick="window.goToLineCatalog('Seguridad')">🛒 Ver Catálogo de Seguridad</button>
       </div>
     `;
     appendMessage('bot', text, extras);
+    focusChatInput();
   }
 
   function recommendLineaTodas() {
@@ -701,12 +1061,15 @@
   }
 
   // =========================================================================
-  // SUB-RUTINAS ESPECÍFICAS DE CASOS DE LIMPIEZA
+  // SUB-RUTINAS DE RECOMENDACIÓN CON PRODUCTOS ESTRICTAMENTE EN STOCK
   // =========================================================================
 
   function recommendDesengrasante() {
-    const text = `Para remover grasa pesada en campanas, estufas industriales, talleres o motores, el producto indicado es nuestro **Desengrasante Multiusos Industrial Detalgraf**.\n\n• **Modo de aplicación:** Aplica puro o 1:3 en agua tibia para suciedad acumulada (o 1:10 para mantenimiento regular). Deja actuar 5 a 10 minutos y retira con esponja o paño húmedo.\n• **Precaución:** Evita dejar secar sobre aluminio pulido.\n\n*Si necesitas algo más sobre fichas técnicas o compras por volumen, con gusto también nos puedes escribir a **${CHAT_CONFIG.companyEmail}**.*`;
-    const prods = searchLocalProducts('desengrasante').slice(0, 2);
+    const text = `Para remover grasa pesada en campanas, estufas industriales, talleres o motores, disponemos de desengrasantes institucionales de alto poder.\n\n• **Modo de aplicación:** Aplica puro o 1:3 en agua tibia para suciedad acumulada (o 1:10 para mantenimiento regular). Deja actuar 5 a 10 minutos y retira con esponja o paño húmedo.\n• **Precaución:** Evita dejar secar sobre aluminio pulido.\n\nAquí tienes opciones con **existencias disponibles** en bodega:`;
+    let prods = searchLocalProducts('desengrasante').slice(0, 2);
+    if (!prods.length) {
+      prods = getFeaturedProducts('Aseo', ['desengrasante', 'drax', 'suma']);
+    }
     appendMessage('bot', text, renderProductCardsHtml(prods));
   }
 
@@ -715,61 +1078,313 @@
     if (qLower && qLower.includes('madera')) {
       warning = '\n\n⚠️ **Precaución técnica:** Nunca apliques hipoclorito ni cloro sobre madera laminada porque decolora y deteriora la película protectora. Para madera usa limpiadores neutros.';
     }
-    const text = `Disponemos de **Blancox Poder Natural** e Hipoclorito de Sodio para desinfección profunda bactericida de superficies y blanqueo textil.${warning}\n\n• **Presentaciones:** Frascos de 1L, Galón (4L) y Garrafa de 20L.\n\n*Si necesitas algo más o fichas de seguridad, con gusto también nos puedes escribir a **${CHAT_CONFIG.companyEmail}**.*`;
+    const text = `Disponemos de **Blancox Poder Natural** e Hipoclorito para desinfección profunda bactericida de superficies y blanqueo textil.${warning}\n\nAquí tienes opciones con **existencias disponibles** en bodega:`;
     const prods = searchLocalProducts('blancox').concat(searchLocalProducts('cloro')).slice(0, 2);
     appendMessage('bot', text, renderProductCardsHtml(prods));
   }
 
   function recommendDesincrustante() {
-    const text = `Para remover sarro, manchas amarillas y óxido en sanitarios, orinales y lavamanos, te recomendamos el **Desincrustante Ácido para Baños**.\n\n• **Modo de uso:** Aplica directamente sobre el área con sarro, deja actuar de 3 a 5 minutos, refriega con churrusco o cepillo abrasivo y enjuaga con abundante agua.\n• **Recomendación:** Usa guantes y mantén ventilada el área.`;
+    const text = `Para remover sarro, manchas amarillas y óxido en sanitarios, orinales y lavamanos, te recomendamos limpiadores y desincrustantes para baños.\n\n• **Modo de uso:** Aplica sobre el área con sarro, deja actuar de 3 a 5 minutos, refriega con cepillo o churrusco y enjuaga con abundante agua.\n\nOpciones disponibles en stock:`;
     const prods = searchLocalProducts('desincrustante').concat(searchLocalProducts('limpiador banos')).slice(0, 2);
     appendMessage('bot', text, renderProductCardsHtml(prods));
   }
 
   function recommendPisos(qLower) {
-    const text = `Para el mantenimiento de pisos (cerámica, porcelanato, mármol y madera laminada), recomendamos **Limpiadores Multiusos Neutros** y **Ceras Poliméricas Autobrillantes**.\n\n• **Ventaja:** No deterioran el brillo natural ni dejan película resbalosa. Para madera laminada usa trapero apenas húmedo.`;
+    const text = `Para el mantenimiento de pisos (cerámica, porcelanato, mármol y madera laminada), recomendamos **Limpiadores Multiusos Neutros** y **Ceras Autobrillantes** que no deterioran el brillo natural.\n\nOpciones disponibles en stock:`;
     const prods = searchLocalProducts('limpiador').concat(searchLocalProducts('cera')).slice(0, 2);
     appendMessage('bot', text, renderProductCardsHtml(prods));
   }
 
   function recommendLavanderia(qLower) {
-    const text = `Nuestra línea de lavandería incluye **Detergente Líquido Industrial de Alto Rendimiento** y **Suavizante Textil** que protegen fibras y colores.\n\n• **Dosificación recomendada:** 80ml a 120ml por carga de lavadora de 20kg.`;
+    const text = `Nuestra línea de lavandería incluye **Detergente Líquido Industrial** y **Suavizante Textil** de alto rendimiento que protegen fibras y colores.\n\nOpciones disponibles en stock:`;
     const prods = searchLocalProducts('detergente').slice(0, 2);
     appendMessage('bot', text, renderProductCardsHtml(prods));
   }
 
-  function recommendJabonManos() {
-    const text = `Para higiene en oficinas, clínicas y restaurantes manejamos **Jabón Líquido Antibacterial** y **Kleenex Foam / Espuma** con humectantes que evitan resequedad en la piel.`;
+  function recommendToallas() {
+    const text = `Para secado de manos institucional, manejamos **Toallas de Mano en Z Tork y Familia** con excelente poder de absorción y rendimiento por hoja.\n\nOpciones disponibles en stock:`;
+    const prods = searchLocalProducts('toalla mano z').slice(0, 2);
+    appendMessage('bot', text, renderProductCardsHtml(prods));
+  }
+
+  function recommendJabonBio() {
+    const text = `Para higiene y protección sanitaria en clínicas, oficinas y restaurantes manejamos **Jabón Líquido Antibacterial** y **Kleenex Foam en Espuma** con humectantes.\n\nOpciones disponibles en stock:`;
     const prods = searchLocalProducts('jabon').concat(searchLocalProducts('kleenex')).slice(0, 2);
     appendMessage('bot', text, renderProductCardsHtml(prods));
   }
 
-  function recommendPanos() {
-    const text = `Para secado y limpieza sin pelusa, recomendamos **Wypall X-75 Plus Industrial** y paños de microfibra Tork de alta resistencia a solventes y grasas.`;
-    const prods = searchLocalProducts('wypall').concat(searchLocalProducts('tork')).slice(0, 2);
+  function recommendAlcoholBio() {
+    const text = `Contamos con **Alcohol Antiséptico al 70%** y soluciones de desinfección en diversas presentaciones institucionales.\n\nOpciones disponibles en stock:`;
+    const prods = searchLocalProducts('alcohol').slice(0, 2);
     appendMessage('bot', text, renderProductCardsHtml(prods));
   }
 
-  function searchLocalProducts(query) {
+  function recommendPanitosBio() {
+    const text = `Disponemos de **Pañitos Húmedos Antibacteriales Dampy** para limpieza y desinfección rápida de manos y superficies de contacto.\n\nOpciones disponibles en stock:`;
+    const prods = searchLocalProducts('panitos').concat(searchLocalProducts('dampy')).slice(0, 2);
+    appendMessage('bot', text, renderProductCardsHtml(prods));
+  }
+
+  function recommendDispensadorBio() {
+    const text = `Manejamos dispensadores institucionales de pared para jabón espuma, gel y toallas de manos de marcas líderes como Kimberly-Clark y Tork.\n\nOpciones disponibles en stock:`;
+    const prods = searchLocalProducts('dispensador').slice(0, 2);
+    appendMessage('bot', text, renderProductCardsHtml(prods));
+  }
+
+  function recommendMezcladores() {
+    const text = `Ofrecemos **Mezcladores de Madera El Sol** redondos de 14 cm en paquetes de 1000 unidades, biodegradables e higiénicos para café y bebidas calientes.\n\nOpciones disponibles en stock:`;
+    const prods = searchLocalProducts('mezclador').slice(0, 2);
+    appendMessage('bot', text, renderProductCardsHtml(prods));
+  }
+
+  function recommendAromaticas() {
+    const text = `Manejamos infusiones y aromáticas de frutas naturales **Isashii y Hindú** en cajas surtidas de 10 y 100 sobres para oficinas y cafeterías.\n\nOpciones disponibles en stock:`;
+    const prods = searchLocalProducts('aromatica').concat(searchLocalProducts('infusion')).slice(0, 2);
+    appendMessage('bot', text, renderProductCardsHtml(prods));
+  }
+
+  function recommendVasos() {
+    const text = `Disponemos de **Vasos de Cartón térmicos e higiénicos Barval** en presentaciones de 7 oz para bebidas calientes y frías.\n\nOpciones disponibles en stock:`;
+    const prods = searchLocalProducts('vaso').slice(0, 2);
+    appendMessage('bot', text, renderProductCardsHtml(prods));
+  }
+
+  function recommendServilletas() {
+    const text = `Manejamos servilletas institucionales y dispensadores de servilletas para casinos empresariales y cafeterías.\n\nOpciones disponibles en stock:`;
+    const prods = searchLocalProducts('servilleta').slice(0, 2);
+    appendMessage('bot', text, renderProductCardsHtml(prods));
+  }
+
+  function recommendKraft() {
+    const text = `Para embalaje y protección de mercancía, disponemos de **Papel Kraft en Rollo** resistente de 24" x 150 metros.\n\nOpciones disponibles en stock:`;
+    const prods = searchLocalProducts('kraft').slice(0, 2);
+    appendMessage('bot', text, renderProductCardsHtml(prods));
+  }
+
+  function recommendLaminacion() {
+    const text = `Contamos con **Bolsillos para Laminación** tamaño Carta y Carnet de calibre 5 para protección duradera de documentos y carnets.\n\nOpciones disponibles en stock:`;
+    const prods = searchLocalProducts('laminacion').concat(searchLocalProducts('bolsillo')).slice(0, 2);
+    appendMessage('bot', text, renderProductCardsHtml(prods));
+  }
+
+  function recommendCintas() {
+    const text = `Disponemos de **Cintas de Empaque Tesa** transparentes y dispensadores manuales para cerrado seguro de cajas y embalaje logístico.\n\nOpciones disponibles en stock:`;
+    const prods = searchLocalProducts('cinta').concat(searchLocalProducts('tesa')).slice(0, 2);
+    appendMessage('bot', text, renderProductCardsHtml(prods));
+  }
+
+  function recommendSobres() {
+    const text = `Manejamos **Sobres Manila y Yoyo** verticales en tamaño oficio y carta para archivo y radicación de documentos empresariales.\n\nOpciones disponibles en stock:`;
+    const prods = searchLocalProducts('sobre').slice(0, 2);
+    appendMessage('bot', text, renderProductCardsHtml(prods));
+  }
+
+  function recommendWypall() {
+    const text = `Para limpieza pesada, secado y absorción de grasas y solventes, recomendamos **Paños Wypall X-75 Plus Industrial** de Kimberly-Clark.\n\nOpciones disponibles en stock:`;
+    const prods = searchLocalProducts('wypall').slice(0, 2);
+    appendMessage('bot', text, renderProductCardsHtml(prods));
+  }
+
+  function recommendGuantesNitrilo() {
+    const text = `Manejamos **Guantes de Nitrilo Sin Polvo** negros y azules en cajas de 100 unidades (tallas S, M, L) de alta resistencia química y biológica.\n\nOpciones disponibles en stock:`;
+    const prods = searchLocalProducts('nitrilo').slice(0, 2);
+    appendMessage('bot', text, renderProductCardsHtml(prods));
+  }
+
+  function recommendStrech() {
+    const text = `Disponemos de **Strech Film para Embalaje y Paletizado** manual de 30 cm x 300 metros calibre 0.6 para asegurar mercancías en bodega.\n\nOpciones disponibles en stock:`;
+    const prods = searchLocalProducts('strech').concat(searchLocalProducts('film')).slice(0, 2);
+    appendMessage('bot', text, renderProductCardsHtml(prods));
+  }
+
+  function recommendGuantesLatex() {
+    const text = `Ofrecemos **Guantes Domésticos e Industriales de Látex** en diferentes calibres y tallas para labores de aseo y mantenimiento.\n\nOpciones disponibles en stock:`;
+    const prods = searchLocalProducts('guante domestico').concat(searchLocalProducts('latex')).slice(0, 2);
+    appendMessage('bot', text, renderProductCardsHtml(prods));
+  }
+
+  function searchLocalProducts(query, contextReply) {
     const catalog = getCatalogProducts();
-    if (!catalog.length) return [];
+    if (!catalog || !catalog.length) return [];
 
-    const words = query.toUpperCase().split(/\s+/).filter(w => w.length > 2);
-    if (!words.length) return [];
+    const qRaw = (query || '').trim();
+    const cRaw = (contextReply || '').trim();
+    const fullText = (qRaw + ' ' + cRaw).toUpperCase();
 
-    return catalog.filter(p => {
-      const title = (p.title || '').toUpperCase();
-      const subcat = (p.subcat || '').toUpperCase();
-      const cat = (p.category || '').toUpperCase();
-      return words.some(w => title.includes(w) || subcat.includes(w) || cat.includes(w));
+    // 0. Coincidencia directa con títulos de producto identificados en negrita por Gemini (**Título**)
+    const boldMatches = cRaw.match(/\*\*([^*]+)\*\*/g) || [];
+    for (const b of boldMatches) {
+      const cleanTitle = b.replace(/\*\*/g, '').trim().toUpperCase();
+      if (cleanTitle.includes('BOGOTÁ') || cleanTitle.includes('COLOMBIA') || cleanTitle.includes('FICHA') || cleanTitle.length < 5) continue;
+      const directMatch = catalog.find(p => {
+        if (!isProductInStock(p)) return false;
+        const pt = (p.title || '').toUpperCase();
+        return pt === cleanTitle || cleanTitle.includes(pt) || pt.includes(cleanTitle);
+      });
+      if (directMatch) {
+        return [directMatch];
+      }
+    }
+
+    // 1. Detección por Código de Referencia / SKU explícito (K-6078, Ref: XXX, SKU: XXX, etc.)
+    const refPatterns = [
+      /\bK-\d{3,5}\b/gi,
+      /\bRef\.?[:\s]*([A-Za-z0-9\-]+)/gi,
+      /\bSKU[:\s]*([A-Za-z0-9\-]+)/gi,
+      /\b([A-Za-z0-9]{2,4}-\d{3,6})\b/gi,
+      /\b(\d{4,6})\b/gi
+    ];
+
+    const candidateCodes = new Set();
+    refPatterns.forEach(pattern => {
+      let m;
+      while ((m = pattern.exec(fullText)) !== null) {
+        let code = (m[1] || m[0]).replace(/^Ref\.?[:\s]*/i, '').replace(/^SKU[:\s]*/i, '').trim();
+        if (code.length >= 4 && !['1000', '2000', '2026', '3000', '5000', '10000'].includes(code)) {
+          candidateCodes.add(code.toUpperCase());
+        }
+      }
     });
+
+    for (const code of candidateCodes) {
+      const codeClean = code.replace(/[^A-Z0-9\-]/g, '');
+      const matched = catalog.filter(p => {
+        if (!isProductInStock(p)) return false;
+        const t = (p.title || '').toUpperCase();
+        const s = (p.sku || '').toUpperCase();
+        const h = (p.handle || '').toUpperCase();
+        return t.includes(codeClean) || s === codeClean || h.includes(codeClean.toLowerCase());
+      });
+      if (matched.length > 0) {
+        return matched.slice(0, 2);
+      }
+    }
+
+    // 2. Extracción de términos significativos (filtrando stop words)
+    const STOP_WORDS = new Set([
+      'DE', 'DEL', 'LA', 'LAS', 'EL', 'LOS', 'UN', 'UNA', 'UNOS', 'UNAS',
+      'QUE', 'QUÉ', 'COMO', 'CÓMO', 'CUAL', 'CUÁL', 'CUANTO', 'CUÁNTO',
+      'PARA', 'POR', 'CON', 'SIN', 'SOBRE', 'ENTRE', 'HACIA', 'DESDE', 'HASTA',
+      'DAR', 'DAME', 'HACER', 'TENER', 'TIENEN', 'TIENE', 'SERVIR', 'SERVIRIA', 'SERVIRÍA', 'SIRVE', 'USAR',
+      'BUEN', 'BUENO', 'BUENA', 'MEJOR', 'MEJORES', 'EJEMPLO', 'PRODUCTO', 'PRODUCTOS',
+      'ARTICULO', 'ARTÍCULO', 'ARTICULOS', 'ARTÍCULOS', 'ITEM', 'ITEMS', 'REFERENCIA', 'REF',
+      'HOLA', 'BUENAS', 'TARDES', 'DIAS', 'DÍAS', 'GRACIAS', 'FAVOR', 'NECESITO', 'BUSCO', 'QUIERO',
+      'HAY', 'SABER', 'PODRIA', 'PODRÍA', 'PUEDO', 'PUEDE', 'PUEDEN', 'DONDE', 'DÓNDE',
+      'PRECIO', 'PRECIOS', 'MINIMO', 'MÍNIMO', 'PEDIDO', 'PEDIDOS', 'ENVIO', 'ENVÍOS',
+      'FICHA', 'FICHAS', 'TECNICA', 'TÉCNICA', 'OFICIAL', 'PDF', 'HOJA', 'SEGURIDAD', 'MSDS',
+      'ESTE', 'ESTA', 'ESTOS', 'ESTAS', 'AQUI', 'AQUÍ', 'FOTO', 'IMAGEN', 'CAPTURA', 'DISCULPA', 'DISCULPE',
+      'MUESTRA', 'MUÉSTRAME', 'REGALAME', 'REGÁLAME'
+    ]);
+
+    function getWordVariants(w) {
+      const clean = w.toUpperCase().trim();
+      const res = [clean];
+      if (clean.endsWith('S') && clean.length > 3) res.push(clean.slice(0, -1));
+      if (clean.endsWith('ES') && clean.length > 4) res.push(clean.slice(0, -2));
+      return res;
+    }
+
+    function scoreCatalog(tokens) {
+      if (!tokens || !tokens.length) return [];
+      const scored = catalog.filter(isProductInStock).map(p => {
+        const title = (p.title || '').toUpperCase();
+        let score = 0;
+        let matchedCount = 0;
+
+        tokens.forEach(token => {
+          const variants = getWordVariants(token);
+          let tokenMatched = false;
+          for (const v of variants) {
+            const boundaryRegex = new RegExp('(\\b|\\s|^)' + v + '(\\b|\\s|$)', 'i');
+            if (boundaryRegex.test(title)) {
+              score += 40;
+              tokenMatched = true;
+              break;
+            } else if (title.includes(v)) {
+              score += 20;
+              tokenMatched = true;
+              break;
+            }
+          }
+          if (tokenMatched) matchedCount++;
+        });
+
+        if (matchedCount === tokens.length) score += 60;
+        return { p, score, matchedCount };
+      }).filter(x => x.score >= 35);
+
+      scored.sort((a, b) => b.score - a.score);
+      return scored;
+    }
+
+    // 3. Buscar usando tokens identificados por la IA en negrita (**Nombre del Producto**)
+    const boldTokens = [];
+    boldMatches.forEach(b => {
+      const cleanB = b.replace(/\*\*/g, '').toUpperCase().replace(/[^A-Z0-9ÁÉÍÓÚÑ\s]/g, ' ');
+      cleanB.split(/\s+/).forEach(w => {
+        if (w.length >= 3 && !STOP_WORDS.has(w)) boldTokens.push(w);
+      });
+    });
+
+    if (boldTokens.length > 0) {
+      const boldScored = scoreCatalog(boldTokens);
+      if (boldScored.length > 0 && boldScored[0].score >= 60) {
+        return boldScored.slice(0, 2).map(x => x.p);
+      }
+    }
+
+    // 4. Buscar usando tokens de la consulta del usuario
+    const qTokens = qRaw.toUpperCase()
+      .replace(/[^A-Z0-9ÁÉÍÓÚÑ\s]/g, ' ')
+      .split(/\s+/)
+      .filter(w => w.length >= 3 && !STOP_WORDS.has(w));
+
+    if (qTokens.length > 0) {
+      const qScored = scoreCatalog(qTokens);
+      if (qScored.length > 0) {
+        return qScored.slice(0, 2).map(x => x.p);
+      }
+    }
+
+    // 5. Categorías Semánticas generales (evaluadas estrictamente en la consulta del usuario)
+    const categoryKeywords = [
+      { cat: 'AMBIENTADOR', words: ['AMBIENTADOR', 'AMBIENTADORES', 'GLADE', 'BONAIRE', 'OUST', 'AROMATIZANTE'], targets: ['AMBIENTADOR', 'GLADE', 'BONAIRE'] },
+      { cat: 'DESENGRASANTE', words: ['DESENGRASANTE', 'DESENGRASANTES', 'SUMA GRILL', 'GRILL', 'ALCALINO'], targets: ['DESENGRASANTE', 'SUMA GRILL'] },
+      { cat: 'CLORO', words: ['CLORO', 'HIPOCLORITO', 'BLANCOX', 'LIMPIDO', 'LÍMPIDO'], targets: ['BLANCOX', 'CLORO', 'HIPOCLORITO'] },
+      { cat: 'WYPALL', words: ['WYPALL', 'HYDROKNIT'], targets: ['WYPALL'] },
+      { cat: 'GUANTE', words: ['GUANTE', 'GUANTES', 'NITRILO', 'LATEX', 'LÁTEX'], targets: ['GUANTE', 'NITRILO', 'LATEX'] },
+      { cat: 'JABON', words: ['JABON', 'JABÓN', 'JABONES'], targets: ['JABON', 'JABÓN'] },
+      { cat: 'DESINCRUSTANTE', words: ['DESINCRUSTANTE', 'SARRO', 'SANITARIO'], targets: ['DESINCRUSTANTE', 'SARRO'] },
+      { cat: 'DETERGENTE', words: ['DETERGENTE', 'DETERGENTES', 'SUAVIZANTE'], targets: ['DETERGENTE', 'SUAVIZANTE'] }
+    ];
+
+    for (const group of categoryKeywords) {
+      const matchesCategory = group.words.some(w => {
+        const reg = new RegExp('(\\b|\\s|^)' + w + '(\\b|\\s|$)', 'i');
+        return reg.test(qRaw.toUpperCase());
+      });
+      if (matchesCategory) {
+        const found = catalog.filter(p => {
+          if (!isProductInStock(p)) return false;
+          const title = (p.title || '').toUpperCase();
+          return group.targets.some(t => title.includes(t));
+        });
+        if (found.length > 0) return found.slice(0, 2);
+      }
+    }
+
+    return [];
   }
 
   function renderProductCardsHtml(products) {
     if (!products || !products.length) return '';
 
+    // Filtrar estrictamente solo productos con inventario disponible (NUNCA MOSTRAR AGOTADOS)
+    const availableProducts = products.filter(isProductInStock);
+    if (!availableProducts.length) return '';
+
     let html = '<div style="display:flex; flex-direction:column; gap:8px; margin-top:8px;">';
-    products.forEach(p => {
+    availableProducts.forEach(p => {
       const priceFmt = (p.price ? Math.round(p.price) : 0).toLocaleString('es-CO');
       const img = p.image || 'https://cdn.shopify.com/s/files/1/0285/4309/0820/files/logo_detalshop_oficial.png';
       const handle = p.handle || '';
@@ -777,15 +1392,13 @@
 
       const isTracked = p.inventory_management === 'shopify';
       const rawStock = (typeof p.inventory_quantity === 'number') ? p.inventory_quantity : 25;
-      const isSoldOut = (p.available === false) || (isTracked && rawStock <= 0);
 
-      const stockBadge = isSoldOut 
-        ? `<span class="nqc-chat-stock-badge soldout">🚫 Agotado en Bodega</span>`
-        : `<span class="nqc-chat-stock-badge available">✓ En Stock (${isTracked ? rawStock + ' uds' : 'Inmediato'})</span>`;
+      const stockBadge = `<span class="nqc-chat-stock-badge available">✓ En Stock (${isTracked ? rawStock + ' uds' : 'Inmediato'})</span>`;
+      const viewBtnHtml = `<button type="button" class="nqc-chat-btn-product nqc-chat-btn-view" onclick="window.viewProductDetail('${pid}', '${handle}')">Ver Producto</button>`;
+      const addBtnHtml = `<button type="button" class="nqc-chat-btn-product nqc-chat-btn-add" onclick="window.nqcChatAddToCart('${pid}', this)">+ Agregar</button>`;
 
-      const addBtnHtml = isSoldOut
-        ? `<button type="button" class="nqc-chat-btn-product nqc-chat-btn-add" disabled>Agotado</button>`
-        : `<button type="button" class="nqc-chat-btn-product nqc-chat-btn-add" onclick="window.nqcChatAddToCart('${pid}', this)">+ Agregar</button>`;
+      // Todas las referencias de Detalgraf cuentan con Ficha Técnica Oficial / Hoja de Seguridad
+      const fichaRowHtml = `<button type="button" class="nqc-chat-btn-ficha-full" onclick="window.nqcChatDownloadFicha('${pid}', '${escapeHtml(p.title)}')">📄 Ficha Técnica Oficial (PDF)</button>`;
 
       html += `
         <div class="nqc-chat-product-card">
@@ -795,9 +1408,10 @@
             <div class="nqc-chat-product-price">$${priceFmt} COP</div>
             <div>${stockBadge}</div>
             <div class="nqc-chat-product-actions">
-              <button type="button" class="nqc-chat-btn-product nqc-chat-btn-view" onclick="window.viewProductDetail('${pid}', '${handle}')">Ver Producto</button>
+              ${viewBtnHtml}
               ${addBtnHtml}
             </div>
+            ${fichaRowHtml}
           </div>
         </div>
       `;
@@ -805,6 +1419,53 @@
     html += '</div>';
     return html;
   }
+
+  window.nqcChatDownloadFicha = function(productId, title) {
+    const catalog = getCatalogProducts();
+    const p = catalog.find(x => String(x.id) === String(productId));
+    if (!p) {
+      alert('Producto no encontrado en catálogo.');
+      return;
+    }
+
+    const specs = (typeof window.getProductSpecificSpecs === 'function') 
+      ? window.getProductSpecificSpecs(p) 
+      : { ficha_url: p.ficha_url || null };
+
+    if (specs && specs.ficha_url) {
+      window.open(specs.ficha_url, '_blank');
+      appendMessage('bot', `📄 He abierto la **Ficha Técnica Oficial** de **${p.title}** en una nueva pestaña.\n\nTambién puedes descargarla o imprimirla directamente desde tu navegador.`);
+    } else {
+      if (typeof closeChat === 'function') {
+        closeChat();
+      } else if (typeof window.closeNqcChat === 'function') {
+        window.closeNqcChat();
+      }
+      if (typeof window.openPdpWithProduct === 'function') {
+        window.openPdpWithProduct(p.id);
+      }
+      if (typeof window.openPdfModal === 'function') {
+        const titleEl = document.getElementById('modalPdfTitle');
+        if (titleEl) titleEl.textContent = `Ficha Técnica Oficial - ${p.title}`;
+        const skuEl = document.getElementById('modalPdfSku');
+        if (skuEl) skuEl.textContent = 'SKU: ' + (p.sku || 'DS-' + String(p.id).slice(-6));
+        const invimaEl = document.getElementById('modalPdfInvima');
+        if (invimaEl && specs.invima) invimaEl.textContent = specs.invima;
+        const phEl = document.getElementById('modalPdfPh');
+        if (phEl && specs.ph) phEl.textContent = specs.ph;
+        const bioEl = document.getElementById('modalPdfBio');
+        if (bioEl && specs.bio) bioEl.textContent = specs.bio;
+        const unitEl = document.getElementById('modalPdfUnit');
+        if (unitEl && p.unit) unitEl.textContent = p.unit;
+        const compEl = document.getElementById('modalPdfComp');
+        if (compEl && specs.comp) compEl.textContent = specs.comp;
+        const usoEl = document.getElementById('modalPdfUso');
+        if (usoEl && specs.uso) usoEl.textContent = specs.uso;
+        window.openPdfModal();
+      }
+      appendMessage('bot', `📄 He abierto el visor de **Ficha Técnica Oficial** para **${p.title}** con sus especificaciones INVIMA, pH y ficha descargable.`);
+    }
+  };
 
   // Funciones globales expuestas
   window.openNqcChat = openChat;

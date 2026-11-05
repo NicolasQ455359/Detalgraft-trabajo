@@ -22,9 +22,8 @@ let currentFilterCategory = 'Todos';
 let currentSearchQuery = '';
 
 // Ordenamiento alfabético A-Z por título
-try {
-  PRODUCTS_DATA.sort((a, b) => (a.title || '').localeCompare((b.title || ''), 'es', { sensitivity: 'base' }));
-} catch(e) {}
+PRODUCTS_DATA.sort((a, b) => (a.title || '').localeCompare((b.title || ''), 'es', { sensitivity: 'base' }));
+window.PRODUCTS_DATA = PRODUCTS_DATA;
 
 let cart = [];
 let cartZone = 100000; // Bogotá por defecto ($100.000 COP)
@@ -65,7 +64,7 @@ async function loadFullStoreCatalog() {
     let page = 1;
     let keepFetching = true;
     while (keepFetching && page <= 4) {
-      const res = await fetch(`/products.json?limit=250&page=${page}`);
+      const res = await fetch(`/products.json?limit=250&page=${page}&_t=${Date.now()}`, { cache: 'no-store' });
       if (!res.ok) break;
       const data = await res.json();
       if (!data.products || data.products.length === 0) break;
@@ -111,9 +110,7 @@ async function loadFullStoreCatalog() {
           }
         });
 
-        try {
-          PRODUCTS_DATA.sort((a, b) => (a.title || '').localeCompare((b.title || ''), 'es', { sensitivity: 'base' }));
-        } catch(e) {}
+        PRODUCTS_DATA.sort((a, b) => (a.title || '').localeCompare((b.title || ''), 'es', { sensitivity: 'base' }));
 
         renderCatalog(false);
       }
@@ -822,7 +819,7 @@ async function addToCart(productId, qty) {
 
   if (window.location.protocol !== 'file:' && variantId) {
     try {
-      await fetch('/cart/add.js', {
+      const resp = await fetch('/cart/add.js', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -833,6 +830,17 @@ async function addToCart(productId, qty) {
           quantity: qty
         })
       });
+      if (!resp.ok) {
+        const errData = await resp.json().catch(() => ({}));
+        if (resp.status === 422 || (errData && errData.status === 422)) {
+          const msg = errData.description || errData.message || 'No hay suficientes existencias en bodega para este producto.';
+          if (typeof showToastNotification === 'function') {
+            showToastNotification(0, '⚠️ ' + msg, 0, true);
+          } else {
+            alert('⚠️ Inventario agotado:\n\n' + msg);
+          }
+        }
+      }
       await syncShopifyServerCart(true);
     } catch(err) {
       console.warn('Error agregando a Shopify server cart:', err);
@@ -880,7 +888,7 @@ async function updateCartItemQty(identifier, delta) {
 
   if (window.location.protocol !== 'file:' && targetId) {
     try {
-      await fetch('/cart/change.js', {
+      const resp = await fetch('/cart/change.js', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -891,6 +899,17 @@ async function updateCartItemQty(identifier, delta) {
           quantity: newQty
         })
       });
+      if (!resp.ok) {
+        const errData = await resp.json().catch(() => ({}));
+        if (resp.status === 422 || (errData && errData.status === 422)) {
+          const msg = errData.description || errData.message || 'No hay suficientes existencias en bodega para la cantidad solicitada.';
+          if (typeof showToastNotification === 'function') {
+            showToastNotification(0, '⚠️ ' + msg, 0, true);
+          } else {
+            alert('⚠️ Inventario no disponible:\n\n' + msg);
+          }
+        }
+      }
       await syncShopifyServerCart(true);
     } catch(e) {
       console.warn('Error en /cart/change.js:', e);
@@ -1187,44 +1206,64 @@ function updateCartUI() {
   const alertText = document.getElementById('drawerAlertText');
   const btn = document.getElementById('btnCheckoutFigma');
 
-  const pct = Math.min(100, (totalPrice / cartZone) * 100);
+  const pct = Math.min(100, Math.round((totalPrice / cartZone) * 100));
   if (bar) bar.style.width = pct + '%';
 
-  const zoneName = cartZone === 100000 ? 'Bogotá' : 'a nivel Nacional';
+  const percentBadge = document.getElementById('drawerProgressPercent');
+  const midMilestone = document.getElementById('drawerMilestoneMid');
+  const goalMilestone = document.getElementById('drawerMilestoneGoal');
+
+  if (midMilestone) midMilestone.textContent = cartZone === 100000 ? '' : '';
+  if (goalMilestone) goalMilestone.textContent = cartZone === 100000 ? '' : '';
+
+  if (percentBadge) {
+    if (cart.length === 0) {
+      percentBadge.textContent = '0%';
+      percentBadge.className = 'min-progress-percent-badge';
+    } else if (totalPrice >= cartZone) {
+      percentBadge.textContent = '✓ 100% ¡Habilitado!';
+      percentBadge.className = 'min-progress-percent-badge success';
+    } else {
+      percentBadge.textContent = pct + '%';
+      percentBadge.className = 'min-progress-percent-badge';
+    }
+  }
+
+  const zoneName = cartZone === 100000 ? "Bogotá" : "Nacional";
 
   if (cart.length === 0) {
-    if (bar) bar.className = 'min-progress-bar';
+    if (bar) bar.className = "min-progress-bar";
     if (alertText) {
-      alertText.className = 'min-alert-text';
-      alertText.innerHTML = `🛒 Tu carrito está vacío. Agrega productos desde el catálogo para iniciar tu pedido.`;
+      alertText.className = "min-alert-text";
+      alertText.innerHTML = "🛒 Agrega productos para despacho";
     }
     if (btn) {
-      btn.className = 'btn-drawer-checkout disabled';
+      btn.className = "btn-drawer-checkout disabled";
       btn.disabled = true;
-      btn.textContent = 'Tu carrito está vacío';
+      btn.textContent = "Tu carrito está vacío";
     }
   } else if (totalPrice >= cartZone) {
-    if (bar) bar.className = 'min-progress-bar success';
+    if (bar) bar.className = "min-progress-bar success";
     if (alertText) {
-      alertText.className = 'min-alert-text success';
-      alertText.innerHTML = `🎉 ¡Superaste el pedido mínimo de $${cartZone.toLocaleString('es-CO')} COP para despacho en ${zoneName}!`;
+      alertText.className = "min-alert-text success";
+      alertText.innerHTML = `🎉 ¡Meta superada para despacho en ${zoneName}!`;
     }
     if (btn) {
-      btn.className = 'btn-drawer-checkout';
+      btn.className = "btn-drawer-checkout";
       btn.disabled = false;
-      btn.textContent = '[ Proceder al Pago Seguro 🔒 ]';
+      btn.textContent = "[ Proceder al Pago Seguro 🔒 ]";
     }
   } else {
     const missing = cartZone - totalPrice;
-    if (bar) bar.className = 'min-progress-bar';
+    if (bar) bar.className = "min-progress-bar";
     if (alertText) {
-      alertText.className = 'min-alert-text';
-      alertText.innerHTML = `⚠️ Saldo: $${totalPrice.toLocaleString('es-CO')} / Meta: $${cartZone.toLocaleString('es-CO')} (Faltan $${missing.toLocaleString('es-CO')} COP para despacho en ${zoneName})`;
+      alertText.className = "min-alert-text";
+      alertText.innerHTML = `Faltan $${missing.toLocaleString("es-CO")} COP para despacho en ${zoneName}`;
     }
     if (btn) {
-      btn.className = 'btn-drawer-checkout disabled';
+      btn.className = "btn-drawer-checkout disabled";
       btn.disabled = true;
-      btn.textContent = `⚠️ Faltan $${missing.toLocaleString('es-CO')} para Pedido Mínimo`;
+      btn.textContent = `⚠️ Faltan $${missing.toLocaleString("es-CO")} para Pedido Mínimo`;
     }
   }
 
@@ -2941,6 +2980,73 @@ function generateCartQuotePDF() {
   printWindow.document.close();
 }
 window.generateCartQuotePDF = generateCartQuotePDF;
+
+function shareCartByEmail() {
+  if (!Array.isArray(cart) || cart.length === 0) {
+    if (typeof showToastNotification === 'function') {
+      showToastNotification(0, 'Tu carrito está actualmente vacío. Agrega productos para compartirlo.', 0, true);
+    } else {
+      alert('Tu carrito está actualmente vacío. Agrega productos para compartir.');
+    }
+    return;
+  }
+
+  var now = new Date();
+  var dateStr = now.toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+  var totalUnits = cart.reduce(function(sum, item) { return sum + item.qty; }, 0);
+  var totalPrice = cart.reduce(function(sum, item) { return sum + (item.qty * item.price); }, 0);
+  var subtotal = Math.round(totalPrice / 1.19);
+  var iva = totalPrice - subtotal;
+  var zoneName = cartZone === 100000 ? 'Bogota y Sabana ($100.000 COP min.)' : 'Nacional Cobertura Colombia ($200.000 COP min.)';
+  var nitInput = document.getElementById('cedulaNitDrawer');
+  var nitValue = nitInput && nitInput.value ? nitInput.value.trim() : '';
+
+  var itemsBody = '';
+  cart.forEach(function(item, idx) {
+    var itemSub = Math.round(item.qty * item.price);
+    itemsBody += (idx + 1) + '. [x' + item.qty + '] ' + item.title + '\n   Precio: $' + Math.round(item.price).toLocaleString('es-CO') + ' COP | Subtotal: $' + itemSub.toLocaleString('es-CO') + ' COP\n\n';
+  });
+
+  var emailSubject = 'Cotizacion / Carrito DetalShop - Detalgraf S.A.S. (' + totalUnits + ' items)';
+  var emailBody = 'RESUMEN DE COTIZACION / PEDIDO CORPORATIVO\n' +
+    'EMPRESA PROVEEDORA: DETALGRAF S.A.S. (NIT: 830.005.293-5)\n' +
+    'TIENDA VIRTUAL OFICIAL: https://detalgraf.myshopify.com\n' +
+    'CORREO DE CONTACTO: info@detalgraf.com\n' +
+    'FECHA: ' + dateStr + '\n' +
+    'ZONA DE DESPACHO SELECCIONADA: ' + zoneName + '\n' +
+    (nitValue ? 'NIT / DOCUMENTO CLIENTE: ' + nitValue + '\n' : '') +
+    '------------------------------------------------------------\n' +
+    'DETALLE DE PRODUCTOS:\n' +
+    '------------------------------------------------------------\n' +
+    itemsBody +
+    '------------------------------------------------------------\n' +
+    'RESUMEN ECONOMICO:\n' +
+    'Subtotal Antes de IVA: $' + subtotal.toLocaleString('es-CO') + ' COP\n' +
+    'IVA (19% discriminado): $' + iva.toLocaleString('es-CO') + ' COP\n' +
+    'VALOR TOTAL A PAGAR (IVA INCLUIDO): $' + totalPrice.toLocaleString('es-CO') + ' COP\n' +
+    '------------------------------------------------------------\n' +
+    'CONDICIONES COMERCIALES Y DESPACHO:\n' +
+    '- Entrega en 24-48 horas habiles en Bogota y Sabana con Flota Propia Detalgraf.\n' +
+    '- Envios nacionales en 2-5 dias habiles con guia de seguimiento.\n' +
+    '- Facturacion electronica DIAN oficial y remision de entrega.\n\n' +
+    'Para confirmar o pagar este pedido en linea, ingresa a:\n' +
+    'https://detalgraf.myshopify.com';
+
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(emailBody).catch(function() {});
+    }
+  } catch(e) {}
+
+  var mailtoLink = 'mailto:?subject=' + encodeURIComponent(emailSubject) + '&body=' + encodeURIComponent(emailBody);
+  window.location.href = mailtoLink;
+
+  if (typeof showToastNotification === 'function') {
+    showToastNotification(0, 'Correo abierto y resumen copiado al portapapeles. Ya puedes enviarlo a compras o gerencia.', 0, true);
+  }
+}
+window.shareCartByEmail = shareCartByEmail;
+window.getProductSpecificSpecs = getProductSpecificSpecs;
 
 function openContactMail(e) {
   if (e) {

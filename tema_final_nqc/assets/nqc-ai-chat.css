@@ -378,30 +378,36 @@ body.cart-open .nqc-chat-window,
 .nqc-chat-product-actions {
   display: flex;
   gap: 6px;
+  margin-top: 6px;
 }
 
 .nqc-chat-btn-product {
-  padding: 4px 8px;
-  border-radius: 5px;
-  font-size: 11px;
+  flex: 1;
+  padding: 6px 10px;
+  border-radius: 6px;
+  font-size: 11.5px;
   font-weight: 700;
   cursor: pointer;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
-  gap: 4px;
+  justify-content: center;
+  white-space: nowrap !important;
+  box-sizing: border-box;
 }
 
 .nqc-chat-btn-view {
   background: #0f172a;
   color: #ffffff;
   border: none;
+  white-space: nowrap !important;
 }
 
 .nqc-chat-btn-add {
   background: #004b87;
   color: #ffffff;
   border: none;
+  white-space: nowrap !important;
   transition: background 0.2s ease, opacity 0.2s ease;
 }
 
@@ -409,6 +415,32 @@ body.cart-open .nqc-chat-window,
   opacity: 0.55;
   cursor: not-allowed;
   background: #94a3b8 !important;
+}
+
+.nqc-chat-btn-ficha-full {
+  width: 100%;
+  margin-top: 6px;
+  background: #f0fdf4;
+  border: 1px solid #bbf7d0;
+  color: #166534;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 6px;
+  padding: 5px 8px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-sizing: border-box;
+  white-space: nowrap !important;
+}
+.nqc-chat-btn-ficha-full:hover {
+  background: #dcfce7;
+  color: #14532d;
+  border-color: #86efac;
 }
 
 .nqc-chat-stock-badge {
@@ -599,6 +631,89 @@ body.cart-open .nqc-chat-window,
   margin-top: 5px;
 }
 
+/* Adjuntos y Vista Previa de Imágenes / Capturas */
+.nqc-chat-btn-attach {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #64748b;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  transition: color 0.2s, background 0.2s;
+  flex-shrink: 0;
+  margin-right: -2px;
+}
+
+.nqc-chat-btn-attach:hover {
+  color: #004b87;
+  background: #e2e8f0;
+}
+
+.nqc-chat-preview-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #f1f5f9;
+  border: 1px dashed #cbd5e1;
+  border-radius: 10px;
+  padding: 6px 10px;
+  margin-bottom: 8px;
+}
+
+.nqc-chat-preview-box {
+  position: relative;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+.nqc-chat-preview-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 6px;
+  border: 1px solid #cbd5e1;
+}
+
+.nqc-chat-btn-remove-preview {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  width: 17px;
+  height: 17px;
+  border-radius: 50%;
+  background: #ef4444;
+  color: #ffffff;
+  border: none;
+  font-size: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  line-height: 1;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.nqc-chat-preview-text {
+  font-size: 11.5px;
+  color: #475569;
+  font-weight: 600;
+  flex: 1;
+}
+
+.nqc-msg-user-img {
+  max-width: 100%;
+  max-height: 200px;
+  border-radius: 8px;
+  margin-bottom: 6px;
+  display: block;
+  object-fit: cover;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+}
+
 /* Adaptabilidad Responsiva para Pantallas Pequeñas */
 @media (max-width: 480px) {
   .nqc-chat-launcher {
@@ -615,4 +730,20 @@ body.cart-open .nqc-chat-window,
     height: 72vh;
     max-height: 520px;
   }
+}
+
+
+/* ==========================================================================
+   FICHAS TÉCNICAS Y REPETICIÓN DE PEDIDO DIRECTA EN CHAT
+   ========================================================================== */
+.nqc-chat-btn-ficha {
+  background: #f0fdf4 !important;
+  color: #166534 !important;
+  border: 1px solid #bbf7d0 !important;
+  transition: all 0.2s ease !important;
+}
+.nqc-chat-btn-ficha:hover {
+  background: #dcfce7 !important;
+  color: #14532d !important;
+  border-color: #86efac !important;
 }

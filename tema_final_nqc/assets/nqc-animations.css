@@ -1,0 +1,246 @@
+/**
+ * NQC CORPORATE ANIMATIONS SYSTEM — DETALGRAF S.A.S.
+ * Animaciones suaves, profesionales e institucionales (Estilo Enterprise / Stripe / Apple B2B)
+ * Diseñado con aislamiento total: Fácilmente activable / desactivable sin romper ningún estilo.
+ */
+
+/* ==========================================================================
+   1. ACTIVACIÓN PRINCIPAL Y VARIABLES DE TIEMPO
+   ========================================================================== */
+:root {
+  --nqc-anim-ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --nqc-anim-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --nqc-anim-duration-sm: 0.2s;
+  --nqc-anim-duration-md: 0.35s;
+  --nqc-anim-duration-lg: 0.6s;
+}
+
+/* Solo se aplican si la clase maestra está activa en el body */
+body.nqc-animations-active {
+  scroll-behavior: smooth;
+}
+
+/* ==========================================================================
+   2. SCROLL REVEAL (Aparición progresiva al hacer scroll)
+   ========================================================================== */
+body.nqc-animations-active .nqc-reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition: opacity var(--nqc-anim-duration-lg) var(--nqc-anim-ease),
+              transform var(--nqc-anim-duration-lg) var(--nqc-anim-ease);
+  will-change: opacity, transform;
+}
+
+body.nqc-animations-active .nqc-reveal.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Stagger (Efecto cascada elegante para tarjetas en rejilla) */
+body.nqc-animations-active .lines-grid-row1 .line-collection-card:nth-child(1),
+body.nqc-animations-active .lines-grid-row2 .line-collection-card:nth-child(1) {
+  transition-delay: 0.05s;
+}
+body.nqc-animations-active .lines-grid-row1 .line-collection-card:nth-child(2),
+body.nqc-animations-active .lines-grid-row2 .line-collection-card:nth-child(2) {
+  transition-delay: 0.12s;
+}
+body.nqc-animations-active .lines-grid-row1 .line-collection-card:nth-child(3) {
+  transition-delay: 0.19s;
+}
+
+body.nqc-animations-active #homeProductsGrid .p-card-store:nth-child(4n + 1) { transition-delay: 0.04s; }
+body.nqc-animations-active #homeProductsGrid .p-card-store:nth-child(4n + 2) { transition-delay: 0.09s; }
+body.nqc-animations-active #homeProductsGrid .p-card-store:nth-child(4n + 3) { transition-delay: 0.14s; }
+body.nqc-animations-active #homeProductsGrid .p-card-store:nth-child(4n + 4) { transition-delay: 0.19s; }
+
+/* ==========================================================================
+   3. TRANSICIÓN SUAVE ENTRE VISTAS DE PÁGINA (Home <-> PDP <-> Tracking)
+   ========================================================================== */
+body.nqc-animations-active .page-view-block {
+  opacity: 0;
+  transform: translateY(8px);
+  transition: opacity var(--nqc-anim-duration-md) var(--nqc-anim-ease),
+              transform var(--nqc-anim-duration-md) var(--nqc-anim-ease);
+}
+
+body.nqc-animations-active .page-view-block.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   4. TARJETAS DE LÍNEAS ("NUESTRAS LINEAS") — MICRO-INTERACCIONES
+   ========================================================================== */
+body.nqc-animations-active .line-collection-card {
+  transition: transform var(--nqc-anim-duration-md) var(--nqc-anim-ease),
+              box-shadow var(--nqc-anim-duration-md) var(--nqc-anim-ease),
+              border-color var(--nqc-anim-duration-md) ease;
+  will-change: transform, box-shadow;
+}
+
+body.nqc-animations-active .line-collection-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 32px -8px rgba(0, 75, 135, 0.25), 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* Icono Figma de la tarjeta con suave elevación elástica */
+body.nqc-animations-active .line-card-icon-badge {
+  transition: transform var(--nqc-anim-duration-md) var(--nqc-anim-spring),
+              background var(--nqc-anim-duration-md) ease;
+}
+
+body.nqc-animations-active .line-collection-card:hover .line-card-icon-badge {
+  transform: scale(1.08) translateY(-2px);
+}
+
+/* Botón "Comprar ahora" de la tarjeta */
+body.nqc-animations-active .btn-comprar-ahora {
+  transition: background var(--nqc-anim-duration-sm) ease,
+              transform var(--nqc-anim-duration-sm) var(--nqc-anim-ease),
+              box-shadow var(--nqc-anim-duration-sm) ease;
+}
+
+body.nqc-animations-active .line-collection-card:hover .btn-comprar-ahora {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+body.nqc-animations-active .btn-comprar-ahora:active {
+  transform: scale(0.96);
+}
+
+/* ==========================================================================
+   5. TARJETAS DEL CATÁLOGO DE PRODUCTOS (Efecto B2B Institucional)
+   ========================================================================== */
+body.nqc-animations-active .p-card-store {
+  transition: transform var(--nqc-anim-duration-md) var(--nqc-anim-ease),
+              box-shadow var(--nqc-anim-duration-md) var(--nqc-anim-ease),
+              border-color var(--nqc-anim-duration-sm) ease;
+  will-change: transform, box-shadow;
+}
+
+body.nqc-animations-active .p-card-store:hover {
+  transform: translateY(-4px);
+  border-color: #004b87;
+  box-shadow: 0 14px 28px -6px rgba(15, 23, 42, 0.08), 0 4px 10px -2px rgba(0, 75, 135, 0.06);
+}
+
+/* Imagen del producto con micro-zoom sutil */
+body.nqc-animations-active .p-card-img-wrap img {
+  transition: transform 0.4s var(--nqc-anim-ease);
+  will-change: transform;
+}
+
+body.nqc-animations-active .p-card-store:hover .p-card-img-wrap img {
+  transform: scale(1.04);
+}
+
+/* Botón Ficha Técnica y Añadir */
+body.nqc-animations-active .btn-card-pdp,
+body.nqc-animations-active .btn-card-add-direct {
+  transition: transform 0.15s var(--nqc-anim-ease),
+              background 0.2s ease,
+              color 0.2s ease,
+              box-shadow 0.15s ease;
+}
+
+body.nqc-animations-active .btn-card-pdp:hover,
+body.nqc-animations-active .btn-card-add-direct:hover {
+  transform: translateY(-1px);
+}
+
+body.nqc-animations-active .btn-card-pdp:active,
+body.nqc-animations-active .btn-card-add-direct:active {
+  transform: scale(0.96);
+}
+
+/* ==========================================================================
+   6. PESTAÑAS DE CATEGORÍA (Barra de Filtros del Catálogo)
+   ========================================================================== */
+body.nqc-animations-active .cat-tab-pill {
+  transition: all var(--nqc-anim-duration-sm) var(--nqc-anim-ease);
+}
+
+body.nqc-animations-active .cat-tab-pill:hover:not(.active) {
+  transform: translateY(-2px);
+  background: #f1f5f9;
+}
+
+body.nqc-animations-active .cat-tab-pill.active {
+  transform: scale(1.03);
+  box-shadow: 0 4px 10px rgba(0, 75, 135, 0.25);
+}
+
+/* ==========================================================================
+   7. CONTROLES Y BOTONES GLOBALES (Respuesta táctil y háptica visual)
+   ========================================================================== */
+body.nqc-animations-active button:active,
+body.nqc-animations-active .btn-checkout-figma:active,
+body.nqc-animations-active .btn-load-more:active,
+body.nqc-animations-active .nqc-chat-action-btn:active {
+  transform: scale(0.97) !important;
+  transition: transform 0.08s ease !important;
+}
+
+/* Pulso suave corporativo en la insignia del carrito al agregar productos */
+body.nqc-animations-active .cart-count-pulse {
+  animation: nqcBadgePulse 0.45s var(--nqc-anim-spring);
+}
+
+@keyframes nqcBadgePulse {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.35); }
+  75% { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+
+/* ==========================================================================
+   8. ENTRADA DE TOAST FLOTANTE Y NOTIFICACIONES
+   ========================================================================== */
+body.nqc-animations-active .floating-toast {
+  animation: nqcToastIn 0.35s var(--nqc-anim-ease);
+}
+
+@keyframes nqcToastIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ==========================================================================
+   9. VISTA PDP (Ficha de Producto: Pestañas con transición suave)
+   ========================================================================== */
+body.nqc-animations-active .pdp-tab-panel {
+  animation: nqcTabFade 0.25s var(--nqc-anim-ease);
+}
+
+@keyframes nqcTabFade {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ==========================================================================
+   10. ACCESIBILIDAD (Prefiere reducción de movimiento)
+   ========================================================================== */
+@media (prefers-reduced-motion: reduce) {
+  body.nqc-animations-active,
+  body.nqc-animations-active * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+    transform: none !important;
+  }
+}

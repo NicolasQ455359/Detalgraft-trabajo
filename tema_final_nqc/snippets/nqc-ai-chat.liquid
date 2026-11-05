@@ -58,12 +58,31 @@
 
   <!-- Pie de Entrada (Caja de Texto Libre Siempre Accesible) -->
   <div class="nqc-chat-footer">
+    <!-- Vista Previa de Imagen o Captura Adjunta -->
+    <div class="nqc-chat-preview-bar" id="nqcChatImagePreview" style="display:none;">
+      <div class="nqc-chat-preview-box">
+        <img id="nqcChatPreviewImg" src="" alt="Captura adjunta">
+        <button type="button" class="nqc-chat-btn-remove-preview" onclick="window.nqcChatRemoveAttachedImage()" title="Quitar imagen">✕</button>
+      </div>
+      <span class="nqc-chat-preview-text">📷 Imagen lista para enviar a la IA</span>
+    </div>
+
     <div class="nqc-chat-input-form">
+      <!-- Botón de Adjuntar Imagen / Captura de Pantalla -->
+      <label for="nqcChatFileInput" class="nqc-chat-btn-attach" title="Adjuntar foto o captura de pantalla">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+          <circle cx="8.5" cy="8.5" r="1.5"/>
+          <polyline points="21 15 16 10 5 21"/>
+        </svg>
+      </label>
+      <input type="file" id="nqcChatFileInput" accept="image/*" style="display:none;" onchange="window.nqcChatHandleFileSelect(event)">
+
       <input 
         type="text" 
         class="nqc-chat-input" 
         id="nqcChatInput" 
-        placeholder="Escribe tu pregunta o busca un producto..." 
+        placeholder="Escribe o pega una captura (Ctrl+V)..." 
         aria-label="Mensaje para el asistente"
         onkeydown="if(event.key==='Enter'){event.preventDefault(); window.nqcChatSendMessage();}"
       >
